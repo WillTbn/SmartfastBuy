@@ -1,1 +1,1 @@
-# echo Smart Fust Buy
+# Smart Fust Buy
