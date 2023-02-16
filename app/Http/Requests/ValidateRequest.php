@@ -33,7 +33,7 @@ trait ValidateRequest
      * @param string $status qual estado da requisição success|error
      * @param string $msg qual mensagem retorna
      * @param array $long resposta com valor e chave ex.: ['user' => $user, 'outracoisa'=> $outracoisa]
-     * @param string $status API REST
+     * @param string $statusApi API REST
      */
     public function longAnswer(
         $status,
@@ -57,7 +57,7 @@ trait ValidateRequest
     {
         return[
             'required' => 'O :attribute é obrigatório!',
-            'date' => "o :attribute tem que ser uma data valida.",
+            'date' => "o :attribute tem que ser uma data válida.",
             'name.min' => 'É necessário no mínimo :min caracteres no nome!',
             'string' => 'Campo :attribute só aceitar texto.',
             'email.email' => 'Digite um email válido!',
@@ -65,7 +65,7 @@ trait ValidateRequest
             'password_confirm.same' => 'Senhas não conferem, campo confirma senha tem que igual ao campo senha.',
             'code.min' => 'O código de verificação tem no minimo :min caracters',
             'avatar.required' => 'Uma imagem JPG, JPGE ou PNG é obrigatório.',
-            'max' => 'Limite máximo de caracteres ultrapassada.',
+            'max' => 'Limite máximo de caracteres ultrapassada no campo :attribute.',
             'min'=> 'Minimo de caracteres não atigindo, no campo :attribute.'
         ];
     }
