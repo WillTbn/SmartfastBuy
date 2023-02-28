@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,14 +22,22 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/ping', function(){
     return ['pong' =>true];
 });
-Route::group(['middleware' => 'api', 'prefix'=>'auth'],
-function($router){
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
+Route::get('/401', [AuthController::class, 'unauthorized'])->name('Não autorizado');
 
-    Route::post('/validateToken', [AuthController::class, 'validateToken']);
-    Route::post('/logout',[AuthController::class, 'logout']);
-    Route::post('/refresh',[AuthController::class, 'refresh']);
+
+Route::middleware('auth:api')->group(function(){
+    Route::group(['prefix'=>'auth'],
+    function($router){
+        Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/register', [AuthController::class, 'register']);
+
+        Route::post('/validateToken', [AuthController::class, 'validateToken']);
+        Route::post('/logout',[AuthController::class, 'logout']);
+        Route::post('/refresh',[AuthController::class, 'refresh']);
+
+    });
+    Route::group(['prefix'=>'account'], function($router){
+        Route::post('/created', [AccountController::class, 'created']);
+    });
 
 });
-Route::get('/401', [AuthController::class, 'unauthorized']);

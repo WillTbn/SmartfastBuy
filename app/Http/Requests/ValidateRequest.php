@@ -66,7 +66,10 @@ trait ValidateRequest
             'code.min' => 'O código de verificação tem no minimo :min caracters',
             'avatar.required' => 'Uma imagem JPG, JPGE ou PNG é obrigatório.',
             'max' => 'Limite máximo de caracteres ultrapassada no campo :attribute.',
-            'min'=> 'Minimo de caracteres não atigindo, no campo :attribute.'
+            'min'=> 'Minimo de caracteres não atigindo, no campo :attribute.',
+            'person.unique' => 'CPF já em uso!',
+            'user_id.unique' => 'Dados já enviados!'
+
         ];
     }
 }

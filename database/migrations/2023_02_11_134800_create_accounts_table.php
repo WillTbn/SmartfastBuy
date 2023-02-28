@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->string('person');
-            $table->enum('genre',[1,2,3,4]);
+            $table->char('genre', 1);
             $table->string('birthday');
             $table->string('avatar')->nullable()->default(env('APP_URL_C').'/public/defatul-avatar.png');
-            $table->enum('notifications',[1,2,3,4,5]);
-            $table->foreignId('apartment_id')->constrained();
+            $table->char('notifications', 1);
+            $table->foreignId('apartment_id')->nullable()->constrained();
             $table->foreignId('user_id')->constrained();
             $table->softDeletes();
             $table->timestamps();

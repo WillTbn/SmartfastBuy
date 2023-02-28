@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', [1,2,3,4]);
+            $table->char('type', 1);
             $table->foreignId('card_id')->nullable()->constrained();
             $table->timestamps();
         });
