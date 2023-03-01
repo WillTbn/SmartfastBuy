@@ -1,1 +1,1 @@
-# Smart Fust Buy
+# Smart Fast Buy
