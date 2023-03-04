@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CondominiaController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,5 +55,29 @@ Route::middleware('auth:api')->group(function(){
             Route::get('/', [CondominiaController::class, 'index']);
         }
     );
+
+    Route::group(['prefix' => 'user'],
+        function($router){
+            Route::get('/', [UserController::class, 'index']);
+            Route::post('/created', [UserController::class, 'created']);
+            Route::put('/update', [UserController::class, 'update']);
+        }
+    );
+
+    Route::group(['prefix' => 'apartment'],
+        function($router){
+            Route::get('/', [ApartmentController::class, 'index']);
+        }
+    );
+    Route::group(['prefix' => 'product'],
+        function($router){
+            Route::get('/', [ProductController::class, 'index']);
+        }
+    );
+    Route::group(['prefix' => 'category'],
+    function($router){
+        Route::get('/', [CategoryController::class, 'index']);
+    }
+);
 
 });

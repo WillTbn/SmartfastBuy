@@ -14,11 +14,11 @@ class Account extends Model
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'person',
-        'genre',
+        'genre' => genre::class,
         'avatar',
         'apartament_id',
         'user_id',
-        'notifications',
+        'notifications' => notifications::class,
         'birthday',
     ];
 
@@ -28,8 +28,7 @@ class Account extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'notifications' => notifications::class,
-        'genre' => genre::class
+        'person'
     ];
 
     public function user(): HasOne

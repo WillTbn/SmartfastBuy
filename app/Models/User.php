@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\type;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -23,6 +25,7 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'type' => type::class
     ];
 
     /**
@@ -67,4 +70,5 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(Account::class);
     }
+
 }

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidateRequest;
-use App\Models\Condominia;
-use Illuminate\Http\Request;
+use App\Models\Apartment;
 
-class CondominiaController extends Controller
+class ApartmentController extends Controller
 {
+
     use ValidateRequest;
     private $loggedUser;
     public function __construct()
@@ -20,12 +20,12 @@ class CondominiaController extends Controller
      *  returns all records
      * @return \Illuminate\Http\Response
      */
-    public function index(Condominia $condominia)
+    public function index(Apartment $apartment)
     {
         if($this->loggedUser->type === 'M'){
-            return $condominia->with(['apartments'])->get();
+            return $apartment->with(['condominia'])->get();
         }
-        return $this->simpleAnswer('error', 'Permissão negada.', 4000);
+        return $this->simpleAnswer('error', 'Permissão negada.', 400);
     }
 
 }
