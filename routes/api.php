@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\CondominiaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,6 +43,12 @@ Route::middleware('auth:api')->group(function(){
         function($router){
             Route::post('/created', [AccountController::class, 'created']);
             Route::get('/{id}', [AccountController::class, 'show']);
+        }
+    );
+
+    Route::group(['prefix' => 'condominia'],
+        function($router){
+            Route::get('/', [CondominiaController::class, 'index']);
         }
     );
 

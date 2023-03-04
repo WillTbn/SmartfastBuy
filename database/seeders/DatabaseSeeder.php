@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        CondominiaTableSeeder::class;
+        CondominiasTableSeeder::class;
         ApartmentsTableSeeder::class;
         CategoriesTableSeeder::class;
         ProductsTableSeeder::class;

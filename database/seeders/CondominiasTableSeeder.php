@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class CondominiaTableSeeder extends Seeder
+class CondominiasTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +14,7 @@ class CondominiaTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('condominia')->insert([
+        DB::table('condominias')->insert([
             'name' => 'Vivendas Teste',
         ]);
     }

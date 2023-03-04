@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('number');
             $table->string('block');
-            $table->foreignId('condominium_id')->constrained();
+            $table->foreignId('condominia_id')->constrained();
             $table->timestamps();
         });
     }
