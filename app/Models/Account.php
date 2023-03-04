@@ -6,6 +6,7 @@ use App\Enums\genre;
 use App\Enums\notifications;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Account extends Model
@@ -30,4 +31,9 @@ class Account extends Model
         'notifications' => notifications::class,
         'genre' => genre::class
     ];
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(user::class, 'id', 'user_id');
+    }
 }

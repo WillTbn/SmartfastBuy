@@ -74,7 +74,11 @@ class AccountController extends Controller
      */
     public function show(Account $account)
     {
-        //
+        $user = $account->with(['user'])->first();
+        if($user){
+            return $this->longAnswer('success', 'Usuário encontrado com sucesso!',['account'=>$user], 200);
+        }
+        return $this->simpleAnswer('error', 'Usuário não encontrado!', 400);
     }
 
     /**

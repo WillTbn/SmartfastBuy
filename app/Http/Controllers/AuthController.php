@@ -15,15 +15,12 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register', 'unauthorized']]);
+        $this->middleware('auth:api')->except(['login','register', 'unauthorized']);
     }
 
     public function unauthorized()
     {
-        return response()->json(
-        [
-        'error' => 'Não autorizado'
-        ],401);
+        return response()->json(['error' => 'Não autorizado'],401);
     }
     public function login(Request $request)
     {
@@ -44,7 +41,7 @@ class AuthController extends Controller
         }
         //return dd($token);
         $user = Auth::user();
-        return $this->longAnswer('success', 'Usuario encontrado.', [
+        return $this->longAnswer('success', 'Usuário encontrado.', [
             'user'=>$user,
             'authorization' => [
                 'token' => $token,
@@ -74,10 +71,13 @@ class AuthController extends Controller
         ]);
 
         $token = Auth::login($user, true);
-        return $this->longAnswer('success', 'Sucesso na requisição.',['user'=>$user, 'authorization'=>[
-            'token' => $token,
-            'type' => 'bearer',
-        ] ], 200);
+        return $this->longAnswer('success', 'Sucesso na requisição.',[
+            'user'=>$user,
+            'authorization'=>[
+                'token' => $token,
+                'type' => 'bearer',
+            ]
+        ], 200);
     }
     public function validateToken()
     {
