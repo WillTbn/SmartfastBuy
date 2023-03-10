@@ -84,6 +84,10 @@ Route::middleware('auth:api')->group(function(){
     Route::group(['prefix' => 'category'],
     function($router){
         Route::get('/', [CategoryController::class, 'index']);
+        Route::get('/list', [CategoryController::class, 'getList']);
+        Route::post('/created', [CategoryController::class, 'created']);
+        Route::put('/{category}', [CategoryController::class, 'update']);
+        Route::delete('/{category}', [CategoryController::class, 'destroy']);
     }
 );
 

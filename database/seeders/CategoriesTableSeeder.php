@@ -17,12 +17,18 @@ class CategoriesTableSeeder extends Seeder
     {
         DB::table('categories')->insert([
             'name' => 'Cervejas',
+            'updated_at' => now(),
+            'created_at' => now()
         ]);
         DB::table('categories')->insert([
             'name' => 'Destilados',
+            'updated_at' => now(),
+            'created_at' => now()
         ]);
         DB::table('categories')->insert([
             'name' => 'Vinhos',
+            'updated_at' => now(),
+            'created_at' => now()
         ]);
     }
 }

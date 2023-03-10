@@ -13,25 +13,20 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('barcode');
-            $table->integer('quantity');
-            $table->string('value');
-            $table->foreignId('account_id')->constrained();
-            $table->softDeletes();
+        Schema::table('categories', function (Blueprint $table) {
             $table->timestamps();
         });
     }
 
-    /**categories
+    /**
      * Reverse the migrations.
      *
      * @return void
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::table('categories', function (Blueprint $table) {
+            $table->dropColumn('timestamps');
+        });
     }
 };
