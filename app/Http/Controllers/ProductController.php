@@ -133,7 +133,6 @@ class ProductController extends Controller
     }
     /**
      * Delete the specified resource in storage.
-     * @param $id
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
@@ -143,7 +142,10 @@ class ProductController extends Controller
 
         return $this->simpleAnswer('success', 'Produto deletado com sucesso!', 204 );
     }
-
+    /**
+     * List of items in the recycle bin
+     * @return \Illuminate\Http\Response
+     */
     public function trashed()
     {
         $product = Product::onlyTrashed()->get();
@@ -152,7 +154,7 @@ class ProductController extends Controller
     }
     /**
      * Restore the specified resource in storage.
-     * @param $id
+     * @param $product
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
@@ -165,11 +167,15 @@ class ProductController extends Controller
         }
         return $this->simpleAnswer('error', 'Produto de identificador '.$product.' não encontrado na lixeira!', 404);
     }
-
+    /**
+     * Permanent deletion the specified resource in storage.
+     * @param $product
+     * @return \Illuminate\Http\Response
+     */
     public Function deleteForce($product)
     {
         // return $product;
-        Product::onlyTrashed()->where(['id', $product])->forceDelete();
+        Product::onlyTrashed()->where(['id'=> $product])->forceDelete();
 
         return $this->simpleAnswer('success', 'Produto deletado com sucesso!', 200);
     }
