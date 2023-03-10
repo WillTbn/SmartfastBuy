@@ -4,21 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $fillable = [
         'name', 'barcode', 'quantity',
-        'value', 'category_id', 'type',
+        'value', 'account_id','category_id', 'type',
         'image_one', 'image_two', 'image_three',
-        'description'
+        'description', 'deleted_at'
     ];
 
     public function category(): HasOne
     {
         return $this->hasOne(Category::class, 'id', 'category_id');
     }
-
+    public function account(): HasMany
+    {
+        return $this->hasMany(Account::class, 'user_id', 'account_id');
+    }
 }

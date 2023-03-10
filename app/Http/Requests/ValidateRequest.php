@@ -68,7 +68,8 @@ trait ValidateRequest
             'max' => 'Limite máximo de caracteres ultrapassada no campo :attribute.',
             'min'=> 'Minimo de caracteres não atigindo, no campo :attribute.',
             'person.unique' => 'CPF já em uso!',
-            'user_id.unique' => 'Dados já enviados!'
+            'user_id.unique' => 'Dados já enviados!',
+            'barcode.unique' => 'Código de barra já existente em nosso banco, atualize a existente.'
 
         ];
     }
