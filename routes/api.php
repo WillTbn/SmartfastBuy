@@ -67,6 +67,11 @@ Route::middleware('auth:api')->group(function(){
     Route::group(['prefix' => 'apartment'],
         function($router){
             Route::get('/', [ApartmentController::class, 'index']);
+            Route::post('/created', [ApartmentController::class, 'created']);
+            Route::get('/{apartment}', [ApartmentController::class, 'getApartment']);
+            Route::put('/{apartment}', [ApartmentController::class, 'update']);
+            Route::delete('/{apartment}', [ApartmentController::class, 'destroy']);
+
         }
     );
     Route::group(['prefix' => 'product'],
