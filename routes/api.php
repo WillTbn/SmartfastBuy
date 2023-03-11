@@ -53,6 +53,10 @@ Route::middleware('auth:api')->group(function(){
     Route::group(['prefix' => 'condominia'],
         function($router){
             Route::get('/', [CondominiaController::class, 'index']);
+            Route::post('/created', [CondominiaController::class, 'created']);
+            Route::get('/{condominia}', [CondominiaController::class, 'getCondominia']);
+            Route::put('/{condominia}', [CondominiaController::class, 'update']);
+            Route::delete('/{condominia}', [CondominiaController::class, 'destroy']);
         }
     );
 
