@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\genre;
+use App\Enums\notifications;
 use App\Http\Requests\ValidateRequest;
 use App\Models\Account;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class AccountController extends Controller
 {
@@ -43,14 +46,16 @@ class AccountController extends Controller
         if($validator->fails()){
             return $this->simpleAnswer('error', $validator->errors()->first(), 400);
         }
-
+        if($request->user_id != $this->loggedUser->id){
+            return $this->simpleAnswer('error', 'ID - diferente do usuário logado, alterada dados alheus não pode, contate a administração!', 400);
+        }
 
         $register = $account->create([
             'person' => $request->person,
-            'genre' => $request->genre,
+            'genre' => genre::from($request->genre)->getValue(),
             'birthday' => $request->birthday,
-            'notifications' => $request->notifications,
-            'user_id' => $request->user_id,
+            'notifications' => notifications::from($request->notifications)->getValue(),
+            'user_id' => $this->loggedUser->id,
         ]);
         return $this->longAnswer('success', 'Sucesso dados preenchidos com sucesso!',['account'=>$register], 200);
     }
@@ -82,26 +87,43 @@ class AccountController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Account  $account
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Account $account)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Account $account)
+    public function updated(Request $request, Account $account)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'genre' => 'required|max:1',
+            'birthday' => 'required|date',
+            'notifications' => 'required|max:1',
+            'person' => [
+                'required',
+                Rule::unique('accounts')->ignore($this->loggedUser->id, 'user_id')
+            ]
+        ],$this->message());
+
+
+        if($validator->fails()){
+            return $this->simpleAnswer('error', $validator->errors()->first(), 400);
+        }
+        if($account->user_id != $this->loggedUser->id){
+            return $this->simpleAnswer('error', 'ID - diferente do usuário logado, alterada dados alheus não pode, contate a administração!', 400);
+        }
+
+        $register = Account::find($account->id);
+        if($register){
+            $register->person =$request->person;
+            $register->genre = genre::from($request->genre)->getValue();
+            $register->birthday = $request->birthday;
+            $register->notifications = notifications::from($request->notifications)->getValue();
+            $register->save();
+            return $this->longAnswer('success', 'Conta alterado com sucesso!',['conta'=> $register], 200 );
+        }
+        return $this->longAnswer('success', 'Sucesso dados preenchidos com sucesso!',['account'=>$register], 200);
+
     }
 
     /**

@@ -47,6 +47,7 @@ Route::middleware('auth:api')->group(function(){
         function($router){
             Route::post('/created', [AccountController::class, 'created']);
             Route::get('/{id}', [AccountController::class, 'show']);
+            Route::put('/{account}', [AccountController::class, 'updated']);
         }
     );
 

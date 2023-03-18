@@ -14,21 +14,21 @@ class Account extends Model
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'person',
-        'genre' => genre::class,
+        'genre',
         'avatar',
         'apartament_id',
         'user_id',
-        'notifications' => notifications::class,
+        'notifications',
         'birthday',
     ];
-
     /**
      * The attributes that should be cast.
      *
      * @var array<string, string>
      */
     protected $casts = [
-        'person'
+        'person',
+        'genre' => genre::class,
     ];
 
     public function user(): HasOne
