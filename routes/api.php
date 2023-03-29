@@ -33,6 +33,10 @@ Route::group(['prefix'=>'auth'], function(){
     Route::post('/register', [AuthController::class, 'register'])->name('register');
 });
 
+
+Route::get('product/', [ProductController::class, 'index']);
+
+
 Route::middleware('auth:api')->group(function(){
     Route::group(['prefix'=>'auth'],
         function($router){
@@ -81,7 +85,6 @@ Route::middleware('auth:api')->group(function(){
     );
     Route::group(['prefix' => 'product'],
         function($router){
-            Route::get('/', [ProductController::class, 'index']);
             Route::post('/created', [ProductController::class, 'created']);
             Route::get('/trashed', [ProductController::class, 'trashed']);
             Route::get('/{product}', [ProductController::class, 'getProduct']);

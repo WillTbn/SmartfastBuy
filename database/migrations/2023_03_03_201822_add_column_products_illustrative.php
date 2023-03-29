@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->string('image_one')->nullable()->default(env('APP_URL_C').'/public/defatul-illustrative.png')->after('value');
+            $table->string('image_one')->nullable()->default(env('APP_URL_C').'/defatul-illustrative.png')->after('value');
             $table->string('image_two')->nullable()->after('image_one');
             $table->string('image_three')->nullable()->after('image_two');
         });

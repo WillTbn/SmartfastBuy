@@ -50,7 +50,7 @@ trait ValidateRequest
         return response()->json([
             'status'=> $status,
             'message' => $msg,
-            'data'=> $long,
+            'response'=> $long,
         ], $statusApi, $this->headerResponse(), $this->unicodeJson());
     }
     public function message()
