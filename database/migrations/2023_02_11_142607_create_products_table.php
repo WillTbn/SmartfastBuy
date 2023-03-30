@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('barcode');
             $table->integer('quantity');
             $table->string('value');
+            // $table->float('value');
             $table->foreignId('account_id')->constrained();
             $table->softDeletes();
             $table->timestamps();

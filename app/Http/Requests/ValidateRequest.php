@@ -39,19 +39,14 @@ trait ValidateRequest
         $status,
         $msg,
         $long,
-        $statusApi
+        $statusApi = null
     )
     {
-        $arrayempty = [];
-        /*
-        foreach($long as $key => $value){
-            $arrayempty = $key
-        }*/
         return response()->json([
             'status'=> $status,
             'message' => $msg,
             'response'=> $long,
-        ], $statusApi, $this->headerResponse(), $this->unicodeJson());
+        ],($statusApi) ? $statusApi : 200, $this->headerResponse(), $this->unicodeJson());
     }
     public function message()
     {

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTransferObject\Product\ProductDTO;
 use App\Http\Requests\ValidateRequest;
 use App\Models\Product;
+use App\Services\ProductsServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -12,11 +14,13 @@ class ProductController extends Controller
     use ValidateRequest;
     private $loggedUser;
     private $permisions;
-    public function __construct()
+    private ProductsServices $productService;
+    public function __construct( ProductsServices $productService)
     {
         $this->middleware('auth:api')->except(['index']);
         $this->loggedUser = auth()->user();
         $this->permisions = (Array)["M", "V"];
+        $this->productService = $productService;
     }
     /**
      *  returns all records
@@ -38,21 +42,29 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function created(Request $request, Product $product)
+    public function created(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'=> 'required',
-            'barcode' => 'required|unique:products',
-            'quantity' => 'required',
-            'value' => 'required',
-            'category_id'=> 'required|numeric',
-            'type' => '',
-            'description' => ''
-        ],$this->message());
+        $dto = new ProductDTO(...$request->only([
+            'name',
+            'barcode',
+            'quantity',
+            'value',
+            'category_id',
+            'type',
+            'description'
+        ]));
 
-        if($validator->fails()){
-            return $this->simpleAnswer('error', $validator->errors()->first(), 400);
+        if(in_array($this->loggedUser->type, $this->permisions)){
+
+            $register = $this->productService->createProduct($dto);
+
+            if($register){
+                return $this->longAnswer('success', 'Sucesso produto adicionado!',['product'=>$register], 201);
+            }
+            return $this->simpleAnswer('error', 'Error ao adicionar item.', 500);
         }
+        return $this->simpleAnswer('error', 'Permissão negada!', 403);
+        /*
         if(in_array($this->loggedUser->type, $this->permisions)){
             $register = $product->create([
                 'name' =>$request->name,
@@ -70,6 +82,7 @@ class ProductController extends Controller
             return $this->simpleAnswer('error', 'Error ao adicionar item.', 500);
         }
         return $this->simpleAnswer('error', 'Permissão negada!', 403);
+        */
     }
     /**
      *  return one records
