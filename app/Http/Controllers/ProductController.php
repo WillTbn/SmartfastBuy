@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTransferObject\Product\ProductDTO;
+use App\Helpers\FileHelper;
 use App\Http\Requests\ValidateRequest;
 use App\Models\Product;
 use App\Services\ProductsServices;
@@ -42,7 +43,7 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function created(Request $request)
+    public function created(Request $request, FileHelper $file)
     {
         $dto = new ProductDTO(...$request->only([
             'name',
@@ -51,15 +52,24 @@ class ProductController extends Controller
             'value',
             'category_id',
             'type',
-            'description'
+            'description',
         ]));
+        $url = null;
+        if($request['image_one']){
+            $url = $file->createdImageProduct($dto->barcode, $request['image_one']);
+        }
 
         if(in_array($this->loggedUser->type, $this->permisions)){
 
-            $register = $this->productService->createProduct($dto);
+            $register = $this->productService->createProduct($dto, $url);
 
             if($register){
-                return $this->longAnswer('success', 'Sucesso produto adicionado!',['product'=>$register], 201);
+                return $this->longAnswer(
+                    'success',
+                    'Sucesso produto adicionado!',
+                    ['product'=>$register],
+                    201
+                );
             }
             return $this->simpleAnswer('error', 'Error ao adicionar item.', 500);
         }

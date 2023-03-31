@@ -7,7 +7,7 @@ use App\Models\Product;
 
 class ProductsServices
 {
-    public function createProduct(ProductDTO $product): Product
+    public function createProduct(ProductDTO $product, ?string $image = null): Product
     {
         $prod = new Product();
         $prod->name =$product->name;
@@ -18,6 +18,8 @@ class ProductsServices
         $prod->category_id = $product->category_id;
         $prod->type = $product->type;
         $prod->description = $product->description;
+        $prod->image_one = $image;
+        $prod->save();
 
         return $prod;
     }
