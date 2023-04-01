@@ -8,6 +8,7 @@ use App\Http\Requests\ValidateRequest;
 use App\Models\Product;
 use App\Services\ProductsServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -64,35 +65,11 @@ class ProductController extends Controller
             $register = $this->productService->createProduct($dto, $url);
 
             if($register){
-                return $this->longAnswer(
-                    'success',
-                    'Sucesso produto adicionado!',
-                    ['product'=>$register],
-                    201
-                );
+                return $this->longAnswer('success','Sucesso produto adicionado!',['product'=>$register],201);
             }
             return $this->simpleAnswer('error', 'Error ao adicionar item.', 500);
         }
         return $this->simpleAnswer('error', 'Permissão negada!', 403);
-        /*
-        if(in_array($this->loggedUser->type, $this->permisions)){
-            $register = $product->create([
-                'name' =>$request->name,
-                'barcode' => $request->barcode,
-                'quantity' => $request->quantity,
-                'value' => $request->value,
-                'account_id' => $this->loggedUser->id,
-                'category_id' => $request->category_id,
-                'type' => $request->type,
-                'description' => $request->description
-            ]);
-            if($register){
-                return $this->longAnswer('success', 'Sucesso produto adicionado!',['product'=>$register], 200);
-            }
-            return $this->simpleAnswer('error', 'Error ao adicionar item.', 500);
-        }
-        return $this->simpleAnswer('error', 'Permissão negada!', 403);
-        */
     }
     /**
      *  return one records
@@ -114,38 +91,37 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Product $product, FileHelper $file)
     {
-        $validator = Validator::make($request->all(), [
-            'name'=> 'required',
-            'barcode' => 'required|numeric',
-            'quantity' => 'required',
-            'value' => 'required',
-            'category_id'=> 'required|numeric',
-            'type' => '',
-            'description' => ''
-        ], $this->message());
-        if($validator->fails()){
-            return $this->simpleAnswer('error', $validator->errors()->first(), 400);
-        }
-        $barcode = Product::where('id','!=', $product->id)->where('barcode', $request->barcode)->first();
-        if($barcode){
-            return $this->simpleAnswer('error', 'Barra de código já está sendo utilizada!', 205);
-        }
+        $request['id'] = $product->id;
+        $dto = new ProductDTO(...$request->only([
+            'name',
+            'barcode',
+            'quantity',
+            'value',
+            'category_id',
+            'type',
+            'description',
+            'id'
+        ]));
+
         if(in_array($this->loggedUser->type, $this->permisions)){
 
-            $register = Product::with(['category', 'account'])->find($product->id);
-            if($register){
-                $register->name =$request->name;
-                $register->barcode = $request->barcode;
-                $register->quantity = $request->quantity;
-                $register->value = $request->value;
-                $register->account_id = $this->loggedUser->id;
-                $register->category_id = $request->category_id;
-                $register->type = $request->type;
-                $register->description = $request->description;
-                $register->save();
-                return $this->longAnswer('success', 'Produto alterado com sucesso!',['produtos'=> $register], 200 );
+            if($product){
+                $url = null;
+                if($request['image_one']){
+                    if($product->image_one){
+                        Storage::disk('public')->delete($product->image_one);
+                    }
+                    $url = $file->createdImageProduct($dto->barcode, $request['image_one']);
+                }
+                $register = $this->productService->updateProduct($dto, $product->id, $url);
+
+                if($register){
+
+                    return $this->longAnswer('success', 'Produto alterado com sucesso!',['produtos'=> $register], 200 );
+                }
+                return $this->simpleAnswer('error', 'Erro inesperado!', 500);
             }
 
             return $this->simpleAnswer('error', 'Produto não existente!', 404);

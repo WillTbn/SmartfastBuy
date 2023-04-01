@@ -5,10 +5,12 @@ namespace App\DataTransferObject\Product;
 use App\DataTransferObject\AbstractDTO;
 use App\DataTransferObject\InterfaceDTO;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 
 class ProductDTO extends AbstractDTO implements InterfaceDTO
 {
     public readonly int $account_id;
+    public readonly ?int $id;
     public function __construct(
         public readonly string $name,
         public readonly string $barcode,
@@ -18,9 +20,12 @@ class ProductDTO extends AbstractDTO implements InterfaceDTO
         public readonly int $category_id,
         public readonly ?string $type = null,
         public readonly ?string $description = null,
+        ?int $id = null,
     )
     {
         $this->account_id = auth()->user()->id;
+        $this->id = $id;
+        //dd( $this->id );
         $this->validate();
 
     }
@@ -28,13 +33,15 @@ class ProductDTO extends AbstractDTO implements InterfaceDTO
     {
         return [
             'name' => 'required|string|min:10|max:60',
-            'barcode' => 'required|unique:products',
+            'barcode' => ['required',
+                Rule::unique('products')->ignore($this->id)],
             'quantity' => 'required',
             'value' => 'required',
             'category_id'=> 'required|numeric',
             'type' => '',
             'description' => '',
-            'account_id'=>''
+            'account_id'=>'',
+
         ];
     }
     public function messages():array
@@ -48,7 +55,7 @@ class ProductDTO extends AbstractDTO implements InterfaceDTO
             'code.min' => 'O código de verificação tem no minimo :min caracters',
             'max' => 'Limite máximo de caracteres ultrapassada no campo :attribute.',
             'min'=> 'Minimo de caracteres não atigindo, no campo :attribute.',
-            'barcode.unique' => 'Código de barra já existente em nosso banco, atualize a existente.'
+            'barcode.unique' => 'Código de barra já existente em nosso banco, atualize o existente.'
         ];
     }
     public function validator():Validator

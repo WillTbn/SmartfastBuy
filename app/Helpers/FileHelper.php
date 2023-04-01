@@ -2,24 +2,11 @@
 
 namespace App\Helpers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile as File;
 
 class FileHelper
 {
 
-    /**
-     * @param string $type string indicara qual tipo(para video ou image) de tratamentos iremos fazer
-     * @param string $url string diretorio
-     * $identifier $id do usuario
-     */
-    public function removeFile(string $url, int $identifier)
-    {
-        $str = explode($identifier, $url);
-        $nameFile =  end($str);
-        Storage::disk('public')->delete($identifier.'/'.$nameFile);
-    }
     /**
      * $type string indica qual tratamento(array) retornara
      */

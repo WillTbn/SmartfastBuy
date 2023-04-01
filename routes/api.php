@@ -88,7 +88,7 @@ Route::middleware('auth:api')->group(function(){
             Route::post('/created', [ProductController::class, 'created']);
             Route::get('/trashed', [ProductController::class, 'trashed']);
             Route::get('/{product}', [ProductController::class, 'getProduct']);
-            Route::put('/{product}', [ProductController::class, 'update']);
+            Route::post('/{product}', [ProductController::class, 'update']);
             Route::delete('/{product}', [ProductController::class, 'destroy']);
             Route::delete('/forcedelete/{product}', [ProductController::class, 'deleteForce']);
             Route::get('/{product}/restore', [ProductController::class, 'restore']);
