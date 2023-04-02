@@ -18,6 +18,7 @@ class ProductsServices
         $prod->category_id = $product->category_id;
         $prod->type = $product->type;
         $prod->description = $product->description;
+        $prod->condominia_id = $product->condominia_id;
         if($image){
             $prod->image_one = $image;
         }
@@ -36,6 +37,7 @@ class ProductsServices
         $prod->category_id = $product->category_id;
         $prod->type = $product->type;
         $prod->description = $product->description;
+        $prod->condominia_id = $product->condominia_id;
         if($image){
             $prod->image_one = $image;
         }

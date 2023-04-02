@@ -54,6 +54,7 @@ class ProductController extends Controller
             'category_id',
             'type',
             'description',
+            'condominia_id'
         ]));
         $url = null;
         if($request['image_one']){
@@ -94,6 +95,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product, FileHelper $file)
     {
         $request['id'] = $product->id;
+
         $dto = new ProductDTO(...$request->only([
             'name',
             'barcode',
@@ -102,7 +104,8 @@ class ProductController extends Controller
             'category_id',
             'type',
             'description',
-            'id'
+            'id',
+            'condominia_id'
         ]));
 
         if(in_array($this->loggedUser->type, $this->permisions)){

@@ -11,6 +11,7 @@ class ProductDTO extends AbstractDTO implements InterfaceDTO
 {
     public readonly int $account_id;
     public readonly ?int $id;
+    public readonly ?int $condominia_id;
     public function __construct(
         public readonly string $name,
         public readonly string $barcode,
@@ -21,11 +22,13 @@ class ProductDTO extends AbstractDTO implements InterfaceDTO
         public readonly ?string $type = null,
         public readonly ?string $description = null,
         ?int $id = null,
+        ?int $condominia_id = null,
     )
     {
         $this->account_id = auth()->user()->id;
         $this->id = $id;
-        //dd( $this->id );
+        $this->condominia_id = $condominia_id;
+
         $this->validate();
 
     }
@@ -34,14 +37,15 @@ class ProductDTO extends AbstractDTO implements InterfaceDTO
         return [
             'name' => 'required|string|min:10|max:60',
             'barcode' => ['required',
-                Rule::unique('products')->ignore($this->id)],
+                Rule::unique('products')->ignore($this->id)
+            ],
             'quantity' => 'required',
             'value' => 'required',
             'category_id'=> 'required|numeric',
             'type' => '',
             'description' => '',
             'account_id'=>'',
-
+            'condominia_id'=>'required',
         ];
     }
     public function messages():array
