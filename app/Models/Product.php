@@ -27,4 +27,8 @@ class Product extends Model
     {
         return $this->hasMany(Account::class, 'user_id', 'account_id');
     }
+    public function condominia(): HasOne
+    {
+        return $this->hasOne(Condominia::class, 'id', 'condominia_id');
+    }
 }

@@ -8,8 +8,10 @@ use App\Http\Requests\ValidateRequest;
 use App\Models\Product;
 use App\Services\ProductsServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -31,7 +33,10 @@ class ProductController extends Controller
      */
     public function index(Product $product)
     {
-        $list = $product->with(['category'])->get();
+
+        $list = Cache::remember('products', 120, function(){
+            return Product::with(['category', 'condominia'])->get();
+        });
 
         if($list)
         {
