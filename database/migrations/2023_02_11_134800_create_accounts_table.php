@@ -15,10 +15,13 @@ return new class extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('person');
+            $table->string('telephone')->nullable();
+            $table->string('phone')->nullable();
             $table->char('genre', 1);
             $table->string('birthday');
-            $table->string('avatar')->nullable()->default(env('APP_URL_C').'/public/defatul-avatar.png');
+            $table->string('avatar')->nullable()->default('default-avatar.png');
             $table->char('notifications', 1);
             $table->foreignId('apartment_id')->nullable()->constrained();
             $table->foreignId('user_id')->constrained();

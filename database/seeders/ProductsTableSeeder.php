@@ -23,8 +23,9 @@ class ProductsTableSeeder extends Seeder
             'account_id'=> 1,
             'description' => 'Pilsen Puro malte',
             'category_id'=>1,
-            'type'=> 'PuroMalte'
-            //5661722003509 885376748848
+            'type'=> 'PuroMalte',
+            //5661722003509 885376748848,
+            'condominia_id'=> 1
         ]);
         DB::table('products')->insert([
             'name' => 'Brahma 473ml',
@@ -34,7 +35,8 @@ class ProductsTableSeeder extends Seeder
             'description' => '',
             'account_id'=> 1,
             'category_id'=>1,
-            'type'=> 'Pilsen'
+            'type'=> 'Pilsen',
+            'condominia_id'=> 1
         ]);
         DB::table('products')->insert([
             'name' => 'Antartica 473ml',
@@ -44,7 +46,8 @@ class ProductsTableSeeder extends Seeder
             'description' => '',
             'account_id'=> 1,
             'category_id'=>1,
-            'type'=> 'Pilsen'
+            'type'=> 'Pilsen',
+            'condominia_id'=> 1
         ]);
 
         DB::table('products')->insert([
@@ -55,7 +58,8 @@ class ProductsTableSeeder extends Seeder
             'description' => 'Nacionalidade: Chilena Classificação: Seco Uva: Cabernet Sauvignon',
             'account_id'=> 1,
             'category_id'=>3,
-            'type'=> 'Tinto'
+            'type'=> 'Tinto',
+            'condominia_id'=> 1
         ]);
         DB::table('products')->insert([
             'name' => 'Vodka Absolut Original 1L',
@@ -65,7 +69,8 @@ class ProductsTableSeeder extends Seeder
             'description' => '',
             'account_id'=> 1,
             'category_id'=>2,
-            'type'=> 'Vodka'
+            'type'=> 'Vodka',
+            'condominia_id'=> 1
         ]);
     }
 }

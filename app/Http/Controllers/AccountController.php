@@ -6,6 +6,7 @@ use App\Enums\genre;
 use App\Enums\notifications;
 use App\Http\Requests\ValidateRequest;
 use App\Models\Account;
+use App\Models\Condominia;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -36,11 +37,13 @@ class AccountController extends Controller
     public function created(Request $request, Account $account)
     {
         $validator = Validator::make($request->all(), [
+            'name' =>  'required|max:40',
             'person' => 'required|max:11|unique:accounts',
             'genre' => 'required|max:1',
             'birthday' => 'required|date',
             'notifications' => 'required|max:1',
             'user_id' => 'required|unique:accounts',
+            'apartment_id' => 'exists:apartments'
         ],$this->message());
 
         if($validator->fails()){
@@ -51,6 +54,7 @@ class AccountController extends Controller
         }
 
         $register = $account->create([
+            'name' => $request->name,
             'person' => $request->person,
             'genre' => genre::from($request->genre)->getValue(),
             'birthday' => $request->birthday,
@@ -79,11 +83,13 @@ class AccountController extends Controller
      */
     public function show(Account $account)
     {
-        $user = $account->with(['user'])->first();
+        $user = $account->where('user_id', $this->loggedUser->id)->with(['user', 'apartment','condominia'])->first();
+        // $user = $account->where('user_id', $this->loggedUser->id)->with(['user','apartment'])->first();
+        // $user['codominia'] = Condominia::where('id', $user->apartment->condominia_id)->first();
         if($user){
             return $this->longAnswer('success', 'Usuário encontrado com sucesso!',['account'=>$user], 200);
         }
-        return $this->simpleAnswer('error', 'Usuário não encontrado!', 400);
+        return $this->simpleAnswer('error', 'Usuário não encontrado!'. $this->loggedUser->id, 400);
     }
 
     /**
@@ -96,6 +102,7 @@ class AccountController extends Controller
     public function updated(Request $request, Account $account)
     {
         $validator = Validator::make($request->all(), [
+            'name' =>  'required|max:40',
             'genre' => 'required|max:1',
             'birthday' => 'required|date',
             'notifications' => 'required|max:1',
@@ -115,6 +122,7 @@ class AccountController extends Controller
 
         $register = Account::find($account->id);
         if($register){
+            $register->name =$request->name;
             $register->person =$request->person;
             $register->genre = genre::from($request->genre)->getValue();
             $register->birthday = $request->birthday;

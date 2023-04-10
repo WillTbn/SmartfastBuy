@@ -18,13 +18,13 @@ return new class extends Migration
         $password = bcrypt(env('ADMIN_PASSWORD'));
         $person = "15222222224";
         DB::table('users')->insert([
-            'name'=>'administrador',
             'email'=>$email,
             'password'=>$password,
             'type' => 'M'
         ]);
         DB::table('accounts')->insert([
             "person"=> $person,
+            'name'=>'administrador',
             "genre"=> "O",
             "birthday"=> "1990-08-03",
             "notifications"=> "A",

@@ -48,7 +48,6 @@ class UserController extends Controller
         if($this->loggedUser->type != null){
 
             $validator = Validator::make($request->all(),[
-                'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
                 'password' => 'required|string|min:6',
                 'password_confirm' =>'required|same:password',
@@ -60,7 +59,6 @@ class UserController extends Controller
             }
             //return $request;
             $user = $use->create([
-                'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'type' => $request->type,
@@ -84,7 +82,6 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'id' => 'required|numeric',
-            'name' => 'required|string|max:255',
             'email' => 'required|string|email',
             'password' => 'required|string|min:6',
             'password_confirm' =>'required|same:password',
