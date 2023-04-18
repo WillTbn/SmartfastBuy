@@ -22,6 +22,8 @@ class Account extends Model
         'user_id',
         'notifications',
         'birthday',
+        'phone',
+        'telephone'
     ];
     /**
      * The attributes that should be cast.

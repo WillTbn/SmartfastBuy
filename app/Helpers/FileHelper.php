@@ -63,4 +63,19 @@ class FileHelper
         }
 
     }
+    public function imageAvatar(
+        string $avatar,
+        File $file_one,
+        //?File $file_two = null, AINDA AVALIANDO NECESSIDADE
+        //?File $file_tree = null AINDA AVALIANDO NECESSIDADE
+    ):string
+    {
+
+        if(in_array($file_one->getClientMimeType(), $this->AllowedType('image'))){
+            $url = $file_one->store($avatar, 'public');
+            return $url;
+        }
+        return false;
+
+    }
 }

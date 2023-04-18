@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CondominiaController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/ping', function(){
     return ['pong' =>true];
 });
+
+Route::get('/test-redis', function(){
+    //Redis::set('chave', 'valor');
+    $valor = Redis::get('products');
+    return $valor;
+});
+
 Route::get('/401', [AuthController::class, 'unauthorized'])->name('unauthorized');
 
 Route::group(['prefix'=>'auth'], function(){
@@ -51,7 +59,7 @@ Route::middleware('auth:api')->group(function(){
         function($router){
             Route::post('/created', [AccountController::class, 'created']);
             Route::get('/{id}', [AccountController::class, 'show']);
-            Route::put('/{account}', [AccountController::class, 'updated']);
+            Route::post('/{account}', [AccountController::class, 'updated']);
         }
     );
 

@@ -22,7 +22,7 @@ class ProductsServices
         if($image){
             $prod->image_one = $image;
         }
-        $prod->save();
+        $prod->saveOrFail();
 
         return $prod;
     }
@@ -41,7 +41,7 @@ class ProductsServices
         if($image){
             $prod->image_one = $image;
         }
-        $prod->save();
+        $prod->saveOrFail();
 
         return $prod;
     }

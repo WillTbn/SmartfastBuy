@@ -9,8 +9,6 @@ use App\Models\Product;
 use App\Services\ProductsServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -34,8 +32,9 @@ class ProductController extends Controller
     public function index(Product $product)
     {
 
-        $list = Cache::remember('products', 120, function(){
-            return Product::with(['category', 'condominia'])->get();
+        $list = Cache::remember('products', 3600, function(){
+            $product =  Product::with(['category', 'condominia'])->get();
+            return $product;
         });
 
         if($list)

@@ -2,24 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTransferObject\Account\AccountDTO;
 use App\Enums\genre;
 use App\Enums\notifications;
+use App\Helpers\FileHelper;
 use App\Http\Requests\ValidateRequest;
 use App\Models\Account;
-use App\Models\Condominia;
-use App\Models\User;
+use App\Services\AccountServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
+
 
 class AccountController extends Controller
 {
     use ValidateRequest;
     private $loggedUser;
-    public function __construct()
+    private $permissions;
+    private AccountServices $accountService;
+    public function __construct( AccountServices $accountService)
     {
         $this->middleware('auth:api');
         $this->loggedUser = auth()->user();
+        $this->permissions = (array)["M", "V"];
+        $this->accountService = $accountService;
     }
     /**
      *
@@ -34,7 +40,7 @@ class AccountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function created(Request $request, Account $account)
+    public function created(Request $request, Account $account, FileHelper $file)
     {
         $validator = Validator::make($request->all(), [
             'name' =>  'required|max:40',
@@ -83,7 +89,7 @@ class AccountController extends Controller
      */
     public function show(Account $account)
     {
-        $user = $account->where('user_id', $this->loggedUser->id)->with(['user', 'apartment','condominia'])->first();
+        $user = $account->where('user_id', $this->loggedUser->id)->with(['apartment','condominia'])->first();
         // $user = $account->where('user_id', $this->loggedUser->id)->with(['user','apartment'])->first();
         // $user['codominia'] = Condominia::where('id', $user->apartment->condominia_id)->first();
         if($user){
@@ -99,38 +105,47 @@ class AccountController extends Controller
      * @param  \App\Models\Account  $account
      * @return \Illuminate\Http\Response
      */
-    public function updated(Request $request, Account $account)
+    public function updated(Request $request, Account $account, FileHelper $file)
     {
-        $validator = Validator::make($request->all(), [
-            'name' =>  'required|max:40',
-            'genre' => 'required|max:1',
-            'birthday' => 'required|date',
-            'notifications' => 'required|max:1',
-            'person' => [
-                'required',
-                Rule::unique('accounts')->ignore($this->loggedUser->id, 'user_id')
-            ]
-        ],$this->message());
 
+        $dto = new AccountDTO(...$request->only([
+            'name',
+            'genre',
+            'birthday',
+            'notifications',
+            'person',
+            'telephone',
+            'phone',
+            'apartment_id'
+        ]));
 
-        if($validator->fails()){
-            return $this->simpleAnswer('error', $validator->errors()->first(), 400);
+        if(!$account){
+            return $this->simpleAnswer('error', 'Conta não identificada.', 404);
         }
-        if($account->user_id != $this->loggedUser->id){
+
+        if(!in_array($this->loggedUser->type, $this->permissions) && $this->loggedUser->id != $account->user_id){
             return $this->simpleAnswer('error', 'ID - diferente do usuário logado, alterada dados alheus não pode, contate a administração!', 400);
         }
 
-        $register = Account::find($account->id);
-        if($register){
-            $register->name =$request->name;
-            $register->person =$request->person;
-            $register->genre = genre::from($request->genre)->getValue();
-            $register->birthday = $request->birthday;
-            $register->notifications = notifications::from($request->notifications)->getValue();
-            $register->save();
-            return $this->longAnswer('success', 'Conta alterado com sucesso!',['conta'=> $register], 200 );
+        $url = null;
+        if($request['avatar']){
+            if($account->avatar){
+                Storage::disk('public')->delete($account->avatar);
+            }
+            $url = $file->imageAvatar($dto->user_id, $request['avatar']);
+            if(!$url){
+                return $this->simpleAnswer('error', 'Imagem não esta no formato aceitor, formatos aceitos JPG, PNG, JPEG', 400);
+            }
         }
-        return $this->longAnswer('success', 'Sucesso dados preenchidos com sucesso!',['account'=>$register], 200);
+
+
+        $registerUpdate = $this->accountService->updateAccount($dto, $account->user_id, $url);
+
+        if($registerUpdate){
+            return $this->longAnswer('success', 'Dados atualizados!', ['account' => $registerUpdate],200);
+        }
+
+        return $this->simpleAnswer('error', 'OPS!! erro inexperado, tente novamente mais tarde!', 500);
 
     }
 
