@@ -5,6 +5,7 @@ use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CondominiaController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Redis;
@@ -44,6 +45,12 @@ Route::group(['prefix'=>'auth'], function(){
 
 Route::get('product/', [ProductController::class, 'index']);
 
+Route::group(['prefix' => 'password'],
+    function($router){
+        Route::post('/forgot', [PasswordController::class, 'forgotPassword']);
+        Route::post('/reset', [PasswordController::class, 'reset']);
+    }
+);
 
 Route::middleware('auth:api')->group(function(){
     Route::group(['prefix'=>'auth'],
