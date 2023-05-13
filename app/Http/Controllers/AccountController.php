@@ -10,6 +10,7 @@ use App\Http\Requests\ValidateRequest;
 use App\Models\Account;
 use App\Services\AccountServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,6 +27,26 @@ class AccountController extends Controller
         $this->loggedUser = auth()->user();
         $this->permissions = (array)["M", "V"];
         $this->accountService = $accountService;
+    }
+    /**
+     * Pegar all com joi
+     */
+    public function getAll(){
+        // $users = DB::table('users')
+        //     ->join('posts', 'users.id', '=', 'posts.user_id')
+        //     ->select('users.name', 'posts.title')
+        //     ->get();
+
+        $users = DB::table('users')
+            ->join('accounts', 'users.id', '=', 'accounts.user_id')
+            ->select(
+                'users.email',
+                'accounts.apartment_id',
+                'accounts.avatar'
+            )
+        ->get();
+
+        return $this->longAnswer('success', 'Sucesso dados preenchidos com sucesso!',['account'=>$users], 200);
     }
     /**
      *

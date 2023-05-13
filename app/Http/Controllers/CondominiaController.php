@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ValidateRequest;
 use App\Models\Condominia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 class CondominiaController extends Controller
 {
@@ -17,6 +18,23 @@ class CondominiaController extends Controller
         $this->loggedUser = auth()->user();
         $this->permisions = (Array)["M", "V"];
     }
+    public function getAll(){
+        if(in_array($this->loggedUser->type, $this->permisions)){
+            // $condominia = DB::table('condominias')
+            //     ->join('apartments', 'condominias.id', '=', 'apartments.condominia_id')
+            //     ->select(
+            //         'condominias.name',
+            //         'condominias.id',
+            //         'apartments.block',
+            //         'apartments.number'
+            //     )
+            // ->get();
+            $condominia = DB::table('condominias')->get();
+            return $this->longAnswer('success', 'Condominios achados!',['condominio'=>$condominia], 200);
+
+        }
+        return $this->simpleAnswer('error', 'Permissão negada.', 4000);
+    }
 
     /**
      *  returns all records
@@ -25,7 +43,8 @@ class CondominiaController extends Controller
     public function index(Condominia $condominia)
     {
         if(in_array($this->loggedUser->type, $this->permisions)){
-            return $condominia->with(['apartments'])->get();
+            return $this->longAnswer('success', 'Condominios achados!',['condominio'=>$condominia->with(['apartments'])->get()], 200);
+
         }
         return $this->simpleAnswer('error', 'Permissão negada.', 4000);
     }
@@ -52,7 +71,7 @@ class CondominiaController extends Controller
                 'name' =>$request->name
             ]);
             if($register){
-                return $this->longAnswer('success', 'Condominio adicionado!',['condominio'=>$register], 200);
+                return $this->longAnswer('success', 'Condominio adicionado!',['condominio'=>$condominia->where('id',$register->id)->with(['apartments'])->first()], 200);
             }
             return $this->simpleAnswer('error', 'Error ao adicionar condominio.', 500);
         }

@@ -5,6 +5,7 @@ use App\Http\Controllers\ApartmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CondominiaController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -62,17 +63,28 @@ Route::middleware('auth:api')->group(function(){
 
         }
     );
+    // Route::post('invite/created', [InvitationController::class, 'sendInvite']);
+    Route::group(['prefix' => 'invite'],
+        function(){
+            Route::get('/', [InvitationController::class, 'getAll'])->name('getAll');
+            Route::post('/created', [InvitationController::class, 'sendInvite'])->name('created');
+            Route::get('/{invitation}', [InvitationController::class, 'get'])->name('get');
+            Route::put('/{invitation}', [InvitationController::class, 'updateInvitation'])->name('updateInvitation');
+        }
+    );
     Route::group(['prefix'=>'account'],
         function($router){
             Route::post('/created', [AccountController::class, 'created']);
+            Route::get('/get', [AccountController::class, 'getAll']);
             Route::get('/{id}', [AccountController::class, 'show']);
-            Route::post('/{account}', [AccountController::class, 'updated']);
+            Route::put('/{account}', [AccountController::class, 'updated']);
         }
     );
 
     Route::group(['prefix' => 'condominia'],
         function($router){
             Route::get('/', [CondominiaController::class, 'index']);
+            Route::get('/getAll', [CondominiaController::class, 'getAll']);
             Route::post('/created', [CondominiaController::class, 'created']);
             Route::get('/{condominia}', [CondominiaController::class, 'getCondominia']);
             Route::put('/{condominia}', [CondominiaController::class, 'update']);

@@ -29,7 +29,7 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $user
      * @return \Illuminate\Http\Response
      */
-    public function index(Product $product)
+    public function index()
     {
 
         $list = Cache::remember('products', 3600, function(){
