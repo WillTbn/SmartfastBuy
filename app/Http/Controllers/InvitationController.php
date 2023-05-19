@@ -13,6 +13,10 @@ use App\Models\Invitation;
 use App\Services\InvitationServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Throwable;
 
 class InvitationController extends Controller
 {
@@ -35,15 +39,26 @@ class InvitationController extends Controller
         return $this->longAnswer('success', 'Segue dados encontrados!', ['invite'=>$inv], 200);
 
     }
-    public function get(Invitation $invitation)
+    public function get(Invitation $invitation, Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'token' => [
+                'required',
+                Rule::exists('invitations')->where('id', $invitation->id)
+            ]
+        ], $this->message());
+
+        if($validator->fails()){
+            return $this->simpleAnswer('error', $validator->errors()->first(), 402);
+        }
+
         if($invitation){
 
             $invi = $this->invServices->getData($invitation->id);
             return $this->longAnswer('success', 'Segue dados encontrados!', ['invite'=>$invi], 200);
         }
 
-        return $this->simpleAnswer('error', 'Não o convite passado!', 401);
+        return $this->simpleAnswer('error', 'Não há convite!', 401);
 
 
     }

@@ -12,6 +12,7 @@ class InvitationDTO extends AbstractDTO implements InterfaceDTO
 {
     public readonly string $token;
     public readonly string $user_id;
+    // public string $sendData;
     public function __construct(
         public readonly string $email,
         public readonly string $name,
@@ -20,6 +21,7 @@ class InvitationDTO extends AbstractDTO implements InterfaceDTO
     {
         $this->token = Str::random(40);
         $this->user_id  = auth()->user()->id;
+        // $this->sendData = implode(",", $data);
 
         $this->validate();
     }

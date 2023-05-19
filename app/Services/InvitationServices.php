@@ -29,15 +29,15 @@ class InvitationServices
             ->join('users', 'users.id', '=', 'invitations.user_id')
             ->join('accounts', 'users.id', '=','accounts.user_id')
             ->select(
-            'invitations.email',
-            'invitations.name',
-            'invitations.data',
-            'invitations.updated_at as date_send',
-            'users.email as create_email',
-            'accounts.avatar as create_avatar'
+                'invitations.email',
+                'invitations.name',
+                'invitations.data',
+                'invitations.updated_at as date_send',
+                'users.email as create_email',
+                'accounts.avatar as create_avatar'
             )
             ->where('invitations.id', '=', $id)
-        ->get();
+        ->first();
 
 
         return $response;
@@ -50,6 +50,7 @@ class InvitationServices
             ->select(
                 'invitations.email',
                 'invitations.name',
+                'invitations.created_at',
                 'users.email as create_email',
                 'accounts.avatar as create_avatar'
             )
