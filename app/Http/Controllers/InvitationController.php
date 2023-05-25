@@ -39,22 +39,22 @@ class InvitationController extends Controller
         return $this->longAnswer('success', 'Segue dados encontrados!', ['invite'=>$inv], 200);
 
     }
-    public function get(Invitation $invitation, Request $request)
+    public function get($invitation)
     {
-        $validator = Validator::make($request->all(), [
-            'token' => [
-                'required',
-                Rule::exists('invitations')->where('id', $invitation->id)
-            ]
-        ], $this->message());
+        // $validator = Validator::make($request->all(), [
+        //     'token' => [
+        //         'required',
+        //         Rule::exists('invitations')->where('id', $invitation->id)
+        //     ]
+        // ], $this->message());
 
-        if($validator->fails()){
-            return $this->simpleAnswer('error', $validator->errors()->first(), 402);
-        }
+        // if($validator->fails()){
+        //     return $this->simpleAnswer('error', $validator->errors()->first(), 402);
+        // }
+        $iv = Invitation::where('token', $invitation)->first();
+        if($iv){
 
-        if($invitation){
-
-            $invi = $this->invServices->getData($invitation->id);
+            $invi = $this->invServices->getData($iv->id);
             return $this->longAnswer('success', 'Segue dados encontrados!', ['invite'=>$invi], 200);
         }
 

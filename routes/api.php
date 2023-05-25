@@ -45,6 +45,7 @@ Route::group(['prefix'=>'auth'], function(){
 
 
 Route::get('product/', [ProductController::class, 'index']);
+Route::get('/invite/{invitation}', [InvitationController::class, 'get'])->name('get');
 
 Route::group(['prefix' => 'password'],
     function($router){
@@ -68,7 +69,7 @@ Route::middleware('auth:api')->group(function(){
         function(){
             Route::get('/', [InvitationController::class, 'getAll'])->name('getAll');
             Route::post('/created', [InvitationController::class, 'sendInvite'])->name('created');
-            Route::get('/{invitation}', [InvitationController::class, 'get'])->name('get');
+
             Route::put('/{invitation}', [InvitationController::class, 'updateInvitation'])->name('updateInvitation');
         }
     );

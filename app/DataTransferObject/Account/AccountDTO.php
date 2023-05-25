@@ -19,7 +19,8 @@ class AccountDTO extends AbstractDTO implements InterfaceDTO
         public readonly string $notifications,
         public readonly ?string $phone,
         public readonly ?string $telephone,
-        public readonly ?int $apartment_id,
+        public readonly ?string $apartment_id,
+        public readonly ?int $invitation_id,
     )
     {
         $this->user_id = auth()->user()->id;
@@ -35,12 +36,12 @@ class AccountDTO extends AbstractDTO implements InterfaceDTO
             'birthday' => 'required|date',
             'notifications' => 'required|max:1',
             'person' => [
-                'required','min','max:11',
+                'required','max:11',
                 Rule::unique('accounts')->ignore(auth()->user()->id, 'user_id')
             ],
             'telephone' => 'min:10|max:11',
             'phone'=>'',
-            'apartment_id' => 'exists:apartments'
+            'apartment_id' => 'exists:apartments,id',
         ];
     }
     public function messages():array

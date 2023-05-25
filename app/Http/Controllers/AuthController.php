@@ -57,15 +57,17 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
             'password_confirm' =>'required|same:password',
+            'type'=> 'required|max:1'
         ],
         $this->message());
         if($validator->fails()){
            return $this->simpleAnswer('error', $validator->errors()->first(), 400);
         }
-        //return $request;
+
         $user = $use->create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'type' => $request->type
         ]);
 
         $token = Auth::login($user, true);

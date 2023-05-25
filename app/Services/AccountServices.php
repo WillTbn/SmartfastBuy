@@ -26,4 +26,21 @@ class AccountServices
         return $acnt;
 
     }
+    public function createdAccount(AccountDTO $account)
+    {
+        $ac = new Account();
+        $ac->name = $account->name;
+        $ac->user_id = $account->user_id;
+        $ac->person = $account->person;
+        $ac->genre = $account->genre;
+        $ac->birthday = $account->birthday;
+        $ac->notifications = $account->notifications;
+        $ac->telephone = $account->telephone;
+        $ac->phone = $account->phone;
+        $ac->apartment_id = $account->apartment_id;
+        $ac->saveOrFail();
+
+
+        return $ac;
+    }
 }

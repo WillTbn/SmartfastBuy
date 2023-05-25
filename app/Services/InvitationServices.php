@@ -28,7 +28,9 @@ class InvitationServices
         DB::table('invitations')
             ->join('users', 'users.id', '=', 'invitations.user_id')
             ->join('accounts', 'users.id', '=','accounts.user_id')
+            // ->join('apartments', 'id', '=', 'invitations.data.apartment_id')
             ->select(
+                'invitations.id',
                 'invitations.email',
                 'invitations.name',
                 'invitations.data',
@@ -56,5 +58,9 @@ class InvitationServices
             )
         ->get();
         return $response;
+    }
+    public function delete(int $id)
+    {
+        Invitation::destroy($id);
     }
 }

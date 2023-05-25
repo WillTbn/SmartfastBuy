@@ -9,6 +9,7 @@ use App\Helpers\FileHelper;
 use App\Http\Requests\ValidateRequest;
 use App\Models\Account;
 use App\Services\AccountServices;
+use App\Services\InvitationServices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -21,12 +22,17 @@ class AccountController extends Controller
     private $loggedUser;
     private $permissions;
     private AccountServices $accountService;
-    public function __construct( AccountServices $accountService)
+    private InvitationServices $invitationService;
+    public function __construct(
+        AccountServices $accountService,
+        InvitationServices $invitationService
+    )
     {
         $this->middleware('auth:api');
         $this->loggedUser = auth()->user();
         $this->permissions = (array)["M", "V"];
         $this->accountService = $accountService;
+        $this->invitationService = $invitationService;
     }
     /**
      * Pegar all com joi
@@ -61,34 +67,57 @@ class AccountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function created(Request $request, Account $account, FileHelper $file)
+    public function created(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' =>  'required|max:40',
-            'person' => 'required|max:11|unique:accounts',
-            'genre' => 'required|max:1',
-            'birthday' => 'required|date',
-            'notifications' => 'required|max:1',
-            'user_id' => 'required|unique:accounts',
-            'apartment_id' => 'exists:apartments'
-        ],$this->message());
+        $dto = new AccountDTO(...$request->only([
+            'name',
+            'genre',
+            'birthday',
+            'notifications',
+            'person',
+            'telephone',
+            'phone',
+            'apartment_id',
+            'invitation_id'
+        ]));
+        // if($dto->user_id != $this->loggedUser->id){
+        //     return $this->simpleAnswer('error', 'ID - diferente do usuário logado, alterada dados alheus não pode, contate a administração!', 400);
+        // }
 
-        if($validator->fails()){
-            return $this->simpleAnswer('error', $validator->errors()->first(), 400);
+        $register = $this->accountService->createdAccount($dto);
+        if($register){
+            $this->invitationService->delete($dto->invitation_id);
+            return $this->longAnswer('success', 'Sucesso dados preenchidos com sucesso!',['account'=>$register], 200);
         }
-        if($request->user_id != $this->loggedUser->id){
-            return $this->simpleAnswer('error', 'ID - diferente do usuário logado, alterada dados alheus não pode, contate a administração!', 400);
-        }
+        return $this->simpleAnswer('error', 'erro na criação, entre contato com suporte!', 400);
 
-        $register = $account->create([
-            'name' => $request->name,
-            'person' => $request->person,
-            'genre' => genre::from($request->genre)->getValue(),
-            'birthday' => $request->birthday,
-            'notifications' => notifications::from($request->notifications)->getValue(),
-            'user_id' => $this->loggedUser->id,
-        ]);
-        return $this->longAnswer('success', 'Sucesso dados preenchidos com sucesso!',['account'=>$register], 200);
+        // $validator = Validator::make($request->all(), [
+        //     'name' =>  'required|max:40',
+        //     'person' => 'required|max:11|unique:accounts',
+        //     'genre' => 'required|max:1',
+        //     'birthday' => 'required|date',
+        //     'notifications' => 'required|max:1',
+        //     'user_id' => 'required|unique:accounts',
+        //     'apartment_id' => 'exists:apartments',
+        //     'invitation_id' => 'required'
+        // ],$this->message());
+
+        // if($validator->fails()){
+        //     return $this->simpleAnswer('error', $validator->errors()->first(), 400);
+        // }
+        // if($request->user_id != $this->loggedUser->id){
+        //     return $this->simpleAnswer('error', 'ID - diferente do usuário logado, alterada dados alheus não pode, contate a administração!', 400);
+        // }
+
+        // $register = $account->create([
+        //     'name' => $request->name,
+        //     'person' => $request->person,
+        //     'genre' => genre::from($request->genre)->getValue(),
+        //     'birthday' => $request->birthday,
+        //     'notifications' => notifications::from($request->notifications)->getValue(),
+        //     'user_id' => $this->loggedUser->id,
+        // ]);
+        // return $this->longAnswer('success', 'Sucesso dados preenchidos com sucesso!',['account'=>$register], 200);
     }
 
     /**
