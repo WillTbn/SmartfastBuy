@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTransferObject\Invitation\InvitationDTO;
 use App\DataTransferObject\Invitation\InvitationUpdateDTO;
 use App\Http\Requests\ValidateRequest;
+use App\Jobs\Invitation\InvitationsUpdatedAt;
 use App\Jobs\Invitation\UpdateInvitationJob;
 use App\Jobs\Invitation\SendEmailInvitationJob;
 use App\Jobs\Invitation\SendUpdateInvitationJob;
@@ -12,11 +13,6 @@ use App\Jobs\Invitation\StoreInvitationJob;
 use App\Models\Invitation;
 use App\Services\InvitationServices;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Throwable;
 
 class InvitationController extends Controller
 {
@@ -61,6 +57,24 @@ class InvitationController extends Controller
         return $this->simpleAnswer('error', 'Não há convite!', 401);
 
 
+    }
+    public function resendInvite(Invitation $invitation)
+    {
+
+        $dto = new InvitationDTO(...$invitation->only([
+            'id',
+            'name',
+            'email',
+            'data',
+            'token'
+        ]));
+
+        if(in_array($this->loggedUser->type, $this->permissions)){
+            (InvitationsUpdatedAt::dispatch($dto));
+            (SendEmailInvitationJob::dispatch($dto));
+            return $this->simpleAnswer('success', 'Convite reenviado com sucesso!', 200);
+        }
+        return $this->simpleAnswer('error', 'Não tem  permissãopara tal!', 401);
     }
     public function sendInvite(Request $request)
     {

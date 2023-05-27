@@ -49,13 +49,16 @@ class InvitationServices
         $response = DB::table('users')
             ->join('invitations', 'users.id', '=', 'invitations.user_id')
             ->join('accounts', 'users.id', '=','accounts.user_id')
+            ->whereNull('invitations.deleted_at')
             ->select(
+                'invitations.id',
                 'invitations.email',
                 'invitations.name',
                 'invitations.created_at',
                 'users.email as create_email',
                 'accounts.avatar as create_avatar'
             )
+
         ->get();
         return $response;
     }

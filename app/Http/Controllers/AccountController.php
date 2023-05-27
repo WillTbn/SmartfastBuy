@@ -7,6 +7,7 @@ use App\Enums\genre;
 use App\Enums\notifications;
 use App\Helpers\FileHelper;
 use App\Http\Requests\ValidateRequest;
+use App\Jobs\Invitation\SendEmailWelcomeJob;
 use App\Models\Account;
 use App\Services\AccountServices;
 use App\Services\InvitationServices;
@@ -87,6 +88,7 @@ class AccountController extends Controller
         $register = $this->accountService->createdAccount($dto);
         if($register){
             $this->invitationService->delete($dto->invitation_id);
+            SendEmailWelcomeJob::dispatch($register);
             return $this->longAnswer('success', 'Sucesso dados preenchidos com sucesso!',['account'=>$register], 200);
         }
         return $this->simpleAnswer('error', 'erro na criação, entre contato com suporte!', 400);

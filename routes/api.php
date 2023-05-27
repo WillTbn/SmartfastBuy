@@ -69,7 +69,7 @@ Route::middleware('auth:api')->group(function(){
         function(){
             Route::get('/', [InvitationController::class, 'getAll'])->name('getAll');
             Route::post('/created', [InvitationController::class, 'sendInvite'])->name('created');
-
+            Route::post('/resend/{invitation}', [InvitationController::class, 'resendInvite'])->name('resend');
             Route::put('/{invitation}', [InvitationController::class, 'updateInvitation'])->name('updateInvitation');
         }
     );

@@ -12,15 +12,19 @@ class InvitationDTO extends AbstractDTO implements InterfaceDTO
 {
     public readonly string $token;
     public readonly string $user_id;
+    public readonly ?int $id;
     // public string $sendData;
     public function __construct(
         public readonly string $email,
         public readonly string $name,
         public readonly string $data,
+        ?string $token = null,
+        ?int $id = null
     )
     {
-        $this->token = Str::random(40);
+        $this->token = $token != null ? $token : Str::random(40);
         $this->user_id  = auth()->user()->id;
+        $this->id = $id;
         // $this->sendData = implode(",", $data);
 
         $this->validate();
@@ -29,7 +33,10 @@ class InvitationDTO extends AbstractDTO implements InterfaceDTO
     {
         return[
             'name' => 'required|min:2',
-            'email' => 'required|email|max:255|unique:users|unique:invitations',
+            'email' => [
+                'required','email','max:255','unique:users',
+                Rule::unique('invitations')->ignore($this->id)
+            ],
             'data' => 'required'
         ];
     }
