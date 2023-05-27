@@ -38,7 +38,7 @@ class StoreInvitationJob implements ShouldQueue
         $invite->name = $this->dto->name;
         $invite->data = $this->dto->data;
         $invite->user_id = $this->dto->user_id;
-        $invite->token = Str::random(40);
+        $invite->token = $this->dto->token;
         $invite->created_at = now();
         $invite->saveOrFail();
         // $this->inviteServices->sendCreate(

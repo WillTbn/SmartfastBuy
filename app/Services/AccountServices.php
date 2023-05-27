@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DataTransferObject\Account\AccountDTO;
 use App\Models\Account;
+use Illuminate\Support\Facades\DB;
 
 class AccountServices
 {
@@ -42,5 +43,24 @@ class AccountServices
 
 
         return $ac;
+    }
+    public function getAccountEmail(int $id)
+    {
+        $response =
+        DB::table('accounts')
+            ->join('users', 'users.id', '=', 'accounts.user_id')
+            ->join('apartments', 'apartments.id', '=', 'accounts.apartment_id')
+            ->join('condominias', 'condominias.id', '=', 'apartments.condominia_id')
+            ->select(
+                'accounts.name',
+                'users.email',
+                'apartments.number as apartments_number',
+                'apartments.block as apartments_block',
+                'condominias.name as condominia'
+            )
+            ->where('accounts.id', '=', $id)
+        ->first();
+
+        return $response;
     }
 }

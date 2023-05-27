@@ -88,7 +88,7 @@ class AccountController extends Controller
         $register = $this->accountService->createdAccount($dto);
         if($register){
             $this->invitationService->delete($dto->invitation_id);
-            SendEmailWelcomeJob::dispatch($register);
+            SendEmailWelcomeJob::dispatch($this->accountService->getAccountEmail($register->id));
             return $this->longAnswer('success', 'Sucesso dados preenchidos com sucesso!',['account'=>$register], 200);
         }
         return $this->simpleAnswer('error', 'erro na criação, entre contato com suporte!', 400);

@@ -20,7 +20,7 @@ class SendEmailWelcomeJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(protected Account $account)
+    public function __construct(protected $account)
     {
         //
     }

@@ -8,7 +8,7 @@
 </head>
 <body>
     <h2>Seja bem vindo!!!</h2>
-    <h3>Estamos muito Feliz de ter voce conosco, {{$name}}</h3>
+    <h3>{{$name}}, estamos muito Felizes de ter voce conosco!</h3>
 
 
     <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
