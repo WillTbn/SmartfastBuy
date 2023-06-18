@@ -5,7 +5,6 @@ namespace App\DataTransferObject\Account;
 use App\DataTransferObject\AbstractDTO;
 use App\DataTransferObject\InterfaceDTO;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Validation\Rule;
 
 class AccountDTO extends AbstractDTO implements InterfaceDTO
@@ -56,7 +55,7 @@ class AccountDTO extends AbstractDTO implements InterfaceDTO
             'max' => 'Limite máximo de caracteres ultrapassada no campo :attribute.',
             'min'=> 'Minimo de caracteres não atigindo, no campo :attribute.',
             'barcode.unique' => 'Código de barra já existente em nosso banco, atualize o existente.',
-            ''
+            'unique' => 'o :attribute já existente.'
         ];
     }
     public function validator():Validator

@@ -17,27 +17,32 @@ class ApartmentsTableSeeder extends Seeder
     {
         DB::table('apartments')->insert([
             'number'=> random_int(100, 200),
-            'block' => 'a1',
+            'block_id' => '1',
+            'floor' => '1',
             'condominia_id'=> 1,
         ]);
         DB::table('apartments')->insert([
             'number'=> random_int(201, 300),
-            'block' => 'a1',
+            'block_id' => '2',
+            'floor' => '1',
             'condominia_id'=> 1,
         ]);
         DB::table('apartments')->insert([
             'number'=> random_int(301, 400),
-            'block' => 'a1',
+            'block_id' => '3',
+            'floor' => '1',
             'condominia_id'=> 1,
         ]);
         DB::table('apartments')->insert([
             'number'=> random_int(401, 500),
-            'block' => 'a1',
+            'block_id' => '4',
+            'floor' => '1',
             'condominia_id'=> 1,
         ]);
         DB::table('apartments')->insert([
             'number'=> random_int(501, 600),
-            'block' => 'a1',
+            'block_id' => '1',
+            'floor' => '5',
             'condominia_id'=> 1,
         ]);
     }

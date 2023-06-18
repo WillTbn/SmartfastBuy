@@ -18,7 +18,7 @@ class CondominiaController extends Controller
         $this->loggedUser = auth()->user();
         $this->permisions = (Array)["M", "V"];
     }
-    public function getAll(){
+    public function getAll( Condominia $cond){
         if(in_array($this->loggedUser->type, $this->permisions)){
             // $condominia = DB::table('condominias')
             //     ->join('apartments', 'condominias.id', '=', 'apartments.condominia_id')
@@ -29,7 +29,7 @@ class CondominiaController extends Controller
             //         'apartments.number'
             //     )
             // ->get();
-            $condominia = DB::table('condominias')->get();
+            $condominia = $cond->with(['apartments'])->get();
             return $this->longAnswer('success', 'Condominios achados!',['condominio'=>$condominia], 200);
 
         }
@@ -43,7 +43,16 @@ class CondominiaController extends Controller
     public function index(Condominia $condominia)
     {
         if(in_array($this->loggedUser->type, $this->permisions)){
-            return $this->longAnswer('success', 'Condominios achados!',['condominio'=>$condominia->with(['apartments'])->get()], 200);
+
+            $data = $condominia
+                ->join('apartments', 'condominias.id', '=', 'apartments.condominia_id')
+                ->select('condominias.*')
+                ->distinct()
+                ->with(['apartments'])
+            ->get();
+
+            // return $this->longAnswer('success', 'Condominios achados!',['condominio'=>$condominia->with(['apartments'])->get()], 200);
+            return $this->longAnswer('success', 'Condominios achados!',['condominio'=>$data], 200);
 
         }
         return $this->simpleAnswer('error', 'Permissão negada.', 4000);
@@ -86,7 +95,15 @@ class CondominiaController extends Controller
     {
         // $get = Condominia::find($condominia->id);
         if($condominia){
-            return $this->longAnswer('success', 'Condominio encontrado!',['condominio'=> $condominia], 200 );
+            $data = $condominia->where('id', $condominia->id)->with(['apartments.accounts'])->get();
+
+            return $this->longAnswer(
+                'success',
+                'Condominio encontrado!',
+                [
+                    'condominio'=> $data
+                ], 200
+            );
         }
         return $this->simpleAnswer('error', 'Não encontramos condominio com esse id registrado!', 205);
     }

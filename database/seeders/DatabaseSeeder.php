@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             CondominiasTableSeeder::class,
+            BlockTableSeeder::class,
             ApartmentsTableSeeder::class,
             CategoriesTableSeeder::class,
             ProductsTableSeeder::class,

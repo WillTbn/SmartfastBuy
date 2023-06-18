@@ -35,6 +35,21 @@ class Account extends Model
         'genre' => genre::class,
     ];
 
+    // protected $hidden = ['person'];
+    public function getPersonAttribute($value)
+    {
+        // Verifica se o valor do CPF existe e tem pelo menos 11 dígitos
+        if ($value && strlen($value) >= 11) {
+            // Obtém os quatro últimos dígitos do CPF
+            $lastFourDigits = substr($value, -4);
+
+            // Formata o CPF com asteriscos, mantendo apenas os quatro últimos dígitos
+            return '***.***.***-' . $lastFourDigits;
+        }
+
+        return $value;
+    }
+
     public function user(): HasOne
     {
         return $this->hasOne(user::class, 'id', 'user_id');

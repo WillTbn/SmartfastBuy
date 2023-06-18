@@ -1,0 +1,39 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+
+class BlockTableSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('blocks')->insert([
+            'name' => 'a1',
+            'condominia_id'=> 1,
+        ]);
+        DB::table('blocks')->insert([
+            'name' => 'a2',
+            'condominia_id'=> 1,
+        ]);
+        DB::table('blocks')->insert([
+            'name' => 'a3',
+            'condominia_id'=> 1,
+        ]);
+        DB::table('blocks')->insert([
+            'name' => 'a4',
+            'condominia_id'=> 1,
+        ]);
+        DB::table('blocks')->insert([
+            'name' => 'a5',
+            'condominia_id'=> 1,
+        ]);
+    }
+}

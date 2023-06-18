@@ -105,6 +105,7 @@ Route::middleware('auth:api')->group(function(){
         function($router){
             Route::get('/', [ApartmentController::class, 'index']);
             Route::post('/created', [ApartmentController::class, 'created']);
+            Route::post('/block', [ApartmentController::class, 'createdBlock']);
             Route::get('/{apartment}', [ApartmentController::class, 'getApartment']);
             Route::put('/{apartment}', [ApartmentController::class, 'update']);
             Route::delete('/{apartment}', [ApartmentController::class, 'destroy']);

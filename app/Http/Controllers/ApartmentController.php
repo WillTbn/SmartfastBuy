@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ApartmentServices;
+use App\DataTransferObject\Apartment\ApartmentDTO;
+use App\DataTransferObject\Apartment\FloorsDTO;
 use App\Http\Requests\ValidateRequest;
 use App\Models\Apartment;
 use Illuminate\Http\Request;
@@ -13,11 +16,15 @@ class ApartmentController extends Controller
     use ValidateRequest;
     private $loggedUser;
     private $permisions;
-    public function __construct()
+    private ApartmentServices $apto;
+    public function __construct(
+        ApartmentServices $aptService
+    )
     {
         $this->middleware('auth:api');
         $this->loggedUser = auth()->user();
         $this->permisions = (Array)["M", "V"];
+        $this->apto = $aptService;
     }
 
     /**
@@ -27,9 +34,37 @@ class ApartmentController extends Controller
     public function index(Apartment $apartment)
     {
         if(in_array($this->loggedUser->type, $this->permisions)){
-            return $apartment->with(['condominia'])->get();
+            return $apartment->with(['condominia', 'block'])->get();
+            // return $apartment->with(['block.condominia'])->get();
         }
         return $this->simpleAnswer('error', 'Permissão negada.', 400);
+    }
+    public function createdBlock(Request $request, Apartment $apartment)
+    {
+        $dto = new FloorsDTO(...$request->only([
+            'block',
+            'apartment_start',
+            'apartment_finally',
+            'block_id',
+            'condomia_id'
+        ]));
+
+        if($this->apto->getFloors($dto)){
+            return $this->simpleAnswer('error', 'Já existem apartamento nesse intervalo, verifique.', 500);
+        }
+        $dataApto = array(
+            'block_id' => $dto->block_id,
+            'condominia_id' => $dto->condominia_id
+        );
+
+        // ESTUDAR COLOCA ISSO EM UM JOB
+            for($i= $dto->apartment_start; $i <= $dto->apartment_finally; $i++){
+                $dataApto['number'] = $i;
+                $this->apto->sendCreate($dataApto['block'], $dataApto['number'], $dataApto['condominia_id']);
+            }
+        // FINAL DO FUTURO JOB
+
+        return $this->simpleAnswer('success', 'Sucesso, apartamentos cadastrados com sucesso.', 200);
     }
     /**
      * @param  \App\Models\Apartment  $apartment
@@ -38,7 +73,7 @@ class ApartmentController extends Controller
     public function created(Request $request, Apartment $apartment)
     {
         $validator = Validator::make($request->all(), [
-            'block'=> 'required',
+            'block_id'=> 'required',
             'number' => 'required',
             'condominia_id' => 'required'
         ],$this->message());
@@ -46,14 +81,14 @@ class ApartmentController extends Controller
         if($validator->fails()){
             return $this->simpleAnswer('error', $validator->errors()->first(), 400);
         }
-        $exist = Apartment::where('block', $request->block)->where('number', $request->number)->first();
+        $exist = Apartment::where('block_id', $request->block_id)->where('number', $request->number)->first();
 
         if($exist){
             return $this->simpleAnswer('error','Apartamento já cadastrado!', 400);
         }
         if(in_array($this->loggedUser->type, $this->permisions)){
             $register = $apartment->create([
-                'block' =>$request->block,
+                'block_id' =>$request->block_id,
                 'number' => $request->number,
                 'condominia_id' => $request->condominia_id
             ]);
@@ -87,14 +122,14 @@ class ApartmentController extends Controller
     public function update(Request $request, Apartment $apartment)
     {
         $validator = Validator::make($request->all(), [
-            'block'=> 'required',
+            'block_id'=> 'required',
             'number' => 'required',
             'condominia_id' => 'required'
         ],$this->message());
         if($validator->fails()){
             return $this->simpleAnswer('error', $validator->errors()->first(), 400);
         }
-        $exist = Apartment::where('block', $request->block)->where('number', $request->number)->first();
+        $exist = Apartment::where('block_id', $request->block_id)->where('number', $request->number)->first();
 
         if($exist){
             return $this->simpleAnswer('error','Apartamento já cadastrado!', 400);
@@ -104,7 +139,7 @@ class ApartmentController extends Controller
             $register = Apartment::with(['condominia'])->find($apartment->id);
             if($register){
                 $register->number =$request->number;
-                $register->block = $request->block;
+                $register->block_id = $request->block_id;
                 $register->condominia_id = $request->condominia_id;
                 $register->touch();
                 $register->save();
