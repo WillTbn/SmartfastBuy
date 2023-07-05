@@ -4,7 +4,6 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use App\Enums\type;
 use  App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -26,7 +25,6 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'email',
         'password',
-        'type' => type::class
     ];
 
     /**
@@ -69,7 +67,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function account(): HasOne
     {
-        return $this->hasOne(Account::class);
+        return $this->hasOne(Account::class, 'user_id', 'id');
     }
     public function  sendPasswordResetNotification($token){
         $this->notify( new ResetPasswordNotification($token));

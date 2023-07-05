@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('name');
             $table->text('data');
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->string('token')->unique();
             $table->timestamps();
         });

@@ -20,7 +20,7 @@ class ProductsTableSeeder extends Seeder
             'barcode' =>   random_int(100000000000, 1999999999999),
             'quantity' =>   random_int(20, 50),
             'value' => 2.99,
-            'account_id'=> 1,
+            // 'account_id'=> 1,
             'description' => 'Pilsen Puro malte',
             'category_id'=>1,
             'type'=> 'PuroMalte',
@@ -33,7 +33,7 @@ class ProductsTableSeeder extends Seeder
             'quantity' =>   random_int(20, 50),
             'value' => 2.99,
             'description' => '',
-            'account_id'=> 1,
+            // 'account_id'=> 1,
             'category_id'=>1,
             'type'=> 'Pilsen',
             'condominia_id'=> 1
@@ -44,7 +44,7 @@ class ProductsTableSeeder extends Seeder
             'quantity' =>   random_int(0, 50),
             'value' => 2.99,
             'description' => '',
-            'account_id'=> 1,
+            // 'account_id'=> 1,
             'category_id'=>1,
             'type'=> 'Pilsen',
             'condominia_id'=> 1
@@ -56,7 +56,7 @@ class ProductsTableSeeder extends Seeder
             'quantity' =>   random_int(0, 50),
             'value' => 25.90,
             'description' => 'Nacionalidade: Chilena Classificação: Seco Uva: Cabernet Sauvignon',
-            'account_id'=> 1,
+            // 'account_id'=> 1,
             'category_id'=>3,
             'type'=> 'Tinto',
             'condominia_id'=> 1
@@ -67,7 +67,7 @@ class ProductsTableSeeder extends Seeder
             'quantity' =>   random_int(0, 50),
             'value' => 119.90,
             'description' => '',
-            'account_id'=> 1,
+            // 'account_id'=> 1,
             'category_id'=>2,
             'type'=> 'Vodka',
             'condominia_id'=> 1

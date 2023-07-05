@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ApartmentsTableSeeder::class,
             CategoriesTableSeeder::class,
             ProductsTableSeeder::class,
+            AdminsTableSeeder::class
         ]);
         // \App\Models\User::factory(10)->create();
 

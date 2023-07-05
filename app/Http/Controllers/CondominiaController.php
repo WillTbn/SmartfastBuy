@@ -19,6 +19,7 @@ class CondominiaController extends Controller
         $this->permisions = (Array)["M", "V"];
     }
     public function getAll( Condominia $cond){
+        return $this->loggedUser;
         if(in_array($this->loggedUser->type, $this->permisions)){
             // $condominia = DB::table('condominias')
             //     ->join('apartments', 'condominias.id', '=', 'apartments.condominia_id')
@@ -44,12 +45,13 @@ class CondominiaController extends Controller
     {
         if(in_array($this->loggedUser->type, $this->permisions)){
 
-            $data = $condominia
-                ->join('apartments', 'condominias.id', '=', 'apartments.condominia_id')
-                ->select('condominias.*')
-                ->distinct()
-                ->with(['apartments'])
-            ->get();
+            // $data = $condominia
+            //     ->join('apartments', 'condominias.id', '=', 'apartments.condominia_id')
+            //     ->select('condominias.*')
+            //     ->distinct()
+            //     ->with(['apartments'])
+            // ->get();
+            $data = $condominia->with(['blocks.apartments'])->get();
 
             // return $this->longAnswer('success', 'Condominios achados!',['condominio'=>$condominia->with(['apartments'])->get()], 200);
             return $this->longAnswer('success', 'Condominios achados!',['condominio'=>$data], 200);

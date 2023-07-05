@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->float('value');
             // $table->float('value');
-            $table->foreignId('account_id')->constrained();
+            // $table->foreignId('account_id')->constrained();
             $table->softDeletes();
             $table->timestamps();
         });
