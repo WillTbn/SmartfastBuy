@@ -54,7 +54,7 @@ class AdminsTableSeeder extends Seeder
         Admin::create([
             'name'=>'Administrador User',
             'email'=> env('ADMIN_EMAIL'),
-            'password' => env('ADMIN_PASSWORD'),
+            'password' => bcrypt(env('ADMIN_PASSWORD')),
             'person' => '15222222224',
             'genre'=> 'O',
             'birthday'=> '1990-08-03',

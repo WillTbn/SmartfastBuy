@@ -1,7 +1,5 @@
 <template>
     <div class="">
-        <h1>
-            IMAGEM DA LOGO
-        </h1>
+        <img src="/logo-sfb-dark.png" alt="Logo Smart fast Buy">
     </div>
 </template>

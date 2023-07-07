@@ -10,7 +10,10 @@ use Inertia\Inertia;
 class AdminLoginController extends Controller
 {
     public function index(){
-        return Inertia::render('Home');
+        $user = 'Will Smith';
+        return Inertia::render('Home', [
+            'user' => $user
+        ]);
     }
     public function create()
     {
@@ -18,5 +21,9 @@ class AdminLoginController extends Controller
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
         ]);
+    }
+    public function auth(Request $request)
+    {
+        return dd($request->all());
     }
 }

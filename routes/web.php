@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\AdminLoginController;
+
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
-use Inertia\Inertia;
+// use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +15,9 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [AuthController::class, 'index'])->name('Home');
+Route::get('/', [AdminLoginController::class, 'index'])->name('Home');
+
+Route::post('/auth', [AdminLoginController::class, 'auth'])->name('Auth');
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
 //         'canLogin' => Route::has('login'),
@@ -24,8 +26,8 @@ Route::get('/', [AuthController::class, 'index'])->name('Home');
 //         'phpVersion' => PHP_VERSION,
 //     ]);
 // });
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+// require __DIR__.'/auth.php';
