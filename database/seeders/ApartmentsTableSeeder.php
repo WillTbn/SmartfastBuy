@@ -10,11 +10,10 @@ class ApartmentsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
+
         DB::table('apartments')->insert([
             'number'=> random_int(100, 200),
             'block_id' => '1',

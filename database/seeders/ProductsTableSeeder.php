@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Database\Utility\RandomUtility;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -10,10 +10,8 @@ class ProductsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         DB::table('products')->insert([
             'name' => 'Império 473ml',

@@ -26,19 +26,13 @@ cp .env.example .env
 .vendor/bin/sail up -d
 ```
 
-4.roda cria key do laravel
-
-```php
-sail art key:generate
-```
-
-5.roda as migrations
+4.roda as migrations
 
 ```php
 sail art migrate
 ```
 
-6.roda as seed's
+5.roda as seed's
 
 ```php
 sail art db:seed

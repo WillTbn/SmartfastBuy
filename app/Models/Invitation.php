@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Invitation extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
     protected $fillable = ['email', 'name', 'token','data', 'created_at', 'updated_at', 'deleted_at'];
 
 }
