@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('avatar')->nullable()->default('default-avatar.png');
             $table->enum('notifications',['accepted', 'refused']);
             // $table->foreignId('apartment_id')->nullable()->constrained();
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->softDeletes();
             $table->timestamps();
         });
