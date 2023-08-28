@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,14 +27,20 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+Route::get('/dashboard', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/users', [UserController::class, 'index'])->middleware(['auth', 'verified'])->name('users');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::prefix('/users')->name('users.')->middleware(['auth'])->group(function(){
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::post('/', [UserController::class, 'create'])->name('create');
+    Route::delete('/{id}', [UserController::class, 'deleted'])->name('delete');
+});
+
+
 
 require __DIR__.'/auth.php';

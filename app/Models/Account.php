@@ -12,14 +12,13 @@ class Account extends Model
     use HasFactory, SoftDeletes;
     protected $fillable = [
         'person',
-        'genre',
-        'avatar',
-        'apartament_id',
-        'user_id',
-        'notifications',
-        'birthday',
+        'telephone',
         'phone',
-        'telephone'
+        'genre',
+        'birthday',
+        'avatar',
+        'notifications',
+        'user_id',
     ];
     /**
      * The attributes that should be cast.
@@ -28,7 +27,7 @@ class Account extends Model
      */
     protected $casts = [
         'person',
-        'genre' => genre::class,
+        // 'genre' => genre::class,
     ];
 
     // protected $hidden = ['person'];

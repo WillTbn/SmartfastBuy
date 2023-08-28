@@ -66,4 +66,13 @@ class InvitationServices
     {
         Invitation::destroy($id);
     }
+    public function countInvitations()
+    {
+        $result = [
+            'name' => 'convites',
+            'count' =>DB::table('invitations')->count(),
+            'icons' => 'fa-solid fa-city'
+        ];
+        return $result;
+    }
 }

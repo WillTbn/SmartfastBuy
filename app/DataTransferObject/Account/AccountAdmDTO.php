@@ -5,23 +5,22 @@ namespace App\DataTransferObject\Account;
 use App\DataTransferObject\AbstractDTO;
 use App\DataTransferObject\InterfaceDTO;
 use Illuminate\Contracts\Validation\Validator;
+use InvalidArgumentException;
 use Illuminate\Validation\Rule;
 
-class AccountDTO extends AbstractDTO implements InterfaceDTO
+class AccountAdminDTO extends AbstractDTO implements interfaceDTO
 {
-    public readonly int $user_id;
     public function __construct(
+        public readonly int $user_id,
         public readonly int $person,
         public readonly string $genre,
         public readonly string $birthday,
         public readonly string $notifications,
         public readonly ?string $phone,
-        public readonly ?string $telephone,
-        public readonly ?string $apartment_id,
-        public readonly ?int $invitation_id,
+        public readonly ?string $telephone
     )
     {
-        $this->user_id = auth()->user()->id;
+        // $this->user_id = auth()->user()->id;
 
         $this->validate();
 
@@ -32,13 +31,16 @@ class AccountDTO extends AbstractDTO implements InterfaceDTO
             'genre' => 'required|max:1',
             'birthday' => 'required|date',
             'notifications' => 'required|max:1',
+            'user_id' => [
+                'required',
+                Rule::unique('accounts')
+            ],
             'person' => [
                 'required','max:11',
-                Rule::unique('accounts')->ignore(auth()->user()->id, 'user_id')
+                Rule::unique('accounts')->ignore($this->user_id, 'user_id')
             ],
             'telephone' => 'min:10|max:11',
             'phone'=>'',
-            'apartment_id' => 'exists:apartments,id',
         ];
     }
     public function messages():array

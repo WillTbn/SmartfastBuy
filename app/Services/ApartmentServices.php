@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\DataTransferObject\Apartment\FloorsDTO;
 use App\Models\Apartment;
+use Illuminate\Support\Facades\DB;
 
 class ApartmentServices
 {
@@ -23,5 +24,9 @@ class ApartmentServices
 
         return $verify;
 
+    }
+    public function countApartaments()
+    {
+        return DB::table('apartments')->count();
     }
 }

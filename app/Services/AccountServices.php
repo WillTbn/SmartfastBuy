@@ -11,7 +11,7 @@ class AccountServices
     public function updateAccount( AccountDTO $account,  int $user_id, ?string $image = null): Account
     {
         $acnt = Account::where('user_id', $user_id)->first();
-        $acnt->name = $account->name;
+        // $acnt->name = $account->name;
         $acnt->person = $account->person;
         $acnt->genre = $account->genre;
         $acnt->birthday = $account->birthday;
@@ -30,7 +30,7 @@ class AccountServices
     public function createdAccount(AccountDTO $account)
     {
         $ac = new Account();
-        $ac->name = $account->name;
+        // $ac->name = $account->name;
         $ac->user_id = $account->user_id;
         $ac->person = $account->person;
         $ac->genre = $account->genre;

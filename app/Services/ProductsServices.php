@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DataTransferObject\Product\ProductDTO;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 class ProductsServices
 {
@@ -44,5 +45,14 @@ class ProductsServices
         $prod->saveOrFail();
 
         return $prod;
+    }
+    public function countProducts(): array
+    {
+        $result = [
+            'name'=> 'produtos',
+            'count' => DB::table('products')->count(),
+            'icons' => 'fa-solid fa-shop'
+        ];
+        return $result;
     }
 }
