@@ -6,7 +6,6 @@ use App\DataTransferObject\User\UserAdmDTO;
 use App\Jobs\AdmSystem\Account\AccountCreateJob;
 use App\Jobs\AdmSystem\Account\AccountDeleteJob;
 use App\Jobs\AdmSystem\Invitation\SendEmailWelcomeJob;
-use App\Models\User;
 use App\Services\Adm\AccountServices;
 use App\Services\Adm\UserServices;
 use App\Services\RoleServices;

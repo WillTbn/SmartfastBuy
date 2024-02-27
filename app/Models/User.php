@@ -48,4 +48,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Account::class, 'user_id', 'id');
     }
+    public function role():HasOne
+    {
+        return $this->hasOne(Role::class, 'id', 'role_id');
+    }
 }

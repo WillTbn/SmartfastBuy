@@ -55,4 +55,10 @@ class ProductsServices
         ];
         return $result;
     }
+    public function getAllProduct()
+    {
+        $products = Product::with(['condominia'])->get();
+
+        return $products;
+    }
 }

@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\DataTransferObject\Apartment\FloorsDTO;
 use App\Models\Apartment;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class ApartmentServices
@@ -18,15 +19,26 @@ class ApartmentServices
     }
     public function getFloors(FloorsDTO $dto): bool
     {
-        $verify = Apartment::wher('block_id', $dto->block_id)
+        $verify = Apartment::where('block_id', $dto->block_id)
             ->whereBetween('number', [$dto->apartment_start, $dto->apartment_finally])
         ->exists();
 
         return $verify;
 
     }
+    public function getAptCond(int $condomonia): Collection
+    {
+        $apt = Apartment::where('condominia_id', $condomonia)->get();
+        return $apt;
+    }
     public function countApartaments()
     {
         return DB::table('apartments')->count();
+    }
+    public function existsAp(int $block, int $number)
+    {
+        $exist = Apartment::where('block_id', $block)->where('number', $number)->first();
+
+        return $exist;
     }
 }

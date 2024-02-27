@@ -26,7 +26,7 @@ class UserServices
        return $user;
     }
     public function getAllUsers(){
-        $user = User::all();
+        $user = User::where('id', '!=', auth()->user()->id)->with('role')->get();
 
         return $user;
     }

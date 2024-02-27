@@ -37,3 +37,9 @@ sail art migrate
 ```php
 sail art db:seed
 ```
+
+6.roda o npm ápos esta rodando o serve do laravel, para roda o inertial com vite 
+
+```php
+npm run dev
+```

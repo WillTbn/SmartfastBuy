@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Adm\BlockController;
+use App\Http\Controllers\Adm\CondominiaController;
+use App\Http\Controllers\Adm\InvitationController;
+use App\Http\Controllers\Adm\ProductsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -39,6 +43,27 @@ Route::prefix('/users')->name('users.')->middleware(['auth'])->group(function(){
     Route::get('/', [UserController::class, 'index'])->name('index');
     Route::post('/', [UserController::class, 'create'])->name('create');
     Route::delete('/{id}', [UserController::class, 'deleted'])->name('delete');
+});
+Route::prefix('/products')->name('products.')->middleware(['auth'])->group(function(){
+    Route::get('/', [ProductsController::class, 'index'])->name('index');
+    Route::get('/{id}', [ProductsController::class, 'getOne'])->name('edit');
+    // Route::post('/', [UserController::class, 'create'])->name('create');
+    Route::delete('/{id}', [ProductsController::class, 'deleted'])->name('delete');
+});
+Route::prefix('/condominia')->name('condominia.')->middleware(['auth'])->group(function(){
+    Route::get('/', [CondominiaController::class, 'index'])->name('index');
+    Route::post('/', [CondominiaController::class, 'create'])->name('create');
+    Route::get('/{condominia}', [CondominiaController::class, 'getOne'])->name('edit');
+    // Route::delete('/{id}', [ProductsController::class, 'deleted'])->name('delete');
+});
+Route::prefix('/blocks')->name('blocks.')->middleware((['auth']))->group(function (){
+    Route::post('/', [BlockController::class, 'created'])->name('create');
+});
+Route::prefix('/invites')->name('invites.')->middleware(['auth'])->group(function(){
+    Route::get('/', [InvitationController::class, 'index'])->name('index');
+    // Route::get('/{id}', [ProductsController::class, 'getOne'])->name('edit');
+    Route::post('/', [InvitationController::class, 'create'])->name('create');
+    // Route::delete('/{id}', [ProductsController::class, 'deleted'])->name('delete');
 });
 
 

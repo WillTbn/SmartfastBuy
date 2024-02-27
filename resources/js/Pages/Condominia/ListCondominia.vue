@@ -1,51 +1,44 @@
 <template>
-    <Head title="Usuários"/>
+    <Head title="Condominios"/>
     <AuthenticatedLayout>
         <template #header>
-            Usuários
+            Condominios
         </template>
-        <form-create
-            :roles="roles"
-        ></form-create>
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div v-if="condominias.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <table-body>
                 <template #headColumns>
                     <table-head type="first" label="Name"/>
-                    <table-head type="first" label="Email"/>
-                    <table-head type="normal" label="Permissions"/>
-                    <table-head type="normal" label="actions"/>
                 </template>
                 <template #tableRows>
-                    <tr v-for="user in users" :key="user.id">
+                    <tr v-for="cond in condominias" :key="cond.id">
                         <table-data type="first">
-                            {{ user.name }}
-                        </table-data>
-
-                        <table-data type="first">
-                            {{ user.email }}
-                        </table-data>
-
-                        <table-data type="normal">
-                            {{ user.role.name }}
+                            {{ cond.name }}
                         </table-data>
                         <table-data type="normal">
-                            <Link method="delete" :href="route('users.delete', user.id)" class="trash"><font-awesome-icon color="red" :icon="['fass', 'fa-trash']"/></Link>
-                            <!-- <a href="router('users.delete')">excluir</a> -->
-                            {{ user.id }}
+                            <Link method="get" :href="route('condominia.edit', cond.id)">
+                                <font-awesome-icon color="green" @click="setCond(cond.id)" :icon="['fass', 'fa-edit']"/>
+                            </Link>
+
+                            {{ cond.id }}
                         </table-data>
                     </tr>
                 </template>
             </table-body>
+        </div>
+        <div class="text-center max-auto max-w-7x1 sm:px-6 lg:px-8" v-else>
+
+            <p> Não há convites em aberto</p>
+
         </div>
     </AuthenticatedLayout>
 </template>
 <script>
 import { Head,Link} from '@inertiajs/vue3';
 import AuthenticatedLayout from '../../Layouts/AuthenticatedLayout.vue';
-import FormCreate from '../../Layouts/users/FormCreate.vue';
 import TableHead from '../../Components/Table/TableHead.vue';
 import TableData from '../../Components/Table/TableData.vue';
 import TableBody from '../../Components/Table/TableBody.vue';
+import { useStore } from 'vuex';
 
 export default{
     components:{
@@ -54,13 +47,22 @@ export default{
         TableData,
         Head,
         Link,
-        AuthenticatedLayout,
-        FormCreate
+        AuthenticatedLayout
     },
     props:{
-        roles:{type:Array},
-        users:{type:Array}
+        // roles:{type:Array},
+        // invites:{type:Array},
+        condominias:{type:Array}
     },
+    setup(){
+        const store = useStore()
+        const setCond = (id) => {
+            store.commit("condominia/setId", id)
+        }
+        return{
+            setCond
+        }
+    }
     // setup(){
     //     const submit = (id) => {
     //         alert(id)

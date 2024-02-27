@@ -5,6 +5,7 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import store from './Store'
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
 
@@ -12,8 +13,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faUserSecret, faCity, faShop } from '@fortawesome/free-solid-svg-icons'
-library.add(faUserSecret, faCity, faShop)
+import { faUserSecret, faCity, faShop, faEdit, faTrash, faPlus, faWindowClose, faClose } from '@fortawesome/free-solid-svg-icons'
+library.add(faUserSecret, faCity, faShop, faEdit, faTrash,faPlus, faWindowClose, faClose)
 const appName = import.meta.env.VITE_APP_NAME || 'Smart Fast Buy';
 
 createInertiaApp({
@@ -23,6 +24,7 @@ createInertiaApp({
         return createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
+            .use(store)
             .component('font-awesome-icon', FontAwesomeIcon)
             .mount(el);
     },
