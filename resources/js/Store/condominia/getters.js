@@ -8,3 +8,6 @@ export function statusView (state) {
     // console.log('statusView -> ',state.user.type)
     // return 'auth'
 }
+export function apartmentsByIdCondominia(state, id){
+    return state.condominia.apartments.find(ap =>ap.condominia_id === id )
+}

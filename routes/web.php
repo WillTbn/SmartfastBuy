@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Adm\ApartmentController;
 use App\Http\Controllers\Adm\BlockController;
 use App\Http\Controllers\Adm\CondominiaController;
 use App\Http\Controllers\Adm\InvitationController;
@@ -56,14 +57,27 @@ Route::prefix('/condominia')->name('condominia.')->middleware(['auth'])->group(f
     Route::get('/{condominia}', [CondominiaController::class, 'getOne'])->name('edit');
     // Route::delete('/{id}', [ProductsController::class, 'deleted'])->name('delete');
 });
-Route::prefix('/blocks')->name('blocks.')->middleware((['auth']))->group(function (){
-    Route::post('/', [BlockController::class, 'created'])->name('create');
-});
+// Route::prefix('/blocks')->name('blocks.')->middleware((['auth']))->group(function (){
+//     Route::post('/', [BlockController::class, 'created'])->name('create');
+// });
 Route::prefix('/invites')->name('invites.')->middleware(['auth'])->group(function(){
     Route::get('/', [InvitationController::class, 'index'])->name('index');
     // Route::get('/{id}', [ProductsController::class, 'getOne'])->name('edit');
     Route::post('/', [InvitationController::class, 'create'])->name('create');
     // Route::delete('/{id}', [ProductsController::class, 'deleted'])->name('delete');
+});
+
+Route::middleware(['auth'])->group(function(){
+
+    Route::controller(BlockController::class)->prefix('/blocks')->as('blocks.')->group(function() {
+        Route::post('/', 'created')->name('create');
+        Route::delete('/{block}', 'deleted')->name('delete');
+    });
+
+    Route::controller(ApartmentController::class)->prefix('/apartments')->as('apartment.')->group(function(){
+        Route::get('/', 'index')->name('index');
+    });
+
 });
 
 

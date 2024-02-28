@@ -8,7 +8,7 @@
                 <input id="name" type="text" v-model="form.name"
                 :class="styleForm"
                 >
-                <div v-if="form.errors.name">{{ form.errors.name }}</div>
+                <div v-if="form.errors.name" class="font-medium text-red-700">{{ form.errors.name }}</div>
             </label>
         </div>
         <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
@@ -24,32 +24,35 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useStore } from 'vuex';
 // import Dialog from '@/Components/Dialog.vue';
 
-export default {
+export default defineComponent({
     components:{
         PrimaryButton
     },
     setup(){
         // const item = ref({...condominia})
         const store = useStore()
-        const styleForm = "block w-full px-4 border-transparent rounded form-input"
+        const styleForm = ref("block w-full px-4 border-transparent rounded form-input")
         const id = computed(()=> store.state.condominia.id)
-        const submitRegister = () => {
-            // form.condominia_id = condominia
-            console.log(form)
-            form.post(route('blocks.create'), {
-                onSuccess:() => form.reset()
-            })
-        }
         const form = useForm({
             name:"",
             condominia_id: id.value
         })
+        const submitRegister = () => {
+            // form.condominia_id = condominia
+            console.log(form)
+            form.post(route('blocks.create'), {
+                onSuccess:() => form.reset(),
+                onError:() => styleForm.value = 'block w-full px-4 border-red-700 rounded form-input'
+            })
+        }
+
         return {
+            id,
             form,
             styleForm,
             submitRegister
         }
     }
-};
+});
 
 </script>

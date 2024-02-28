@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Adm;
 
 use App\DataTransferObject\Apartment\FloorsDTO;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Block\BlockPostRequest;
 use App\Models\Apartment;
+use App\Models\Block;
 use App\Services\ApartmentServices;
 use App\Services\BlockServices;
 use Illuminate\Http\Request;
@@ -23,19 +25,14 @@ class BlockController extends Controller
         $this->aptServices = $apartmentServices;
         $this->blockServices = $blockServices;
     }
-    public function created(Request $request)
+    public function created(BlockPostRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            // verificar o unique:table,column,except,id
-            'name'=> 'required',
-            'condominia_id' => 'required|exists:condominias,id'
-        ]);
 
-        if($validator->fails())
-        {
-            return redirect()->back()
-            ->with('error', $validator->errors()->first());
-        }
+        // if($validator->fails())
+        // {
+        //     return redirect()->back()
+        //     ->with('error', $validator->errors()->first());
+        // }
 
         $register = $this->blockServices->createdBlock($request->name, $request->condominia_id);
         if($register){
@@ -76,5 +73,11 @@ class BlockController extends Controller
         return redirect()->back()
             ->with('success', 'Sucesso, apartamentos cadastrados com sucesso.');
         // return $this->simpleAnswer('success', 'Sucesso, apartamentos cadastrados com sucesso.', 200);
+    }
+    public function deleted(Block $block){
+
+        $block->delete();
+        return redirect()->back()
+        ->with('success', 'Usuário deletedo com sucesso!');
     }
 }

@@ -39,8 +39,9 @@ import TableHead from '../../Components/Table/TableHead.vue';
 import TableData from '../../Components/Table/TableData.vue';
 import TableBody from '../../Components/Table/TableBody.vue';
 import { useStore } from 'vuex';
+import {defineComponent} from 'vue'
 
-export default{
+export default defineComponent({
     components:{
         TableBody,
         TableHead,
@@ -57,6 +58,7 @@ export default{
     setup(){
         const store = useStore()
         const setCond = (id) => {
+            console.log('este é meu id do condominio', id)
             store.commit("condominia/setId", id)
         }
         return{
@@ -77,5 +79,5 @@ export default{
     //     }
     // }
 
-}
+})
 </script>

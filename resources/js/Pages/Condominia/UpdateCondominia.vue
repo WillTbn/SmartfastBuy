@@ -53,10 +53,19 @@
                         </table-data>
                         <table-data type="normal">
                             <primary-button @click="viewBlock(block)">
-                            <span>
-                                <font-awesome-icon color="" :icon="['fass', 'fa-plus']"/>
-                            </span>
+                                add apartamento
+                                <span class="ml-2">
+                                    <font-awesome-icon color="" :icon="['fass', 'fa-plus']"/>
+                                </span>
                             </primary-button>
+                        </table-data>
+                        <table-data type="normal">
+                            <danger-button @click="deletedBlock( block.id)" v-if="block.apartments.length <= 0">
+                                excluir bloco
+                                <span class="ml-2">
+                                    <font-awesome-icon color="" :icon="['fass', 'fa-xmark']"/>
+                                </span>
+                            </danger-button>
                         </table-data>
                         <!--
                         <table-data type="normal">
@@ -68,10 +77,10 @@
                 </template>
             </table-body>
         </div>
-        <div class="text-center max-auto max-w-7x1 sm:px-6 lg:px-8" v-if="blocks.length == 0">
-
-            <p> Não há block cadastrado nesse codoominio</p>
-
+        <div v-if="blocks.length == 0">
+            <not-data-list>
+                Não há block cadastrado nesse comdominio
+            </not-data-list>
         </div>
 
         <modal :show="modalSet" @close="closeModal" >
@@ -87,7 +96,7 @@
     </AuthenticatedLayout>
 </template>
 <script>
-import { Head} from '@inertiajs/vue3';
+import { Head, useForm} from '@inertiajs/vue3';
 import AuthenticatedLayout from '../../Layouts/AuthenticatedLayout.vue';
 import TableHead from '../../Components/Table/TableHead.vue';
 import TableData from '../../Components/Table/TableData.vue';
@@ -95,10 +104,13 @@ import TableBody from '../../Components/Table/TableBody.vue';
 import { computed, onMounted, ref } from 'vue';
 import CreatedBlock from '../../Components/Forms/CreatedBlock.vue';
 import PrimaryButton from '../../Components/PrimaryButton.vue';
+import DangerButton from '../../Components/DangerButton.vue';
 import { useStore } from 'vuex';
 import Dialog from '../../Components/Dialog.vue';
+import NotDataList from '../../Components/NotDataList.vue';
 import Modal from '../../Components/Modal.vue';
 import IndexBlock from '../Block/IndexBlock.vue';
+import { faTruckMedical } from '@fortawesome/free-solid-svg-icons';
 
 export default{
     components:{
@@ -111,7 +123,9 @@ export default{
         PrimaryButton,
         Dialog,
         Modal,
-        IndexBlock
+        IndexBlock,
+        DangerButton,
+        NotDataList
     },
     props:{
         // roles:{type:Array},
@@ -127,6 +141,7 @@ export default{
         const id = computed(()=> store.state.condominia.id)
         const modalSet= ref(false)
         const control = "modal-center"
+        const form = useForm({id:''})
         const viewBlock = (block) =>{
             modalSet.value = true
             store.commit("condominia/setBlock", block)
@@ -134,12 +149,20 @@ export default{
         const closeModal = () =>{
             modalSet.value = false
         }
+        const deletedBlock = (id) =>{
+            console.log('dentro do deletedblock',id)
+            route('blocks.delete', id)
+            // form.id = id
+            form.delete(route('blocks.delete', id))
+        }
+
         onMounted(() =>{
             console.log('ESTOU AQUI !!!')
             console.log('AQUI ESTA ID ', id.value)
             // console.log(props.condominia)
         });
         return {
+            deletedBlock,
             viewBlock,
             closeModal,
             modalSet,
