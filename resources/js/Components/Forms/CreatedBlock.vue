@@ -20,7 +20,7 @@
 <script>
 import {useForm} from '@inertiajs/vue3'
 import {computed, defineComponent, ref} from 'vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 import { useStore } from 'vuex';
 // import Dialog from '@/Components/Dialog.vue';
 

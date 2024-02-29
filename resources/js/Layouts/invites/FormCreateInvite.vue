@@ -92,7 +92,7 @@
 const styleForm = "block w-full px-4 border-transparent rounded form-input"
 import {useForm} from '@inertiajs/vue3'
 import {ref} from 'vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue';
+import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 // import Dialog from '@/Components/Dialog.vue';
 
 

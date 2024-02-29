@@ -8,4 +8,8 @@ class BlockServices {
     public function deleted(Block $block){
         $block->delete();
     }
+
+    public function getOne(int $id){
+        return Block::find($id);
+    }
 }

@@ -76,6 +76,7 @@ Route::middleware(['auth'])->group(function(){
 
     Route::controller(ApartmentController::class)->prefix('/apartments')->as('apartment.')->group(function(){
         Route::get('/', 'index')->name('index');
+        Route::post('/', 'created')->name('create');
     });
 
 });

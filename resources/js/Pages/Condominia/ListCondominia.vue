@@ -18,8 +18,6 @@
                             <Link method="get" :href="route('condominia.edit', cond.id)">
                                 <font-awesome-icon color="green" @click="setCond(cond.id)" :icon="['fass', 'fa-edit']"/>
                             </Link>
-
-                            {{ cond.id }}
                         </table-data>
                     </tr>
                 </template>
@@ -58,7 +56,6 @@ export default defineComponent({
     setup(){
         const store = useStore()
         const setCond = (id) => {
-            console.log('este é meu id do condominio', id)
             store.commit("condominia/setId", id)
         }
         return{

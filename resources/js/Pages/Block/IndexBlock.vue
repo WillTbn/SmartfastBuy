@@ -5,7 +5,9 @@
 
         </h2>
 
-        <div v-if="block.apartments.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <steps-control-apartment />
+
+        <div v-if="block.apartments.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8 table-scrol">
 
             <table-body>
                 <template #headColumns>
@@ -47,26 +49,30 @@
             </not-data-list>
         </div>
         <div class="flex justify-end mt-6">
-            <secondary-button @click="closeModel"> fechar</secondary-button>
+            <secondary-button @click="$emit('back-init')"> fechar</secondary-button>
         </div>
     </div>
 </template>
 <script>
 import {useStore, mapGetters} from 'vuex'
-import {computed, defineComponent} from 'vue'
-import SecondaryButton from '../../Components/SecondaryButton.vue';
+import {computed, defineComponent, ref} from 'vue'
+import SecondaryButton from '../../Components/Buttons/SecondaryButton.vue';
+import GreenButton from '../../Components/Buttons/GreenButton.vue';
 import NotDataList from '../../Components/NotDataList.vue';
 import TableHead from '../../Components/Table/TableHead.vue';
 import TableData from '../../Components/Table/TableData.vue';
 import TableBody from '../../Components/Table/TableBody.vue';
-import PrimaryButton from '../../Components/PrimaryButton.vue';
+import PrimaryButton from '../../Components/Buttons/PrimaryButton.vue';
+import StepsControlApartment from '../../Layouts/Apartment/StepsControlApartment.vue';
 export default defineComponent({
     components:{
         SecondaryButton,NotDataList,
         TableHead,
         TableData,
         TableBody,
-        PrimaryButton
+        PrimaryButton,
+        GreenButton,
+        StepsControlApartment
     },
     computed:{
         // aps(){
@@ -75,17 +81,15 @@ export default defineComponent({
     },
     setup(){
         const store = useStore()
+
         const block = computed(()=>store.state.condominia.block)
         // const apartments = computed(()=>store.state.condominia.block.apartments)
         // const aps = store.getters.condominia.apartmentsByIdCondominia(block.id)
-        const closeModel = () => {
-            console.log('TEM QUE FECHA O MODAL')
-        }
+
 
         return{
             // apartments,
             block,
-            closeModel
         }
     }
 })
