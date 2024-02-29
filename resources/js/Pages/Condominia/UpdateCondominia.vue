@@ -55,7 +55,7 @@
                             </table-data>
                             <table-data type="normal">
                                 <primary-button @click="viewBlock(block)">
-                                    add apartamento
+                                    Ver apartamento
                                     <span class="ml-2">
                                         <font-awesome-icon color="" :icon="['fass', 'fa-plus']"/>
                                     </span>
@@ -101,7 +101,7 @@
     </AuthenticatedLayout>
 </template>
 <script>
-import { Head, useForm} from '@inertiajs/vue3';
+import { Head, useForm, router} from '@inertiajs/vue3';
 import AuthenticatedLayout from '../../Layouts/AuthenticatedLayout.vue';
 import TableHead from '../../Components/Table/TableHead.vue';
 import TableData from '../../Components/Table/TableData.vue';
@@ -115,7 +115,7 @@ import Dialog from '../../Components/Dialog.vue';
 import NotDataList from '../../Components/NotDataList.vue';
 import Modal from '../../Components/Modal.vue';
 import IndexBlock from '../Block/IndexBlock.vue';
-import { faTruckMedical } from '@fortawesome/free-solid-svg-icons';
+import { Inertia} from '@inertiajs/inertia'
 
 export default{
     components:{
@@ -135,7 +135,7 @@ export default{
     props:{
         // roles:{type:Array},
         flash:{type:Object},
-        condominia:{type:Object},
+        // condominia:{type:Object},
         blocks:{type:Array}
     },
 
@@ -143,7 +143,7 @@ export default{
         const createdBlock = ref(false)
         const DialogOpen = ref(false)
         const store = useStore()
-        const id = computed(()=> store.state.condominia.id)
+
         const condominia = computed(()=> store.state.condominia)
         const modalSet= ref(false)
         const control = "modal-center"
@@ -156,16 +156,19 @@ export default{
             modalSet.value = false
         }
         const deletedBlock = (id) =>{
-            console.log('dentro do deletedblock',id)
-            route('blocks.delete', id)
-            // form.id = id
-            form.delete(route('blocks.delete', id))
+            if(confirm('Tem certeza que vai excluir?')){
+                Inertia.delete(route('blocks.delete', id))
+                router.reload()
+                // setTimeout(() =>{
+                // }, 1000)
+            }
+            // // form.id = id
+            // form.delete(route('blocks.delete', id))
         }
 
         onMounted(() =>{
-            console.log('ESTOU AQUI !!!')
-            console.log('AQUI ESTA ID ', id.value)
-            // console.log(props.condominia)
+            store.commit("condominia/setId", router.page.props.condominia.id)
+
         });
         return {
             condominia,

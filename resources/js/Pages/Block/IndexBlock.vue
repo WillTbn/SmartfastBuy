@@ -5,9 +5,9 @@
 
         </h2>
 
-        <steps-control-apartment />
+        <steps-control-apartment @action-update="$emit('back-init')"/>
 
-        <div v-if="block.apartments.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8 table-scrol">
+        <div v-if="aps.apartments.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8 table-scrol">
 
             <table-body>
                 <template #headColumns>
@@ -18,7 +18,7 @@
 
                 </template>
                 <template #tableRows>
-                    <tr v-for="apt in block.apartments" :key="apt.id">
+                    <tr v-for="apt in aps.apartments" :key="apt.id">
                         <table-data type="first">
                             {{ apt.number }}
                         </table-data>
@@ -32,13 +32,13 @@
                                     <font-awesome-icon color="" :icon="['fass', 'fa-plus']"/>
                                 </span>
                             </primary-button>
+                            <danger-button class="ml-2" @click="deletedApto(apt.id)">
+                                deletar
+                                <span class="ml-2">
+                                    <font-awesome-icon color="" :icon="['fass', 'fa-trash']"/>
+                                </span>
+                            </danger-button>
                         </table-data>
-                        <!--
-                        <table-data type="normal">
-                            <Link method="get" :href="route('envite.edit', product.id)"><font-awesome-icon color="green" :icon="['fass', 'fa-edit']"/></Link>
-
-                            {{ invite.id }}
-                        </table-data> -->
                     </tr>
                 </template>
             </table-body>
@@ -63,7 +63,10 @@ import TableHead from '../../Components/Table/TableHead.vue';
 import TableData from '../../Components/Table/TableData.vue';
 import TableBody from '../../Components/Table/TableBody.vue';
 import PrimaryButton from '../../Components/Buttons/PrimaryButton.vue';
+import DangerButton from '../../Components/DangerButton.vue';
 import StepsControlApartment from '../../Layouts/Apartment/StepsControlApartment.vue';
+import { Head, useForm, router} from '@inertiajs/vue3';
+import { Inertia} from '@inertiajs/inertia'
 export default defineComponent({
     components:{
         SecondaryButton,NotDataList,
@@ -71,24 +74,36 @@ export default defineComponent({
         TableData,
         TableBody,
         PrimaryButton,
+        DangerButton,
         GreenButton,
         StepsControlApartment
     },
     computed:{
-        // aps(){
-        //     return this.$store.state.condominia.block.apartments.find(ap =>ap.condominia_id === this.block.id )
-        // }
+        aps(){
+            return this.$store.state.condominia.block
+        }
     },
     setup(){
         const store = useStore()
 
         const block = computed(()=>store.state.condominia.block)
+        const condominia = computed(() => store.state.condominia)
         // const apartments = computed(()=>store.state.condominia.block.apartments)
         // const aps = store.getters.condominia.apartmentsByIdCondominia(block.id)
-
+        const deletedApto = (id) =>{
+            if(confirm('Tem certeza que vai excluir este apartamento?')){
+                Inertia.delete(route('apartment.delete', id))
+                setTimeout(() =>{
+                    router.reload()
+                }, 1000)
+            }
+            // // form.id = id
+            // form.delete(route('blocks.delete', id))
+        }
 
         return{
-            // apartments,
+            deletedApto,
+            condominia,
             block,
         }
     }

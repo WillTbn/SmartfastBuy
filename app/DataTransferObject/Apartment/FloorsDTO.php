@@ -9,7 +9,6 @@ use Illuminate\Contracts\Validation\Validator;
 class FloorsDTO extends AbstractDTO implements InterfaceDTO
 {
     public function __construct(
-        public readonly string $block,
         public readonly int $apartment_start,
         public readonly int $apartment_finally,
         public readonly int $block_id,
@@ -23,7 +22,7 @@ class FloorsDTO extends AbstractDTO implements InterfaceDTO
         return [
             'apartment_start' => 'required',
             'apartment_finally' => 'required',
-            'condominia_id' => 'required',
+            // 'condominia_id' => 'required',
             'block_id' => 'required|exists:blocks,id',
             // 'number' => 'required|min:2',
             'condominia_id' => 'exists:condominias,id',

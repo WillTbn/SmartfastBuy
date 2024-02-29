@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class ApartmentServices
 {
-    public function sendCreate( int $block, int $number, int $condominia_id, $floor = null): Apartment
+    public function sendCreate( int $block_id, int $number, int $condominia_id, $floor = null): Apartment
     {
         $apartment = new Apartment();
         $apartment->condominia_id = $condominia_id;
         $apartment->number = $number;
-        $apartment->block_id = $block;
+        $apartment->block_id = $block_id;
         $apartment->floor = $floor;
         $apartment->saveOrFail();
         return $apartment;

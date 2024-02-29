@@ -71,12 +71,14 @@ Route::middleware(['auth'])->group(function(){
 
     Route::controller(BlockController::class)->prefix('/blocks')->as('blocks.')->group(function() {
         Route::post('/', 'created')->name('create');
+        Route::post('/floors', 'createFloorsBlocks')->name('floorsBlock');
         Route::delete('/{block}', 'deleted')->name('delete');
     });
 
     Route::controller(ApartmentController::class)->prefix('/apartments')->as('apartment.')->group(function(){
         Route::get('/', 'index')->name('index');
         Route::post('/', 'created')->name('create');
+        Route::delete('/{apto}', 'delete')->name('delete');
     });
 
 });

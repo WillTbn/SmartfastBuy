@@ -17,7 +17,7 @@
 </template>
 <script>
 import {computed, defineComponent, ref} from 'vue'
-import {useForm} from '@inertiajs/vue3'
+import {useForm, router} from '@inertiajs/vue3'
 import PrimaryButton from '../../Components/Buttons/PrimaryButton.vue'
 import { useStore } from 'vuex'
 
@@ -25,7 +25,8 @@ export default defineComponent({
     components:{
         PrimaryButton
     },
-    setup(){
+    emits: ['created-apto'],
+    setup(props, ctx){
         const store = useStore()
         const condominia = computed(()=> store.state.condominia)
         const styleForm = ref("block w-full px-4 rounded-md border-transparent  form-input")
@@ -38,11 +39,23 @@ export default defineComponent({
             number:'',
 
         })
+        // const emit = defineEmits(['created-apto'])
         const submitRegister = () => {
             form.post(route('apartment.create'), {
-                onSuccess:() => form.reset(),
+                onSuccess:(e) => {
+                    form.reset(),
+                    console.log(e.props)
+                    // store.commit("condominia/setBlock", e.props.blocks)
+
+                },
                 onError:() => styleForm.value = 'block w-full rounded-md px-4 border-red-700  form-input',
-                onFinish:() => form.reset()
+                onFinish:() => {
+                    form.reset(),
+                    setTimeout(() => {
+                        router.reload(),
+                        ctx.emit('created-apto')
+                    }, 1000);
+                }
             })
         }
         return{

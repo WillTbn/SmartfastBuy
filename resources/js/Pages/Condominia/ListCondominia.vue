@@ -16,7 +16,7 @@
                         </table-data>
                         <table-data type="normal">
                             <Link method="get" :href="route('condominia.edit', cond.id)">
-                                <font-awesome-icon color="green" @click="setCond(cond.id)" :icon="['fass', 'fa-edit']"/>
+                                <font-awesome-icon color="green"  :icon="['fass', 'fa-edit']"/>
                             </Link>
                         </table-data>
                     </tr>

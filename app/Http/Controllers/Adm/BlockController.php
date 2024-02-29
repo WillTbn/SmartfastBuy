@@ -46,11 +46,10 @@ class BlockController extends Controller
     public function createFloorsBlocks(Request $request)
     {
         $dto = new FloorsDTO(...$request->only([
-            'block',
             'apartment_start',
             'apartment_finally',
             'block_id',
-            'condomia_id'
+            'condominia_id'
         ]));
 
         if($this->aptServices->getFloors($dto)){
@@ -62,22 +61,23 @@ class BlockController extends Controller
             'block_id' => $dto->block_id,
             'condominia_id' => $dto->condominia_id
         );
-
         // ESTUDAR COLOCA ISSO EM UM JOB
             for($i= $dto->apartment_start; $i <= $dto->apartment_finally; $i++){
                 $dataApto['number'] = $i;
-                $this->aptServices->sendCreate($dataApto['block'], $dataApto['number'], $dataApto['condominia_id']);
+                $this->aptServices->sendCreate($dataApto['block_id'], $dataApto['number'], $dataApto['condominia_id']);
             }
         // FINAL DO FUTURO JOB
-
-        return redirect()->back()
+        return redirect()
+        // >route('condominia.index')
+            ->back()
             ->with('success', 'Sucesso, apartamentos cadastrados com sucesso.');
+            // ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
         // return $this->simpleAnswer('success', 'Sucesso, apartamentos cadastrados com sucesso.', 200);
     }
-    public function deleted(Block $block){
-
+    public function deleted(Block $block)
+    {
         $block->delete();
         return redirect()->back()
-        ->with('success', 'Usuário deletedo com sucesso!');
+        ->with('success', 'Bloco deletedo com sucesso!');
     }
 }

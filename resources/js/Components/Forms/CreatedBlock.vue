@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {useForm} from '@inertiajs/vue3'
+import {useForm, router} from '@inertiajs/vue3'
 import {computed, defineComponent, ref} from 'vue'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 import { useStore } from 'vuex';
@@ -42,7 +42,8 @@ export default defineComponent({
             console.log(form)
             form.post(route('blocks.create'), {
                 onSuccess:() => form.reset(),
-                onError:() => styleForm.value = 'block w-full px-4 border-red-700 rounded form-input'
+                onError:() => styleForm.value = 'block w-full px-4 border-red-700 rounded form-input',
+                onFinish:() => router.reload()
             })
         }
 

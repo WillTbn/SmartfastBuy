@@ -29,8 +29,8 @@ class Client extends User
         'password' => 'hashed'
     ];
 
-    public function account():HasOne
+    public function account_client():HasOne
     {
-        return $this->hasOne(Account::class, 'user_id', 'id');
+        return $this->hasOne(AccountClient::class, 'client_id', 'id');
     }
 }
