@@ -26,7 +26,7 @@
                             {{ apt.apartments.length }}
                         </table-data> -->
                         <table-data type="normal">
-                            <primary-button>
+                            <primary-button @click.prevent="startLink(apt.id)">
                                 Vincular cliente
                                 <span class="ml-2">
                                     <font-awesome-icon color="" :icon="['fass', 'fa-plus']"/>
@@ -43,6 +43,7 @@
                 </template>
             </table-body>
         </div>
+
         <div v-else>
             <not-data-list>
                 Não há apartamento cadastrado nesse bloco.
@@ -51,6 +52,12 @@
         <div class="flex justify-end mt-6">
             <secondary-button @click="$emit('back-init')"> fechar</secondary-button>
         </div>
+
+        <!--  Modal vincular cliente -->
+        <modal :show="modalLinkClient" @close="closeModal" >
+            <form-create-invite :condominia_id="block.condominia_id" :apartment_id="linkApartmentId" @closed="closeModal"/>
+        </modal>
+
     </div>
 </template>
 <script>
@@ -67,6 +74,9 @@ import DangerButton from '../../Components/DangerButton.vue';
 import StepsControlApartment from '../../Layouts/Apartment/StepsControlApartment.vue';
 import { Head, useForm, router} from '@inertiajs/vue3';
 import { Inertia} from '@inertiajs/inertia'
+import Modal from '../../Components/Modal.vue';
+import FormCreateInvite from '../../Layouts/invites/FormCreateInvite.vue';
+
 export default defineComponent({
     components:{
         SecondaryButton,NotDataList,
@@ -76,7 +86,9 @@ export default defineComponent({
         PrimaryButton,
         DangerButton,
         GreenButton,
-        StepsControlApartment
+        StepsControlApartment,
+        Modal,
+        FormCreateInvite
     },
     computed:{
         aps(){
@@ -85,7 +97,8 @@ export default defineComponent({
     },
     setup(){
         const store = useStore()
-
+        const modalLinkClient = ref(false)
+        const linkApartmentId = ref(null)
         const block = computed(()=>store.state.condominia.block)
         const condominia = computed(() => store.state.condominia)
         // const apartments = computed(()=>store.state.condominia.block.apartments)
@@ -100,11 +113,24 @@ export default defineComponent({
             // // form.id = id
             // form.delete(route('blocks.delete', id))
         }
+        const startLink = (id) => {
+            modalLinkClient.value = true
+            linkApartmentId.value = id
+
+        }
+        const closeModal = () =>{
+            modalLinkClient.value = false
+
+        }
 
         return{
             deletedApto,
+            modalLinkClient,
             condominia,
             block,
+            linkApartmentId,
+            closeModal,
+            startLink
         }
     }
 })

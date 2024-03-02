@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Jobs\AdmSystem\Invitation;
+namespace App\Jobs\AdmSystem;
 
-use App\DataTransferObject\Invitation\InvitationDTO;
-use App\Mail\InvitationEmail;
+use App\Mail\AdmSystem\InvitationEmail;
 use App\Models\Invitation;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
-class SendEmailInvitationJob implements ShouldQueue
+class SendEmailInvatationJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

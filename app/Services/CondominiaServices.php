@@ -11,4 +11,12 @@ class CondominiaServices
     {
         return Condominia::all();
     }
+
+    public function createCondominia(String $name) :Condominia
+    {
+        $cond = new Condominia();
+        $cond->name = $name;
+        $cond->saveOrFail();
+        return $cond;
+    }
 }

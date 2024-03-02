@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Adm;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Condominia\CondominiaPostRequest;
 use App\Models\Condominia;
 use App\Services\ApartmentServices;
 use App\Services\BlockServices;
@@ -44,6 +45,17 @@ class CondominiaController extends Controller
             // 'users' => [...$this->userservice->getAllUsers()]
             // 'users' => $user
         ]);
+    }
+    public function create(CondominiaPostRequest $request)
+    {
+        // $register = $this->blockServices->createdBlock($request->name, $request->condominia_id);
+        $register = $this->condServices->createCondominia($request->name);
+        if($register){
+            return redirect()->back()
+            ->with('success', 'Condominio criado!');
+        }
+        return redirect()->back('500')
+        ->with('error', 'Problema ao salva no banco contate o suporte!');
     }
     public function delete(Condominia $condominia)
     {

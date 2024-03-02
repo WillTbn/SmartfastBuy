@@ -42,12 +42,7 @@ export default defineComponent({
         // const emit = defineEmits(['created-apto'])
         const submitRegister = () => {
             form.post(route('apartment.create'), {
-                onSuccess:(e) => {
-                    form.reset(),
-                    console.log(e.props)
-                    // store.commit("condominia/setBlock", e.props.blocks)
-
-                },
+                onSuccess:(e) => form.reset(),
                 onError:() => styleForm.value = 'block w-full rounded-md px-4 border-red-700  form-input',
                 onFinish:() => {
                     form.reset(),

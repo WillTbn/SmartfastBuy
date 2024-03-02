@@ -51,21 +51,16 @@ Route::prefix('/products')->name('products.')->middleware(['auth'])->group(funct
     // Route::post('/', [UserController::class, 'create'])->name('create');
     Route::delete('/{id}', [ProductsController::class, 'deleted'])->name('delete');
 });
-Route::prefix('/condominia')->name('condominia.')->middleware(['auth'])->group(function(){
-    Route::get('/', [CondominiaController::class, 'index'])->name('index');
-    Route::post('/', [CondominiaController::class, 'create'])->name('create');
-    Route::get('/{condominia}', [CondominiaController::class, 'getOne'])->name('edit');
-    // Route::delete('/{id}', [ProductsController::class, 'deleted'])->name('delete');
-});
+
 // Route::prefix('/blocks')->name('blocks.')->middleware((['auth']))->group(function (){
 //     Route::post('/', [BlockController::class, 'created'])->name('create');
 // });
-Route::prefix('/invites')->name('invites.')->middleware(['auth'])->group(function(){
-    Route::get('/', [InvitationController::class, 'index'])->name('index');
-    // Route::get('/{id}', [ProductsController::class, 'getOne'])->name('edit');
-    Route::post('/', [InvitationController::class, 'create'])->name('create');
-    // Route::delete('/{id}', [ProductsController::class, 'deleted'])->name('delete');
-});
+// Route::prefix('/invites')->name('invites.')->middleware(['auth'])->group(function(){
+//     Route::get('/', [InvitationController::class, 'index'])->name('index');
+//     // Route::get('/{id}', [ProductsController::class, 'getOne'])->name('edit');
+//     Route::post('/', [InvitationController::class, 'create'])->name('create');
+//     // Route::delete('/{id}', [ProductsController::class, 'deleted'])->name('delete');
+// });
 
 Route::middleware(['auth'])->group(function(){
 
@@ -79,6 +74,16 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/', 'index')->name('index');
         Route::post('/', 'created')->name('create');
         Route::delete('/{apto}', 'delete')->name('delete');
+    });
+
+    Route::controller(CondominiaController::class)->prefix('/condominia')->as('condominia.')->group(function (){
+        Route::post('/', 'create')->name('create');
+        Route::get('/', 'index')->name('index');
+        Route::get('/{condominia}','getOne')->name('getOne');
+    });
+    Route::controller(InvitationController::class)->prefix('/invites')->as('invites.')->group(function(){
+        Route::get('/', 'index')->name('index');
+        Route::post('/', 'create')->name('create');
     });
 
 });

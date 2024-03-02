@@ -8,7 +8,7 @@
                 <input id="name" type="text" v-model="form.name"
                 :class="styleForm"
                 >
-                <div v-if="form.errors.name" class="font-medium text-red-700">{{ form.errors.name }}</div>
+                <msg-error v-if="form.errors.name" :message="form.errors.name"/>
             </label>
         </div>
         <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
@@ -22,11 +22,14 @@ import {useForm, router} from '@inertiajs/vue3'
 import {computed, defineComponent, ref} from 'vue'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 import { useStore } from 'vuex';
+import MsgError from './MsgError.vue';
+
 // import Dialog from '@/Components/Dialog.vue';
 
 export default defineComponent({
     components:{
-        PrimaryButton
+        PrimaryButton,
+        MsgError
     },
     setup(){
         // const item = ref({...condominia})

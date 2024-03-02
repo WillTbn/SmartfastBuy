@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Adm;
 
+use App\DataTransferObject\Invitation\InvitationDTO;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Invitation\InvitationPostRequest;
+use App\Jobs\AdmSystem\SendEmailInvatationJob;
 use App\Services\CondominiaServices;
 use App\Services\InvitationServices;
 use Illuminate\Http\Request;
@@ -29,8 +32,24 @@ class InvitationController extends Controller
             'condominias' => $this->condServices->getAllCond(),
         ]);
     }
-    public function create(Request $request)
+    public function create(InvitationPostRequest $request)
     {
-        return $request;
+        $dto = new InvitationDTO(...$request->only([
+            'email',
+            'name',
+            'person',
+            'birthday',
+            'apartment_id',
+        ]));
+
+        $response = $this->invitationServices->sendCreate($dto);
+
+        if($response){
+            SendEmailInvatationJob::dispatch($response)->delay(2);
+            return redirect()->back()->with('success', 'Convite enviado com sucesso!');
+        }
+        return redirect()->back('500')
+        ->with('error', 'Problema ao salva, entre em contato com o suporte!');
+
     }
 }
