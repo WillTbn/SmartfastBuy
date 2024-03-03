@@ -6,23 +6,26 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
-
+import PrimaryButton from '../Components/Buttons/PrimaryButton.vue';
+import SelectTheme from '../Components/Forms/SelectTheme.vue';
 const showingNavigationDropdown = ref(false);
+
 </script>
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+        <div class="min-h-screen light:bg-gray-100">
+            <nav class="light:bg-white border-b light:border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
+
                         <div class="flex">+
                             <!-- Logo -->
                             <div class="flex items-center shrink-0">
                                 <Link :href="route('dashboard')">
                                     <ApplicationLogo
-                                        class="block w-auto text-gray-800 fill-current h-9"
+                                        class="block w-auto light:text-gray-800 fill-current h-9"
                                     />
                                 </Link>
                             </div>
@@ -84,6 +87,10 @@ const showingNavigationDropdown = ref(false);
                                     </template>
                                 </Dropdown>
                             </div>
+                        </div>
+                        <div class="flex items-center">
+                            <select-theme/>
+
                         </div>
 
                         <!-- Hamburger -->
@@ -150,7 +157,7 @@ const showingNavigationDropdown = ref(false);
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
+            <header class="light:bg-white shadow" v-if="$slots.header">
                 <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
@@ -163,3 +170,9 @@ const showingNavigationDropdown = ref(false);
         </div>
     </div>
 </template>
+<style>
+.dark{
+    background-color: rgb(3 7 18);
+    color:white
+}
+</style>
