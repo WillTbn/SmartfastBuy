@@ -84,6 +84,7 @@ Route::middleware(['auth'])->group(function(){
     Route::controller(InvitationController::class)->prefix('/invites')->as('invites.')->group(function(){
         Route::get('/', 'index')->name('index');
         Route::post('/', 'create')->name('create');
+        Route::delete('/{invitation}', 'delete')->name('delete');
         Route::put('/resend-email/{invitation}', 'resend')->name('resend');
     });
 

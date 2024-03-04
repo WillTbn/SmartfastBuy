@@ -7,7 +7,7 @@
         <div v-if="invites.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <table-body>
                 <template #headColumns>
-                    <table-head type="first" label="Nome"/>
+                    <table-head type="first" label="E-mail"/>
                     <table-head type="normal" label="criado por"/>
                     <table-head type="normal" label="criado em"/>
                     <table-head type="normal" label="Ações"/>
@@ -17,9 +17,9 @@
                     -->
                 </template>
                 <template #tableRows>
-                    <tr v-for="invite in invites" :key="invite.id">
+                    <tr v-for="(invite, index) in invites" :key="index">
                         <table-data type="first">
-                            {{ invite.name }}
+                            {{ invite.email }}
                         </table-data>
                         <table-data type="normal">
                             <div  class="flex flex-row items-center ">
@@ -32,18 +32,11 @@
                         </table-data>
 
                         <table-data type="normal">
-                            <info-button @click="resend(invite.id)">
-                                reenviar
-                                <span class="ml-2">
-                                    <font-awesome-icon color="" :icon="['fass', 'fa-paper-plane']"/>
-                                </span>
-                            </info-button>
-                            <danger-button class="ml-2">
-                                deletar
-                                <span class="ml-2">
-                                    <font-awesome-icon color="" :icon="['fass', 'fa-trash']"/>
-                                </span>
-                            </danger-button>
+                            <div class="flex flex-row items-center">
+
+                                <resend-invite :invitationId="invite.id" :key="index"/>
+                                <delete-invite :invitationId="invite.id" :name="invite.name" :key="index"/>
+                            </div>
                         </table-data>
                         <!--
 
@@ -73,10 +66,14 @@ import AuthenticatedLayout from '../../Layouts/AuthenticatedLayout.vue';
 import TableHead from '../../Components/Table/TableHead.vue';
 import TableData from '../../Components/Table/TableData.vue';
 import TableBody from '../../Components/Table/TableBody.vue';
-import InfoButton from '@/Components/Buttons/InfoButton.vue';
+
 import DangerButton from '@/Components/DangerButton.vue';
 import { router, useForm } from '@inertiajs/vue3';
 import useNotify from '../../composables/useNotify';
+
+import { ref } from 'vue';
+import ResendInvite from '../../Components/Invitation/ResendInvite.vue';
+import DeleteInvite from '../../Components/Invitation/DeleteInvite.vue';
 
 export default defineComponent({
     components:{
@@ -84,10 +81,11 @@ export default defineComponent({
         TableHead,
         TableData,
         DangerButton,
-        InfoButton,
         Head,
         Link,
-        AuthenticatedLayout
+        AuthenticatedLayout,
+        DeleteInvite,
+        ResendInvite,
     },
     props:{
         // roles:{type:Array},
@@ -95,14 +93,8 @@ export default defineComponent({
         condominias:{type:Array}
     },
     setup(){
-        // const submit = (id) => {
-        //     alert(id)
-        //     if(confirm("are you sure you want to delete this user?"))
-        //     {
-        //         $this.$inertia.delete(`users/${id}`)
-        //     }
-        // }
         const {errorNotify} = useNotify()
+
         const submitRegister = () => {
             form.post(route('condominia.create'), {
                 onSuccess:(e) => {
@@ -121,23 +113,8 @@ export default defineComponent({
             })
         }
 
-        const resend = (id) => {
-            const form = useForm({
-                id:id
-            })
-            console.log('OLHA _>', form)
-            // form.value.id = id
-            form.put( route('invites.resend', id), {
-                onSuccess:() => form.reload(),
-                onError:(e) => errorNotify(e),
-                onFinish:() =>console.log('estou no final')
-            })
-
-
-        }
 
         return {
-            resend
             // submit
         }
     }

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Adm;
 
-use App\Jobs\AdmSystem\Invitation\SendEmailInvitationJob;
+
 use App\Jobs\AdmSystem\SendEmailInvatationJob;
 use App\Models\Apartment;
 use App\Models\Block;
@@ -10,7 +10,6 @@ use App\Models\Condominia;
 use App\Models\Invitation;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
@@ -127,4 +126,27 @@ class InvitationControllerTest extends TestCase
         Queue::assertPushed(SendEmailInvatationJob::class);
 
     }
+    public function test_invitation_deleted()
+    {
+        $user = \App\Models\User::factory()->create();
+
+        $invitation =  Invitation::factory()->create([
+            'name' => 'Fulano de tal',
+            'email'=>   'teste@live.com',
+            'user_id' => $user->id,
+            'data' => 'algo qualquer',
+            'token'=> 'bdNiypOWANe9QepXeUIOF1QYorgT0Tqen33333'
+        ]);
+
+        $response = $this->actingAs($user)->delete(route('invites.delete', $invitation->id));
+        $response->assertStatus(302);
+        // dd($invitation);
+
+        $this->assertSoftDeleted('invitations', ['email' => 'teste@live.com']);
+
+        // $this->assertDatabaseMissing('invitations', [
+        //     'email'=>   'teste@live.com',
+        // ]);
+    }
+
 }

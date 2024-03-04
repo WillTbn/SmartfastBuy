@@ -9,7 +9,6 @@ use App\Jobs\AdmSystem\SendEmailInvatationJob;
 use App\Models\Invitation;
 use App\Services\CondominiaServices;
 use App\Services\InvitationServices;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class InvitationController extends Controller
@@ -58,6 +57,16 @@ class InvitationController extends Controller
         if($invitation){
             $invitation->update(['updated_at' => now()]);
             return redirect()->back()->with('success', 'Convite reenviado com sucesso!');
+        }
+
+        return redirect()->back('500')
+        ->with('error', 'Convite esta com algum error, relate ao suporte!');
+    }
+    public function delete(Invitation $invitation)
+    {
+        if($invitation){
+            $invitation->delete();
+            return redirect()->back()->with('success', 'Convite excluido!');
         }
 
         return redirect()->back('500')

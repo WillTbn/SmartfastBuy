@@ -2,14 +2,12 @@
 
 namespace Tests\Feature\Adm;
 
-use App\Models\AccountClient;
 use App\Models\Apartment;
 use App\Models\Block;
-use App\Models\Client;
 use App\Models\Condominia;
-use Exception;
+
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+
 use Tests\TestCase;
 
 class ApartmentControllerTest extends TestCase

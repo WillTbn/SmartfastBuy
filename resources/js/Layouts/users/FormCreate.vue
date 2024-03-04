@@ -151,7 +151,7 @@ function geradorPassword(){
 const getGenre = [
     {id:1, name:"Homem"},
     {id:2, name:"Mulher"},
-    {id:3, name:"LGBT"},
+    {id:3, name:"LGBTQQICAAPF2K+"},
     {id:4, name:"não informar"}
 ]
 const notYes = [
