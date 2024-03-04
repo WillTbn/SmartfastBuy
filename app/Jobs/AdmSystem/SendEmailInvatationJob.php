@@ -2,7 +2,7 @@
 
 namespace App\Jobs\AdmSystem;
 
-use App\Mail\AdmSystem\InvitationEmail;
+use App\Mail\Client\InvitationSendEmail;
 use App\Models\Invitation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -27,12 +27,12 @@ class SendEmailInvatationJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
+     * Execute the job.s
      *
      * @return void
      */
     public function handle()
     {
-        Mail::to("jorgenunes@woza.com.br")->send(new InvitationEmail($this->dto));
+        Mail::to("jorgenunes@woza.com.br")->send(new InvitationSendEmail($this->dto));
     }
 }

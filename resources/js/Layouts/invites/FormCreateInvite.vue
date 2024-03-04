@@ -106,7 +106,7 @@ const props = defineProps({
     apartment_id:{type:Number}
 })
 // defineEmits(['closed'])
-const {errorNotify} = useNotify()
+const {errorNotify, multError} = useNotify()
 const emit = defineEmits(['closed'])
 const submitRegister = () => {
     form.post(route('invites.create'), {
@@ -114,11 +114,12 @@ const submitRegister = () => {
             form.reset(),
             emit('closed')
         },
-        onError:(e) =>{
-            for(const key in e){
-                errorNotify(e[key])
-            }
-        },
+        onError:(e) =>  multError(e)
+        // onError:(e) =>{
+        //     for(const key in e){
+        //         errorNotify(e[key])
+        //     }
+        // },
     })
 }
 

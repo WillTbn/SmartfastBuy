@@ -55,6 +55,41 @@ class InvitationControllerTest extends TestCase
         ]);
 
     }
+    public function test_invitation_update_token_resend_email()
+    {
+        $user = User::factory()->create();
+
+        $cond = Condominia::factory()->create();
+        $block = Block::factory()->create(
+            ['name' => 'Vivendas teste', 'condominia_id' =>$cond->id]
+        );
+        $apto =  Apartment::factory()->create([
+            'number' => 106,
+            'floor' => 1,
+            'block_id' =>  $block->id,
+            'condominia_id' => $cond->id
+        ]);
+        //aqui pode ser criado um fake em vez de uma requisição ao create do controller
+        $this->actingAs($user)->post(route('invites.create', [
+            'name' => 'Fulano de tal',
+            'email'=>   'teste@live.com',
+            'person' => '111.222.333-44',
+            'birthday' => fake()->date(),
+            'apartment_id' => $apto->id
+        ]));
+        $getInvitation = Invitation::latest()->first();
+
+        $response = $this->actingAs($user)->put(route('invites.resend', $getInvitation->id));
+
+        $getNewInvitation = Invitation::latest()->first();
+        $this->assertNotNull($getNewInvitation);
+
+        $response->assertStatus(302);
+        $this->assertDatabaseHas('invitations', [
+            'token'=>   $getNewInvitation->token,
+        ]);
+
+    }
     public function test_job_send_email()
     {
         $user = User::factory()->create();

@@ -36,10 +36,16 @@ export default function useNotify() {
             autoClose:3000
         })
     };
+    const multError = (obj) => {
+        for(const key in obj){
+            errorNotify(obj[key])
+        }
+    }
 
     return {
         errorNotify,
         successNotify,
         infoNotify,
+        multError,
     };
 }

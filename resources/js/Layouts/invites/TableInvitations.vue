@@ -1,9 +1,5 @@
 <template>
-    <Head title="Convites"/>
-    <AuthenticatedLayout>
-        <template #header>
-            Convites
-        </template>
+    <div>
         <div v-if="invites.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <table-body>
                 <template #headColumns>
@@ -32,7 +28,7 @@
                         </table-data>
 
                         <table-data type="normal">
-                            <info-button @click="resend(invite.id)">
+                            <info-button>
                                 reenviar
                                 <span class="ml-2">
                                     <font-awesome-icon color="" :icon="['fass', 'fa-paper-plane']"/>
@@ -64,83 +60,43 @@
             <p> Não há convites em aberto</p>
 
         </div>
-    </AuthenticatedLayout>
+    </div>
 </template>
 <script>
-import {defineComponent} from 'vue'
-import { Head,Link} from '@inertiajs/vue3';
 import AuthenticatedLayout from '../../Layouts/AuthenticatedLayout.vue';
 import TableHead from '../../Components/Table/TableHead.vue';
 import TableData from '../../Components/Table/TableData.vue';
 import TableBody from '../../Components/Table/TableBody.vue';
 import InfoButton from '@/Components/Buttons/InfoButton.vue';
 import DangerButton from '@/Components/DangerButton.vue';
-import { router, useForm } from '@inertiajs/vue3';
-import useNotify from '../../composables/useNotify';
 
-export default defineComponent({
+
+export default{
     components:{
         TableBody,
         TableHead,
         TableData,
         DangerButton,
         InfoButton,
-        Head,
-        Link,
-        AuthenticatedLayout
     },
     props:{
         // roles:{type:Array},
         invites:{type:Array},
         condominias:{type:Array}
     },
-    setup(){
-        // const submit = (id) => {
-        //     alert(id)
-        //     if(confirm("are you sure you want to delete this user?"))
-        //     {
-        //         $this.$inertia.delete(`users/${id}`)
-        //     }
-        // }
-        const {errorNotify} = useNotify()
-        const submitRegister = () => {
-            form.post(route('condominia.create'), {
-                onSuccess:(e) => {
-                    form.reset(),
-                    console.log(e.props)
-                    // store.commit("condominia/setBlock", e.props.blocks)
+    // setup(){
+    //     const submit = (id) => {
+    //         alert(id)
+    //         if(confirm("are you sure you want to delete this user?"))
+    //         {
+    //             $this.$inertia.delete(`users/${id}`)
+    //         }
+    //     }
 
-                },
-                onError:() => styleForm.value = 'block w-full rounded-md px-4 border-red-700  form-input',
-                onFinish:() => {
-                    form.reset(),
-                    setTimeout(() => {
-                        router.reload()
-                    }, 1000);
-                }
-            })
-        }
+    //     return {
+    //         submit
+    //     }
+    // }
 
-        const resend = (id) => {
-            const form = useForm({
-                id:id
-            })
-            console.log('OLHA _>', form)
-            // form.value.id = id
-            form.put( route('invites.resend', id), {
-                onSuccess:() => form.reload(),
-                onError:(e) => errorNotify(e),
-                onFinish:() =>console.log('estou no final')
-            })
-
-
-        }
-
-        return {
-            resend
-            // submit
-        }
-    }
-
-})
+}
 </script>

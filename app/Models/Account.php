@@ -44,6 +44,10 @@ class Account extends Model
 
         return $value;
     }
+    public function getAvatarAttribute($value)
+    {
+        return env('APP_URL_C').$value;
+    }
 
     public function user(): HasOne
     {

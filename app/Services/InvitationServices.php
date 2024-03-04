@@ -56,9 +56,8 @@ class InvitationServices
                 'invitations.name',
                 'invitations.created_at',
                 'users.email as create_email',
-                'accounts.avatar as create_avatar'
+                DB::raw("CONCAT('".env('APP_URL_C')."/', accounts.avatar) as create_avatar"),
             )
-
         ->get();
         return $response;
     }

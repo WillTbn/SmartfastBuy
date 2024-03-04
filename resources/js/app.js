@@ -15,8 +15,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faUserSecret, faCity, faShop, faEdit, faTrash, faPlus, faWindowClose, faClose, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-library.add(faUserSecret, faCity, faShop, faEdit, faTrash,faPlus, faWindowClose, faClose, faArrowLeft)
+import { faUserSecret, faCity, faShop, faEdit, faTrash, faPlus, faWindowClose, faClose, faArrowLeft, faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+library.add(faUserSecret, faCity, faShop, faEdit, faTrash,faPlus, faWindowClose, faClose, faArrowLeft, faPaperPlane)
 const appName = import.meta.env.VITE_APP_NAME || 'Smart Fast Buy';
 const pinia = createPinia()
 createInertiaApp({
