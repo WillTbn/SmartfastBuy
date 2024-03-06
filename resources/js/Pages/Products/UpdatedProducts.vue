@@ -1,33 +1,37 @@
 <template>
     <Head title="Produtos"/>
     <AuthenticatedLayout>
-        <div class="p-4 mx-auto mt-6 space-y-6 md:container" >
-            <div class="grid grid-cols-6 gap-12 text-center">
-                {{ product.name }}
-            </div>
-            <div class="grid grid-cols-6 gap-12 text-center">
-                {{ product.image_one }}
-            </div>
-            <div class="grid grid-cols-3 gap-4">
-                <div class="block">
-                    {{ product.value }}
+        <div class="md:px-16 md:m-auto md:container">
+            <form @submit.prevent="submitRegister" class="p-4 mt-6 space-y-6" >
+                <div class="grid grid-cols-3 gap-4">
+                    <label class="block">
+                        <span for="name" class="light:text-gray-700">Nome do produto*</span><br/>
+                        <input id="name" type="text" v-model="product.name"
+                        class="rounded text-gray-950"
+                        >
+                        <div v-if="form.errors.name">{{ form.errors.name }}</div>
+                    </label>
+
+                    <label class="block">
+                        <span for="value" class="light:text-gray-700">Preço*</span><br/>
+                        <input id="value" type="text" v-model="product.value"
+                        class="rounded text-gray-950"
+                        >
+                        <div v-if="form.errors.value">{{ form.errors.value }}</div>
+                    </label>
+                    <label class="block">
+                        <span for="description" class="light:text-gray-700">Descrição*</span><br/>
+                        <input id="description" type="text" v-model="product.description"
+                        class="rounded text-gray-950"
+                        >
+                        <div v-if="form.errors.description">{{ form.errors.description }}</div>
+                    </label>
+                    <PrimaryButton class="my-2" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                        Cadastra
+                    </PrimaryButton>
                 </div>
-                <div class="block">
-                    {{ product.barcode }}
-                </div>
-                <div class="block">
-                    {{ product.type }}
-                </div>
-                <div class="block">
-                    {{ product.quantity}}
-                </div>
-                <div class="block">
-                    {{ product.condominia_id}}
-                </div>
-                <div class="block">
-                    {{ product.description}}
-                </div>
-            </div>
+            </form>
+            <barcodes-product :barcodeProduct="product_one.product_barcodes"/>
         </div>
     </AuthenticatedLayout>
 </template>
@@ -35,17 +39,34 @@
 import { Head,Link} from '@inertiajs/vue3';
 import AuthenticatedLayout from '../../Layouts/AuthenticatedLayout.vue';
 import {defineComponent} from 'vue'
-
+import {useForm, router} from '@inertiajs/vue3'
+import PrimaryButton from '../../Components/Buttons/PrimaryButton.vue';
+import BarcodesProduct from './BarcodesProduct.vue'
 export default defineComponent({
     components:{
         Head,
         Link,
         AuthenticatedLayout,
+        PrimaryButton,
+        BarcodesProduct,
     },
     props:{
         // roles:{type:Array},
-        product:{type:Object}
+        product:{type:Object},
+        product_one:{type:Object},
     },
+    setup () {
+
+        const form = useForm({
+            name:"",
+
+        })
+
+        return{
+            form
+        }
+
+    }
     // setup(){
     //     const submit = (id) => {
     //         alert(id)

@@ -45,22 +45,6 @@ Route::prefix('/users')->name('users.')->middleware(['auth'])->group(function(){
     Route::post('/', [UserController::class, 'create'])->name('create');
     Route::delete('/{id}', [UserController::class, 'deleted'])->name('delete');
 });
-Route::prefix('/products')->name('products.')->middleware(['auth'])->group(function(){
-    Route::get('/', [ProductsController::class, 'index'])->name('index');
-    Route::get('/{id}', [ProductsController::class, 'getOne'])->name('edit');
-    // Route::post('/', [UserController::class, 'create'])->name('create');
-    Route::delete('/{id}', [ProductsController::class, 'deleted'])->name('delete');
-});
-
-// Route::prefix('/blocks')->name('blocks.')->middleware((['auth']))->group(function (){
-//     Route::post('/', [BlockController::class, 'created'])->name('create');
-// });
-// Route::prefix('/invites')->name('invites.')->middleware(['auth'])->group(function(){
-//     Route::get('/', [InvitationController::class, 'index'])->name('index');
-//     // Route::get('/{id}', [ProductsController::class, 'getOne'])->name('edit');
-//     Route::post('/', [InvitationController::class, 'create'])->name('create');
-//     // Route::delete('/{id}', [ProductsController::class, 'deleted'])->name('delete');
-// });
 
 Route::middleware(['auth'])->group(function(){
 
@@ -88,6 +72,11 @@ Route::middleware(['auth'])->group(function(){
         Route::put('/resend-email/{invitation}', 'resend')->name('resend');
     });
 
+    Route::controller(ProductsController::class)->prefix('/products')->as('products')->group(function(){
+        Route::get('/', 'index')->name('index');
+        Route::get('/{product}', 'getOne')->name('oneproduct');
+        Route::delete('/{product}', 'deleted')->name('delete');
+    });
 });
 
 

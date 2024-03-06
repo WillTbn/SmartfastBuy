@@ -57,8 +57,33 @@ class ProductsServices
     }
     public function getAllProduct()
     {
-        $products = Product::with(['condominia'])->get();
+        $response =
+        DB::table('products')
+        ->join('product_barcodes', 'products.id', '=', 'product_barcodes.product_id')
+        ->join('categories', 'products.category_id', '=', 'categories.id')
+        ->join('condominias', 'products.condominia_id', '=', 'condominias.id')
+        ->select(
+            'products.id',
+            'products.name',
+            'products.value',
+            'products.sku',
+            'products.description',
+            'condominias.name as condominia_name',
+            'categories.name as category_name',
+            DB::raw('COUNT(product_barcodes.product_id) as total_barcodes'),
+            DB::raw('SUM(product_barcodes.quantity) as total_quantity')
+        )
+        ->groupBy('products.id', 'products.name', 'products.value', 'products.sku', 'condominias.name', 'categories.name')
+        ->get();
+        // $products = Product::with(['condominia', 'productBarcodes'])->get();
 
-        return $products;
+        return $response;
+    }
+    public function getOne(Product $product)
+    {
+        // DB::table('products')->where('id','=', $product->id)->get();
+        $response = $product->where('id', $product->id)->with(['condominia', 'category', 'productBarcodes','user'])->first();
+
+        return $response;
     }
 }

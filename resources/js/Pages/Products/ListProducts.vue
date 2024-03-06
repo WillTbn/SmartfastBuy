@@ -4,18 +4,18 @@
         <template #header>
             Produtos
         </template>
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <table-body>
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8" v-if="products.length > 0">
+            <table-body class="text-white">
                 <template #headColumns>
                     <table-head type="first" label="Name"/>
                     <table-head type="normal" label="Preço"/>
                     <table-head type="normal" label="Quantidade"/>
-                    <table-head type="first" label="Código de barra"/>
+                    <table-head type="first" label="sku"/>
                     <table-head type="normal" label="Condominio"/>
                     <table-head type="normal" label="actions"/>
                 </template>
                 <template #tableRows>
-                    <tr v-for="product in products" :key="product.id">
+                    <tr v-for="(product, index) in products" :key="index">
                         <table-data type="first">
                             {{ product.name }}
                         </table-data>
@@ -23,18 +23,23 @@
                             {{ product.value }}
                         </table-data>
                         <table-data type="first">
-                            {{ product.quantity }}
+                            {{product.total_quantity}}
                         </table-data>
 
                         <table-data type="first">
-                            {{ product.barcode }}
+                            {{ product.sku }}
                         </table-data>
 
-                        <table-data type="normal">
-                            {{ product.condominia.name }}
+                        <table-data type="first">
+                            {{ product.condominia_name }}
                         </table-data>
-                        <table-data type="normal">
-                            <Link method="get" :href="route('products.edit', product.id)"><font-awesome-icon color="green" :icon="['fass', 'fa-edit']"/></Link>
+                        <table-data type="first">
+                            <Link
+                            method="get"
+                            :href="route('products.edit', product.id)"
+                        >
+                            <font-awesome-icon color="light:green" :icon="['fass', 'fa-edit']"/>
+                        </Link>
 
                             {{ product.id }}
                         </table-data>
@@ -46,12 +51,13 @@
 </template>
 <script>
 import { Head,Link} from '@inertiajs/vue3';
+import {defineComponent} from 'vue';
 import AuthenticatedLayout from '../../Layouts/AuthenticatedLayout.vue';
 import TableHead from '../../Components/Table/TableHead.vue';
 import TableData from '../../Components/Table/TableData.vue';
 import TableBody from '../../Components/Table/TableBody.vue';
 
-export default{
+export default defineComponent({
     components:{
         TableBody,
         TableHead,
@@ -78,5 +84,5 @@ export default{
     //     }
     // }
 
-}
+})
 </script>

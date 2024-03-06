@@ -29,8 +29,12 @@ class Product extends Model
     {
         return $this->hasOne(Condominia::class, 'id', 'condominia_id');
     }
-    public function productBarcode(): HasMany
+    public function productBarcodes(): HasMany
     {
         return $this->hasMany(ProductBarcodes::class);
+    }
+    public function user():HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

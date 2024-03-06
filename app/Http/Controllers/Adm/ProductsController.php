@@ -28,9 +28,11 @@ class ProductsController extends Controller
     }
     public function getOne( Product $id)
     {
+        // dd($this->serviceproduct->getOne($id));
         // TEM QUE FAZER TRATATIVA SE CASO NÂO TENHA $id
         return Inertia::render('Products/UpdatedProducts', [
-            'product' => $id
+            'product' => $id,
+            'product_one' => $this->serviceproduct->getOne($id)
             // 'roles' => [...$this->role->getRoles()],
             // 'users' => [...$this->userservice->getAllUsers()]
             // 'users' => $user
