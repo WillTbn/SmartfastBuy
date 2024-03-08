@@ -1,5 +1,5 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
-import forms from '@tailwindcss/forms';
+// import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -28,5 +28,10 @@ export default {
         }
     },
 
-    plugins: [forms],
+    plugins: [
+        require("@tailwindcss/forms")({
+            strategy: 'base', // only generate global styles
+            strategy: 'class', // only generate classes
+          })
+    ],
 };

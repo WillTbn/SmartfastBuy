@@ -72,9 +72,10 @@ Route::middleware(['auth'])->group(function(){
         Route::put('/resend-email/{invitation}', 'resend')->name('resend');
     });
 
-    Route::controller(ProductsController::class)->prefix('/products')->as('products')->group(function(){
+    Route::controller(ProductsController::class)->prefix('/products')->as('products.')->group(function(){
         Route::get('/', 'index')->name('index');
         Route::get('/{product}', 'getOne')->name('oneproduct');
+        Route::post('/imageOne/{product}', 'imageOne')->name('imageOne');
         Route::delete('/{product}', 'deleted')->name('delete');
     });
 });

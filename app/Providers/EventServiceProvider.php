@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Apartment;
+use App\Models\Product;
 use App\Observers\ApartmentObserver;
+use App\Observers\ProductObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -29,6 +31,7 @@ class EventServiceProvider extends ServiceProvider
     {
 
         Apartment::observe(ApartmentObserver::class);
+        Product::observe(ProductObserver::class);
     }
 
     /**

@@ -106,7 +106,7 @@ class ProductControllerTest extends TestCase
             'barcode' =>   random_int(100000000000, 1999999999999),
             'quantity' =>  10,
         ]);
-        $response = $this->actingAs($user)->get(route('products.edit', $product1->id));
+        $response = $this->actingAs($user)->get(route('products.oneproduct', $product1->id));
 
         dd($response);
     }

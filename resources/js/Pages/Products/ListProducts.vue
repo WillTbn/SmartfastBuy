@@ -36,7 +36,7 @@
                         <table-data type="first">
                             <Link
                             method="get"
-                            :href="route('products.edit', product.id)"
+                            :href="route('products.oneproduct', product.id)"
                         >
                             <font-awesome-icon color="light:green" :icon="['fass', 'fa-edit']"/>
                         </Link>

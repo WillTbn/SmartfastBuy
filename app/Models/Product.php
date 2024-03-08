@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -14,12 +15,26 @@ class Product extends Model
     protected $fillable = [
         'name', 'sku',
         'value', 'type', 'condominia_id', 'category_id',
-        'description', 'image_one', 'image_two', 'user_id'
+        'description', 'image_one', 'image_two', 'image_three', 'user_id'
     ];
 
     public function category(): HasOne
     {
         return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+    public function getImageOneAttribute($value)
+    {
+        return $value != 'default-illustrative.png' ? asset('storage/products/'.$value) : asset($value);
+    }
+    public function getImageTwoAttribute($value)
+    {
+        return $value != 'default-illustrative.png' ? asset('storage/products/'.$value) : asset($value);
+
+    }
+    public function getImageThreeAttribute($value)
+    {
+
+        return $value != 'default-illustrative.png' ? asset('storage/products/'.$value) : asset($value);
     }
     // public function account(): HasMany
     // {
