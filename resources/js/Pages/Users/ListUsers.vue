@@ -26,10 +26,13 @@
                         </table-data>
 
                         <table-data type="normal">
-                            {{ user.role.name }}
+                            {{ user.role }}
                         </table-data>
                         <table-data type="normal">
-                            <Link method="delete" :href="route('users.delete', user.id)" class="trash"><font-awesome-icon color="red" :icon="['fass', 'fa-trash']"/></Link>
+                            <danger-buton @click.prevent="submitDelete(user.id, user.email)">
+                                <font-awesome-icon color="white" :icon="['fass', 'fa-trash']"/>
+                            </danger-buton>
+                            <!-- <Link method="delete" :href="submitDelete(user.id)" class="trash"></Link> -->
                             <!-- <a href="router('users.delete')">excluir</a> -->
                             {{ user.id }}
                         </table-data>
@@ -46,6 +49,8 @@ import FormCreate from '../../Layouts/users/FormCreate.vue';
 import TableHead from '../../Components/Table/TableHead.vue';
 import TableData from '../../Components/Table/TableData.vue';
 import TableBody from '../../Components/Table/TableBody.vue';
+import DangerButon from '@/Components/DangerButon.vue';
+
 
 export default{
     components:{
@@ -55,25 +60,26 @@ export default{
         Head,
         Link,
         AuthenticatedLayout,
-        FormCreate
+        FormCreate,
+        DangerButon
     },
     props:{
         roles:{type:Array},
         users:{type:Array}
     },
-    // setup(){
-    //     const submit = (id) => {
-    //         alert(id)
-    //         if(confirm("are you sure you want to delete this user?"))
-    //         {
-    //             $this.$inertia.delete(`users/${id}`)
-    //         }
-    //     }
+    setup(){
+        const submitDelete = (id, email) => {
 
-    //     return {
-    //         submit
-    //     }
-    // }
+        if(confirm(`Tem certeza que quer excluir o usuário de e-mail ${email}?`))
+            {
+                $this.$inertia.delete(`users/${id}`)
+            }
+        }
+
+        return {
+            submitDelete
+        }
+    }
 
 }
 </script>
