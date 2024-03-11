@@ -4,22 +4,22 @@
       <!-- email class="grid grid-cols-3 grid-rows-3 gap-4"-->
         <div class="grid grid-cols-3 gap-4">
             <label class="block">
-                <span for="name" class="text-gray-700">Nome*</span>
+                <span for="name" class="light:text-gray-700">Nome*</span>
                 <input id="name" type="text" v-model="form.name"
                 :class="styleForm"
                 >
                 <div v-if="form.errors.name">{{ form.errors.name }}</div>
             </label>
             <label class="block">
-                <span for="email" class="text-gray-700">Email*</span>
-                <input id="email" type="text" v-model="form.email"
+                <span for="email" class="light:text-gray-700">Email*</span>
+                <input id="email" type="email" v-model="form.email"
                 :class="styleForm"
                 >
                 <div v-if="form.errors.email">{{ form.errors.email }}</div>
             </label>
             <label class="block">
-                <span for="permissions" class="text-gray-700">Qual a permissão ?*</span>
-                <select v-model="form.role_id" class="block w-full mt-1 border-transparent rounded-md bg-gray">
+                <span for="permissions" class="light:text-gray-700">Qual a permissão?*</span>
+                <select v-model="form.role_id" :class="styleForm">
                     <option v-for="item in roles" :key="item.id" :value="item.id">
                         {{ item.name }}
                     </option>
@@ -30,44 +30,45 @@
         </div>
         <div class="grid grid-cols-3 gap-5 mt-5">
             <label class="block">
-                <span for="password" class="text-gray-700">password*</span>
+                <span for="password" class="light:text-gray-700">password*</span>
                 <input id="password" type="password" v-model="form.password"
                 :class="styleForm"
                 >
 
             </label>
             <label class="block">
-                <span for="password_confirmation" class="text-gray-700">Password confirm*</span>
+                <span for="password_confirmation" class="light:text-gray-700">Password confirm*</span>
                 <input id="password_confirmation" type="password" v-model="form.password_confirmation"
                 :class="styleForm"
                 >
             </label>
             <div v-if="form.errors.password">{{ form.errors.password }}</div>
             <button
-            style=" margin: auto;"
-            @click.prevent="sendPassword"
-            class="p-2 font-extrabold text-white rounded-sm bg-sky-500 hover:bg-sky-600">
+                style=" margin: auto;"
+                @click.prevent="sendPassword"
+                class="p-2 font-extrabold text-white rounded-sm bg-sky-500 hover:bg-sky-600"
+            >
                 gerar Senha
             </button>
         </div>
         <div class="grid grid-cols-4 gap-4 mt-5">
             <label class="block">
-                <span for="person" class="text-gray-700">CPF*</span>
+                <span for="person" class="light:text-gray-700">CPF*</span>
                 <input id="person" type="text" v-model="form.person"
                     :class="styleForm"
                 >
                 <div v-if="form.errors.person">{{ form.errors.person }}</div>
             </label>
             <label class="block">
-                <span for="birthday" class="text-gray-700">Data de Nascimento*</span>
+                <span for="birthday" class="light:text-gray-700">Data de Nascimento*</span>
                 <input id="birthday" type="text" v-model="form.birthday"
                     :class="styleForm"
                 >
                 <div v-if="form.errors.birthday">{{ form.errors.birthday }}</div>
             </label>
             <label class="block">
-                <span for="genre" class="text-gray-700">Qual genero se idenfica ?</span>
-                <select v-model="form.genre" class="block w-full mt-1 border-transparent rounded-md bg-gray">
+                <span for="genre" class="light:text-gray-700">Qual genero se idenfica ?</span>
+                <select v-model="form.genre" :class="styleForm">
                     <option v-for="item in getGenre" :key="item.id" :value="item.id">
                         {{ item.name }}
                     </option>
@@ -79,22 +80,22 @@
         </div>
         <div class="grid grid-cols-4 gap-4 mt-5">
             <label class="block">
-                <span for="telephone" class="text-gray-700">Telefone</span>
+                <span for="telephone" class="light:text-gray-700">Telefone</span>
                 <input id="telephone" type="text" v-model="form.telephone"
                     :class="styleForm"
                 >
                 <div v-if="form.errors.telephone">{{ form.errors.telephone }}</div>
             </label>
             <label class="block">
-                <span for="phone" class="text-gray-700">Celular</span>
+                <span for="phone" class="light:text-gray-700">Celular</span>
                 <input id="phone" type="text" v-model="form.phone"
                     :class="styleForm"
                 >
                 <div v-if="form.errors.phone">{{ form.errors.phone }}</div>
             </label>
             <label class="block">
-                <span for="notifications" class="text-gray-700">receber notitificações ?*</span>
-                <select v-model="form.notifications" class="block w-full mt-1 border-transparent rounded-md bg-gray">
+                <span for="notifications" class="light:text-gray-700">receber notitificações ?*</span>
+                <select v-model="form.notifications" :class="styleForm">
                     <option v-for="item in notYes" :key="item.id" :value="item.value">
                         {{ item.name }}
                     </option>
@@ -110,7 +111,7 @@
 
 </template>
 <script setup>
-const styleForm = "block w-full px-4 border-transparent rounded form-input"
+const styleForm = "block w-full px-4 border-transparent rounded form-input text-black"
 import {useForm} from '@inertiajs/vue3'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 // import Dialog from '@/Components/Dialog.vue';

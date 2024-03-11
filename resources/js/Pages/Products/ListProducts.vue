@@ -17,6 +17,12 @@
                 <template #tableRows>
                     <tr v-for="(product, index) in products" :key="index">
                         <table-data type="first">
+                            <img
+                                :src="'http://localhost:8088/storage/products/'+product.preview"
+                                style="height: 2rem; width: 2rem; border-radius: 50%; background-color: #999399a6; display: inline;"
+                                :srcset="'http://localhost:8088/storage/products/'+product.preview"
+                            />
+
                             {{ product.name }}
                         </table-data>
                         <table-data type="first">

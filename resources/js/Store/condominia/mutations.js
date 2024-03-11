@@ -1,5 +1,5 @@
-export function setAccount (state, payload){
-    // state.account = payload
+export function setCondomina (state, payload){
+    state.condominia = payload
 }
 export function setUser(state, payload){
     // state.user = payload

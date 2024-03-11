@@ -5,6 +5,7 @@ use App\Http\Controllers\Adm\BlockController;
 use App\Http\Controllers\Adm\CondominiaController;
 use App\Http\Controllers\Adm\InvitationController;
 use App\Http\Controllers\Adm\ProductsController;
+use App\Http\Controllers\Adm\ResponsableController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -24,7 +25,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    return Inertia::render('Auth/Login', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
@@ -77,6 +78,10 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/{product}', 'getOne')->name('oneproduct');
         Route::post('/imageOne/{product}', 'imageOne')->name('imageOne');
         Route::delete('/{product}', 'deleted')->name('delete');
+    });
+
+    Route::controller(ResponsableController::class)->prefix('/responsable')->as('responsable.')->group(function () {
+        Route::post('/', 'create')->name('create');
     });
 });
 

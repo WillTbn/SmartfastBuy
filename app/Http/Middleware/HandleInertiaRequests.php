@@ -42,7 +42,15 @@ class HandleInertiaRequests extends Middleware
             'flash' =>[
                 'success' => session()->has('success'),
                 'message' => session('success')
-            ]
+            ],
+            'permissions' =>function(){
+                $user = auth()->user();
+                return $user ? [
+                    'can_access' =>  $user->role->abilities->pluck('name'),
+                    'roles'=> $user->role->abilities,
+                    'account' => $user->account,
+                ]:null;
+            }
         ]);
     }
 }

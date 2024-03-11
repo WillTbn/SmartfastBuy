@@ -3,6 +3,7 @@
 export default function () {
     return {
        id:"",
-       block:[]
+       block:[],
+       condominia:null,
     }
 }

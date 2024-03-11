@@ -16,9 +16,20 @@
                             {{ cond.name }}
                         </table-data>
                         <table-data type="normal">
-                            <Link method="get" :href="route('condominia.getOne', cond.id)">
-                                <font-awesome-icon color="green"  :icon="['fass', 'fa-edit']"/>
+                            <!-- verificando se tem responsavel -->
+                            <Link method="get" :href="route('condominia.getOne', cond.id)" v-if="cond.contract_condominias_id">
+                                <font-awesome-icon color="green"  :icon="['fass', 'fa-building-circle-arrow-right']"/>
                             </Link>
+                            <PrimaryButton class="p-2" v-else @click.prevent="startModal(cond)">
+                                <font-awesome-icon color="white" class="mr-1"  :icon="['fass', 'fa-building-user']"/>
+                                Cadastra responsável
+                            </PrimaryButton>
+                            <!-- verificando se tem responsavel -->
+
+
+
+                            <!-- faBuildingCircleArrowRight -->
+                            <!-- <font-awesome-icon :icon="['fas', 'building-circle-arrow-right']" /> -->
                         </table-data>
                     </tr>
                 </template>
@@ -27,6 +38,12 @@
         <div class="text-center max-auto max-w-7x1 sm:px-6 lg:px-8" v-else>
             <p> Não há condominios cadastrados</p>
         </div>
+
+        <modal :show="resp" @close="closeModal">
+          <create-responsable></create-responsable>
+        </modal>
+
+
     </AuthenticatedLayout>
 </template>
 <script>
@@ -35,11 +52,14 @@ import AuthenticatedLayout from '../../Layouts/AuthenticatedLayout.vue';
 import TableHead from '../../Components/Table/TableHead.vue';
 import TableData from '../../Components/Table/TableData.vue';
 import TableBody from '../../Components/Table/TableBody.vue';
+import Modal from '../../Components/Modal.vue';
 import PrimaryButton from '../../Components/Buttons/PrimaryButton.vue';
 import DangerButton from '../../Components/DangerButton.vue';
 import { useStore } from 'vuex';
-import {defineComponent} from 'vue'
+import {defineComponent, ref} from 'vue'
 import FormCreated from '../../Layouts/Condominia/FormCreated.vue';
+import CreateResponsable from '@/Layouts/users/responsable/CreateResponsable.vue';
+
 
 export default defineComponent({
     components:{
@@ -52,6 +72,8 @@ export default defineComponent({
         Link,
         PrimaryButton,
         DangerButton,
+        Modal,
+        CreateResponsable
     },
     props:{
         // roles:{type:Array},
@@ -59,12 +81,24 @@ export default defineComponent({
         condominias:{type:Array}
     },
     setup(){
+        const resp = ref(false)
         const store = useStore()
-        const setCond = (id) => {
-            store.commit("condominia/setId", id)
+
+        const setCond = (condominia) => {
+            store.commit("condominia/setCondomina", condominia)
+        }
+        const closeModal = () =>{
+            resp.value = false
+        }
+        const startModal = (condominia) =>{
+            setCond(condominia)
+            resp.value = true
         }
         return{
-            setCond
+            setCond,
+            resp,
+            startModal,
+            closeModal
         }
     }
     // setup(){

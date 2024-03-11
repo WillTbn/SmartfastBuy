@@ -52,4 +52,16 @@ class User extends Authenticatable
     {
         return $this->hasOne(Role::class, 'id', 'role_id');
     }
+    public function isMaster()
+    {
+        return $this->role_id = 1;
+    }
+    public function isSeller()
+    {
+        return $this->role_id = 2;
+    }
+    public function isResponse()
+    {
+        return $this->role_id = 4;
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services\Adm;
 
+use App\DataTransferObject\Responsable\ResponsableDTO;
 use App\DataTransferObject\User\UserAdmDTO;
 use App\Models\Account;
 
@@ -21,6 +22,19 @@ class AccountServices
         $ac->phone = $account->phone;
         $ac->saveOrFail();
         return $ac;
+    }
+    public function createAccountResponsable(ResponsableDTO $responsable, int $user_id)
+    {
+        $ac = new Account();
+        $ac->user_id = $user_id;
+        $ac->person = $responsable->person;
+        $ac->genre = $responsable->genre;
+        $ac->birthday = $responsable->birthday;
+        $ac->notifications = $responsable->notifications;
+        $ac->telephone = $responsable->telephone;
+        $ac->phone = $responsable->phone;
+        $ac->condominia_id = $responsable->condominia_id;
+        $ac->saveOrFail();
     }
     public function deleted(int $user_id)
     {

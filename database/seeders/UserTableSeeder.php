@@ -27,6 +27,9 @@ class UserTableSeeder extends Seeder
         $abv2 = Ability::create([
             'name'=> 'products-access'
         ]);
+        $abv3 = Ability::create([
+            'name'=> 'condominia-access'
+        ]);
 
 
         $role = Role::create([
@@ -35,6 +38,9 @@ class UserTableSeeder extends Seeder
 
         $vend = Role::create([
             'name'=>'Vendedor'
+        ]);
+        $resp = Role::create([
+            'name'=>'Responsavel'
         ]);
 
         RoleAbility::create([
@@ -49,6 +55,10 @@ class UserTableSeeder extends Seeder
         RoleAbility::create([
             'role_id' =>  $vend->id,
             'ability_id'=> $abv2->id
+        ]);
+        RoleAbility::create([
+            'role_id' =>  $resp->id,
+            'ability_id'=> $abv3->id
         ]);
         $user = User::create([
             'name'=>'Administrador User',

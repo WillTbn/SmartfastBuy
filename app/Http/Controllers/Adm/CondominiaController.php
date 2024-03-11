@@ -35,15 +35,11 @@ class CondominiaController extends Controller
 
     public function getOne(Condominia $condominia)
     {
-        // return $condominia;
-        // TEM QUE FAZER TRATATIVA SE CASO NÂO TENHA $id
         return Inertia::render('Condominia/UpdateCondominia', [
             'condominia' => $condominia,
             'apartments' => $this->aptServices->getAptCond($condominia->id),
             'blocks' => $this->blockServices->getAllBlock($condominia->id)
-            // 'roles' => [...$this->role->getRoles()],
-            // 'users' => [...$this->userservice->getAllUsers()]
-            // 'users' => $user
+
         ]);
     }
     public function create(CondominiaPostRequest $request)

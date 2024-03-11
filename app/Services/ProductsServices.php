@@ -67,6 +67,7 @@ class ProductsServices
             'products.name',
             'products.value',
             'products.sku',
+            'products.image_one as preview',
             'products.description',
             'condominias.name as condominia_name',
             'categories.name as category_name',
