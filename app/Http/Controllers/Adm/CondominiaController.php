@@ -26,10 +26,14 @@ class CondominiaController extends Controller
         $this->aptServices = $apartmentServices;
         $this->blockServices = $blockServices;
     }
-    public function index()
+    public function index(Request $request)
     {
+
+        $user = $request->user();
+
+        // dd($request->user()->isMaster());
         return Inertia::render('Condominia/ListCondominia', [
-            'condominias' => $this->condServices->getAllCond()
+            'condominias' => $user->isMaster() ? $this->condServices->getAllCond() : $this->condServices->getlinkToUser(),
         ]);
     }
 

@@ -54,14 +54,14 @@ class User extends Authenticatable
     }
     public function isMaster()
     {
-        return $this->role_id = 1;
+        return $this->role_id === 1;
     }
     public function isSeller()
     {
-        return $this->role_id = 2;
+        return $this->role_id === 2;
     }
     public function isResponse()
     {
-        return $this->role_id = 4;
+        return $this->role_id === 4;
     }
 }

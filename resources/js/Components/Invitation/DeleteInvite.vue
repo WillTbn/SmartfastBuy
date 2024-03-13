@@ -22,7 +22,7 @@ export default defineComponent({
         const form = useForm({
             id:props.invitationId
         })
-        const {errorNotify} = useNotify()
+        const {errorNotify,successNotify} = useNotify()
         const  sendDelete = () =>{
             console.log('amigo estou aqui')
             if(confirm(`Tem certeza que vai excluir o convito do ${props.name}?`)){

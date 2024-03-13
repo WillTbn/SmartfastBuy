@@ -1,15 +1,25 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import PrimaryButton from '../Components/Buttons/PrimaryButton.vue';
 import SelectTheme from '../Components/Forms/SelectTheme.vue';
+import {useUserStore} from '../storePinia/user'
+import { storeToRefs } from 'pinia';
 const showingNavigationDropdown = ref(false);
+const page = usePage()
+const can_user = computed(() => page.props.permissions)
+const storeUser = useUserStore()
+const {condomiaView, userMaster} = storeToRefs(storeUser)
 
+onMounted(() =>{
+    storeUser.setCan(can_user.value.can_access)
+    storeUser.setRole(can_user.value.role)
+})
 </script>
 
 <template>
@@ -35,16 +45,16 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('condominia.index')" :active="route().current('condominia.index')">
+                                <NavLink :href="route('condominia.index')" v-if="condomiaView('condominia-access') || userMaster" :active="route().current('condominia.index')">
                                     Condominios
                                 </NavLink>
-                                <NavLink :href="route('invites.index')" :active="route().current('invites.index')">
+                                <NavLink :href="route('invites.index')" v-if="condomiaView('invites-access') || userMaster" :active="route().current('invites.index')">
                                     Convites
                                 </NavLink>
-                                <NavLink :href="route('products.index')" :active="route().current('products.index')">
+                                <NavLink :href="route('products.index')" v-if="condomiaView('products-access') || userMaster" :active="route().current('products.index')">
                                     Produtos
                                 </NavLink>
-                                <NavLink :href="route('users.index')" :active="route().current('users.index')">
+                                <NavLink :href="route('users.index')" v-if="condomiaView('users-access') || userMaster" :active="route().current('users.index')">
                                     usuários
                                 </NavLink>
 

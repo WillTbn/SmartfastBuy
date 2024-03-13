@@ -29,7 +29,7 @@
                             {{ user.role }}
                         </table-data>
                         <table-data type="normal">
-                            <danger-buton @click.prevent="submitDelete(user.id, user.email)">
+                            <danger-buton @click.prevent="submitDelete(user.id, user.name)">
                                 <font-awesome-icon color="white" :icon="['fass', 'fa-trash']"/>
                             </danger-buton>
                             <!-- <Link method="delete" :href="submitDelete(user.id)" class="trash"></Link> -->
@@ -43,13 +43,14 @@
     </AuthenticatedLayout>
 </template>
 <script>
-import { Head,Link} from '@inertiajs/vue3';
+import { Head,Link, useForm} from '@inertiajs/vue3';
 import AuthenticatedLayout from '../../Layouts/AuthenticatedLayout.vue';
 import FormCreate from '../../Layouts/users/FormCreate.vue';
 import TableHead from '../../Components/Table/TableHead.vue';
 import TableData from '../../Components/Table/TableData.vue';
 import TableBody from '../../Components/Table/TableBody.vue';
 import DangerButon from '@/Components/DangerButon.vue';
+import useNotify from '@/composables/useNotify';
 
 
 export default{
@@ -68,11 +69,20 @@ export default{
         users:{type:Array}
     },
     setup(){
-        const submitDelete = (id, email) => {
+        // import useNotify from '../../composables/useNotify';
+        const {successNotify, errorNotify} = useNotify()
+        const submitDelete = (id, name) => {
+            const form = useForm({
+                id:id
+            })
 
-        if(confirm(`Tem certeza que quer excluir o usuário de e-mail ${email}?`))
-            {
-                $this.$inertia.delete(`users/${id}`)
+            if(confirm(`Tem certeza que quer excluir o usuário ${name}?`)){
+                form.delete(route('users.delete', form.id), {
+                    onSuccess:(e) => {
+                        successNotify(e.props.flash.message)
+                    },
+                    onError:(e) => errorNotify(e),
+                })
             }
         }
 

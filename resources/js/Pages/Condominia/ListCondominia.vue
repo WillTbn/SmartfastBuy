@@ -17,10 +17,10 @@
                         </table-data>
                         <table-data type="normal">
                             <!-- verificando se tem responsavel -->
-                            <Link method="get" :href="route('condominia.getOne', cond.id)" v-if="cond.contract_condominias_id">
+                            <Link method="get" :href="route('condominia.getOne', cond.id)" v-if="cond.responsable_email || !userMaster">
                                 <font-awesome-icon color="green"  :icon="['fass', 'fa-building-circle-arrow-right']"/>
                             </Link>
-                            <PrimaryButton class="p-2" v-else @click.prevent="startModal(cond)">
+                            <PrimaryButton class="p-2" v-if="userMaster" @click.prevent="startModal(cond)">
                                 <font-awesome-icon color="white" class="mr-1"  :icon="['fass', 'fa-building-user']"/>
                                 Cadastra responsável
                             </PrimaryButton>
@@ -59,7 +59,8 @@ import { useStore } from 'vuex';
 import {defineComponent, ref} from 'vue'
 import FormCreated from '../../Layouts/Condominia/FormCreated.vue';
 import CreateResponsable from '@/Layouts/users/responsable/CreateResponsable.vue';
-
+import {useUserStore} from '../../storePinia/user'
+import { storeToRefs } from 'pinia';
 
 export default defineComponent({
     components:{
@@ -75,12 +76,10 @@ export default defineComponent({
         Modal,
         CreateResponsable
     },
-    props:{
-        // roles:{type:Array},
-        // invites:{type:Array},
-        condominias:{type:Array}
-    },
+    props:['condominias'],
     setup(){
+        const storeUser= useUserStore()
+        const { userMaster } = storeToRefs(storeUser)
         const resp = ref(false)
         const store = useStore()
 
@@ -95,6 +94,7 @@ export default defineComponent({
             resp.value = true
         }
         return{
+            userMaster,
             setCond,
             resp,
             startModal,

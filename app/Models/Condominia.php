@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Condominia extends Model
 {
     use HasFactory;
-    public $table = 'condominias';
+    // public $table = 'condominias';
     protected $fillable =  [ 'name', 'address_condominias_id', 'contract_condominias_id'];
 
     public function apartments()

@@ -47,7 +47,7 @@ class HandleInertiaRequests extends Middleware
                 $user = auth()->user();
                 return $user ? [
                     'can_access' =>  $user->role->abilities->pluck('name'),
-                    'roles'=> $user->role->abilities,
+                    'role'=> $user->role->name,
                     'account' => $user->account,
                 ]:null;
             }

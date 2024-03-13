@@ -53,6 +53,10 @@ class Account extends Model
     {
         return $this->hasOne(user::class, 'id', 'user_id');
     }
+    public function condominia():HasOne
+    {
+        return $this->hasOne(Condominia::class, 'id', 'condominia_id');
+    }
     // public function apartment():HasOne
     // {
     //     return $this->hasOne(Apartment::class, 'id', 'apartment_id');

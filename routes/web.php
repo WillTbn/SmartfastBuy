@@ -60,11 +60,11 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/', 'created')->name('create');
         Route::delete('/{apto}', 'delete')->name('delete');
     });
-
+    // ->middleware('can:viewAny,App\Models\Condominia')
     Route::controller(CondominiaController::class)->prefix('/condominia')->as('condominia.')->group(function (){
-        Route::post('/', 'create')->name('create');
         Route::get('/', 'index')->name('index');
-        Route::get('/{condominia}','getOne')->name('getOne');
+        Route::post('/', 'create')->name('create');
+        Route::get('/{condominia}','getOne')->name('getOne')->middleware('can:view,condominia');
     });
     Route::controller(InvitationController::class)->prefix('/invites')->as('invites.')->group(function(){
         Route::get('/', 'index')->name('index');
