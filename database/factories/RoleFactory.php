@@ -18,7 +18,7 @@ class RoleFactory extends Factory
     {
         $names = ['Master', 'Vendedor'];
         return [
-            'name' => fake()->randomElements($names),
+            'name' => fake()->randomElement($names),
         ];
     }
 }

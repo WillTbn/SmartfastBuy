@@ -17,63 +17,51 @@ class UserTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $ab = Ability::create([
-            'name'=> 'all-access'
-        ]);
 
-        $abv1 = Ability::create([
-            'name'=> 'users-access'
-        ]);
-        $abv2 = Ability::create([
-            'name'=> 'products-access'
-        ]);
-        $abv3 = Ability::create([
-            'name'=> 'condominia-access'
-        ]);
-
-
-        $role = Role::create([
-            'name'=>'Master'
-        ]);
-
-        $vend = Role::create([
-            'name'=>'Vendedor'
-        ]);
-        $resp = Role::create([
-            'name'=>'Responsavel'
-        ]);
-
-        RoleAbility::create([
-            'role_id' =>  $role->id,
-            'ability_id'=> $ab->id
-        ]);
-
-        RoleAbility::create([
-            'role_id' =>  $vend->id,
-            'ability_id'=> $abv1->id
-        ]);
-        RoleAbility::create([
-            'role_id' =>  $vend->id,
-            'ability_id'=> $abv2->id
-        ]);
-        RoleAbility::create([
-            'role_id' =>  $resp->id,
-            'ability_id'=> $abv3->id
-        ]);
         $user = User::create([
             'name'=>'Administrador User',
             'email'=> env('ADMIN_EMAIL'),
             'password' => bcrypt(env('ADMIN_PASSWORD')),
-            'role_id' => $role->id
+            'role_id' => Role::where('name', 'Master')->first()->id
         ]);
 
         Account::create([
-            'person' => '15222222224',
-            'telephone' => '21 23232323',
-            'phone' => '21 988887575',
-            'birthday' => '1990-08-03',
+            'person' => fake('pt_BR')->cpf(),
+            'telephone' => fake('pt_BR')->phoneNumber(),
+            'phone' => fake('pt_BR')->cellphone(),
+            'birthday' => fake()->date('Y-m-d'),
             'notifications' => 'accepted',
             'user_id' => $user->id
+        ]);
+        $responsable = User::create([
+            'name'=>'Responsible User',
+            'email'=> env('RESP_EMAIL', 'responsible@live.com'),
+            'password' => bcrypt(env('RESP_PASSWORD', 'resp123')),
+            'role_id' => Role::where('name', 'Seller')->first()->id
+        ]);
+
+        Account::create([
+            'person' => fake('pt_BR')->cpf(),
+            'telephone' => fake('pt_BR')->phoneNumber(),
+            'phone' => fake('pt_BR')->cellphone(),
+            'birthday' => fake()->date('Y-m-d'),
+            'notifications' => 'accepted',
+            'user_id' => $responsable->id
+        ]);
+        $seller = User::create([
+            'name'=>'Seller User',
+            'email'=> env('SELLER_EMAIL', 'seller@live.com'),
+            'password' => bcrypt(env('SELLER_PASSWORD', 'seller123')),
+            'role_id' => Role::where('name', 'Responsible')->first()->id
+        ]);
+
+        Account::create([
+            'person' => fake('pt_BR')->cpf(),
+            'telephone' => fake('pt_BR')->phoneNumber(),
+            'phone' => fake('pt_BR')->cellphone(),
+            'birthday' => fake()->date('Y-m-d'),
+            'notifications' => 'accepted',
+            'user_id' => $seller->id
         ]);
 
     }

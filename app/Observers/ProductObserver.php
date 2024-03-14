@@ -12,7 +12,7 @@ class ProductObserver
      */
     public function created(Product $product): void
     {
-        dd('From created Oberser', $product);
+        // dd('From created Oberser', $product);
     }
 
     /**

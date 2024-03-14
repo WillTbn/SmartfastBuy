@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('sku')->nullable()->unique();
             $table->float('value');
             $table->string('type');
-            $table->foreignId('condominia_id')->constrained()->onDelete('set null');
+            // $table->foreignId('condominia_id')->constrained()->onDelete('set null');
             $table->foreignId('category_id')->constrained()->onDelete('set null');
             $table->foreignId('user_id')->constrained()->onDelete('set null');
             $table->string('description')->nullable();

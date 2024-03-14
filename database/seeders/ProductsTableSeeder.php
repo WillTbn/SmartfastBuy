@@ -14,10 +14,6 @@ class ProductsTableSeeder extends Seeder
     public function run(): void
     {
         $user = DB::table('users')->first();
-        // 'quantity' =>   random_int(20, 50),
-        // 'quantity' =>   random_int(20, 50),
-        // 'quantity' =>   random_int(0, 50),
-
 
         DB::table('products')->insert([
             'name' => 'Império 473ml',
@@ -26,7 +22,7 @@ class ProductsTableSeeder extends Seeder
             'description' => 'Pilsen Puro malte',
             'category_id'=>1,
             'type'=> 'PuroMalte',
-            'condominia_id'=> 1,
+            // 'condominia_id'=> 1,
             'user_id' =>$user->id
         ]);
 
@@ -38,7 +34,7 @@ class ProductsTableSeeder extends Seeder
             // 'account_id'=> 1,
             'category_id'=>1,
             'type'=> 'Pilsen',
-            'condominia_id'=> 1,
+            // 'condominia_id'=> 1,
             'user_id' =>$user->id
         ]);
         DB::table('products')->insert([
@@ -48,7 +44,7 @@ class ProductsTableSeeder extends Seeder
             'description' => 'Cerveja pilsen',
             'category_id'=>1,
             'type'=> 'Pilsen',
-            'condominia_id'=> 1,
+            // 'condominia_id'=> 1,
             'user_id' =>$user->id
         ]);
 
@@ -60,7 +56,7 @@ class ProductsTableSeeder extends Seeder
             // 'account_id'=> 1,
             'category_id'=>3,
             'type'=> 'Tinto',
-            'condominia_id'=> 1,
+            // 'condominia_id'=> 1,
             'user_id' =>$user->id
         ]);
         DB::table('products')->insert([
@@ -71,7 +67,7 @@ class ProductsTableSeeder extends Seeder
             // 'account_id'=> 1,
             'category_id'=>2,
             'type'=> 'Vodka',
-            'condominia_id'=> 1,
+            // 'condominia_id'=> 1,
             'user_id' =>$user->id
         ]);
     }

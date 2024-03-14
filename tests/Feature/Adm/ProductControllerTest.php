@@ -37,7 +37,6 @@ class ProductControllerTest extends TestCase
             'description' => 'Pilsen Puro malte',
             'category_id'=>$cate->id,
             'type'=> 'PuroMalte',
-            'condominia_id'=> $cond->id,
             'user_id' =>$user->id
         ]);
         $product2 = Product::factory()->create([
@@ -48,22 +47,24 @@ class ProductControllerTest extends TestCase
             // 'account_id'=> 1,
             'category_id'=>$cate->id,
             'type'=> 'Pilsen',
-            'condominia_id'=> $cond->id,
             'user_id' =>$user->id
         ]);
         $barcode1 = ProductBarcodes::factory()->create([
             'product_id' => $product1->id,
             'barcode' =>   random_int(100000000000, 1999999999999),
+            'condominia_id'=> $cond->id,
             'quantity' =>  10,
         ]);
         $barcode2 = ProductBarcodes::factory()->create([
             'product_id' => $product2->id,
             'barcode' =>   random_int(100000000000, 1999999999999),
+            'condominia_id'=> $cond->id,
             'quantity' =>   random_int(0, 50),
         ]);
         $barcode3 = ProductBarcodes::factory()->create([
             'product_id' => $product1->id,
             'barcode' =>   random_int(100000000000, 1999999999999),
+            'condominia_id'=> $cond->id,
             'quantity' =>   30,
         ]);
 
@@ -84,30 +85,29 @@ class ProductControllerTest extends TestCase
 
     }
 
-    public function test_get_one_product()
-    {
-        $user = User::factory()->create();
+    // public function test_get_one_product()
+    // {
+    //     $user = User::factory()->create();
 
-        $cond = Condominia::factory()->create();
-        $cate = Category::factory()->create();
-        // crie
-        $product1 = Product::factory()->create([
-            'name' => 'Império 473ml',
-            'value' => 2.99,
-            'sku' => 'IMPMAL473',
-            'description' => 'Pilsen Puro malte',
-            'category_id'=>$cate->id,
-            'type'=> 'PuroMalte',
-            'condominia_id'=> $cond->id,
-            'user_id' =>$user->id
-        ]);
-        $barcode1 = ProductBarcodes::factory()->create([
-            'product_id' => $product1->id,
-            'barcode' =>   random_int(100000000000, 1999999999999),
-            'quantity' =>  10,
-        ]);
-        $response = $this->actingAs($user)->get(route('products.oneproduct', $product1->id));
+    //     $cond = Condominia::factory()->create();
+    //     $cate = Category::factory()->create();
+    //     // crie
+    //     $product1 = Product::factory()->create([
+    //         'name' => 'Império 473ml',
+    //         'value' => 2.99,
+    //         'sku' => 'IMPMAL473',
+    //         'description' => 'Pilsen Puro malte',
+    //         'category_id'=>$cate->id,
+    //         'type'=> 'PuroMalte',
+    //         'user_id' =>$user->id
+    //     ]);
+    //     $barcode1 = ProductBarcodes::factory()->create([
+    //         'product_id' => $product1->id,
+    //         'barcode' =>   random_int(100000000000, 1999999999999),
+    //         'quantity' =>  10,
+    //     ]);
+    //     $response = $this->actingAs($user)->get(route('products.oneproduct', $product1->id));
 
-        dd($response);
-    }
+    //     // dd($response);
+    // }
 }

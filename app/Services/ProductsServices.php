@@ -50,13 +50,16 @@ class ProductsServices
     {
         $result = [
             'name'=> 'produtos',
+            'products_conts' => DB::table('produt_barcodes')->with('product')->count(),
             'count' => DB::table('products')->count(),
             'icons' => 'fa-solid fa-shop'
         ];
+
         return $result;
     }
     public function getAllProduct()
     {
+
         $response =
         DB::table('products')
         ->join('product_barcodes', 'products.id', '=', 'product_barcodes.product_id')

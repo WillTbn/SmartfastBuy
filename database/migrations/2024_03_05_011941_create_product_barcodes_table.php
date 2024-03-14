@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->string('type_code')->default('EAN-13'); //EAN-13, EAN-8
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('condominia_id')->nullable()->constrained()->onDelete('set null');
             $table->timestamps();
         });
     }

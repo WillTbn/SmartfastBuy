@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Condominia;
 use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,23 +16,27 @@ class ProductBarcodeTableSeeder extends Seeder
     public function run(): void
     {
 
-        $productsIds = [
-            'IMPMAL473',
-            'BRAPIL473',
-            'ANTPIL473',
-            'VINSEC750',
-            'VODABS1L'
-        ];
+        // $productsIds = [
+        //     'IMPMAL473',
+        //     'BRAPIL473',
+        //     'ANTPIL473',
+        //     'VINSEC750',
+        //     'VODABS1L'
+        // ];
 
 
-        $products = Product::whereIn('sku', $productsIds)->pluck('id');
-
-        foreach($products as $prod){
-            DB::table('product_barcodes')->insert([
-                'product_id' => $prod,
-                'barcode' =>   random_int(100000000000, 1999999999999),
-                'quantity' =>   random_int(0, 50),
-            ]);
+        // $products = Product::whereIn('sku', $productsIds)->pluck('id');
+        $products = Product::all()->pluck('id');
+        $condominia = Condominia::all()->pluck('id');
+        foreach($condominia as $cond){
+            foreach($products as $prod){
+                DB::table('product_barcodes')->insert([
+                    'condominia_id' => $cond,
+                    'product_id' => $prod,
+                    'barcode' =>   fake()->ean13(),
+                    'quantity' =>   random_int(0, 50),
+                ]);
+            }
         }
     }
 }

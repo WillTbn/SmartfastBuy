@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Models\Role;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Verified;
@@ -16,10 +17,11 @@ class EmailVerificationTest extends TestCase
 
     public function test_email_verification_screen_can_be_rendered(): void
     {
+        $master = Role::factory()->create(['name' => 'master']);
         $user = User::factory()->create([
             'email_verified_at' => null,
+            'role_id' => $master->id
         ]);
-
         $response = $this->actingAs($user)->get('/verify-email');
 
         $response->assertStatus(200);

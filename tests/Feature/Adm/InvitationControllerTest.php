@@ -110,15 +110,6 @@ class InvitationControllerTest extends TestCase
             'data' => 'algo qualquer',
             'token'=> 'bdNiypOWANe9QepXeUIOF1QYorgT0Tqen33333'
         ]);
-
-
-        // $invitation = $this->actingAs($user)->post(route('invites.create', [
-            //         'name' => 'Fulano de tal',
-            //         'email'=>   'teste@live.com',
-            //         'person' => '111.222.333-44',
-            //         'birthday' => fake()->date(),
-            //         'apartment_id' => $apto->id
-            //     ]));
         Queue::fake();
         dispatch(new SendEmailInvatationJob( $invitation));
 

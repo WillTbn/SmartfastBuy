@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
+use App\Models\Condominia;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +19,16 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $namesType = ['Pilsen', 'Tinto', 'Vodka', 'Pilsen', 'Puro Malte'];
         return [
-            //
+            'name' => fake()->name(),
+            'value' => fake()->randomFloat(2, 0, 10),
+            'sku' => 'IMPMAL473',
+            'description' => 'Pilsen Puro malte',
+            'category_id'=> Category::first()->id,
+            'type'=> 'PuroMalte',
+            'user_id' =>User::first()->id,
+            'type' => fake()->randomElement($namesType)
         ];
     }
 }

@@ -25,7 +25,7 @@ class HomeController extends Controller
         $this->invites = $invites;
     }
 
-    public function index(){
+    public function index(Request $request){
 
         return Inertia::render('Dashboard', [
             'itens' =>[
