@@ -17,10 +17,10 @@
                         </table-data>
                         <table-data type="normal">
                             <!-- verificando se tem responsavel -->
-                            <Link method="get" :href="route('condominia.getOne', cond.id)" v-if="cond.responsable_email || !userMaster">
+                            <Link method="get" :href="route('condominia.getOne', cond.id)" v-if="cond.contract_status == 'start'">
                                 <font-awesome-icon color="green"  :icon="['fass', 'fa-building-circle-arrow-right']"/>
                             </Link>
-                            <PrimaryButton class="p-2" v-if="userMaster" @click.prevent="startModal(cond)">
+                            <PrimaryButton class="p-2" v-if="userMaster && cond.contract_status == 'draft'" @click.prevent="startModal(cond)">
                                 <font-awesome-icon color="white" class="mr-1"  :icon="['fass', 'fa-building-user']"/>
                                 Cadastra responsável
                             </PrimaryButton>

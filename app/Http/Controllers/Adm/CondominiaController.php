@@ -29,11 +29,8 @@ class CondominiaController extends Controller
     public function index(Request $request)
     {
 
-        $user = $request->user();
-
-        // dd($request->user()->isMaster());
         return Inertia::render('Condominia/ListCondominia', [
-            'condominias' => $user->isMaster() ? $this->condServices->getAllCond() : $this->condServices->getlinkToUser(),
+            'condominias' => $request->user()->isMaster() ? $this->condServices->getAllCond() : $this->condServices->getlinkToUser(),
         ]);
     }
 
