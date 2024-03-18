@@ -19,6 +19,7 @@ class Account extends Model
         'avatar',
         'notifications',
         'user_id',
+        'condominia_id'
     ];
     /**
      * The attributes that should be cast.

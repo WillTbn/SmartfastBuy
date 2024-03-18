@@ -60,7 +60,7 @@ class User extends Authenticatable
     {
         return $this->role_id === 2;
     }
-    public function isResponse()
+    public function isResponsible()
     {
         return $this->role_id === 4;
     }

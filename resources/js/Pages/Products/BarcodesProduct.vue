@@ -5,6 +5,7 @@
                 <table-head type="first" label="Codigo"/>
                 <table-head type="normal" label="Tipo de codigo"/>
                 <table-head type="normal" label="Quantidade"/>
+                <table-head type="normal" label="Condominio"/>
                 <table-head type="normal" label="actions"/>
             </template>
             <template #tableRows>
@@ -17,6 +18,10 @@
                     </table-data>
                     <table-data type="first">
                         {{ barcode.quantity }}
+                    </table-data>
+                    <table-data type="first">
+                        <!-- {{ barcode.condominia.name }} -->
+                        calma calabreso
                     </table-data>
                     <table-data type="first">
                      butão

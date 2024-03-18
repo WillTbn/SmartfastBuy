@@ -29,11 +29,11 @@ class ResponsableControllerTest extends TestCase
         $role = Role::factory()->create(['name' => 'Responsavel']);
 
         $this->actingAs($user)->post(route('responsable.create', [
-            'name' =>"Fulano e tal",
+            'name' =>fake()->name(),
             'password' =>"123456789",
             'password_confirmation' =>"123456789",
-            'email' =>'j@live.com',
-            'person' =>22233344455,
+            'email' =>fake()->email(),
+            'person' =>fake('pt_BR')->cpf(),
             'genre' =>"O",
             'birthday' =>"2003/04/01",
             'notifications' =>"accepted",

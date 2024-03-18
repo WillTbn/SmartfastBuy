@@ -12,29 +12,31 @@ use Inertia\Inertia;
 class ProductsController extends Controller
 {
     private ProductsServices $serviceproduct;
+
     public function __construct(
-        ProductsServices $serviceproduct
+        ProductsServices $serviceproduct,
     )
     {
         $this->serviceproduct = $serviceproduct;
+
     }
-    public function index()
+    public function index(Request $request)
     {
+
         return Inertia::render('Products/ListProducts', [
-            'products' => $this->serviceproduct->getAllProduct()
-            // 'roles' => [...$this->role->getRoles()],
-            // 'users' => [...$this->userservice->getAllUsers()]
-            // 'users' => $user
+            'products' => $request->user()->isMaster()
+            ? $this->serviceproduct->getAllProduct()
+            : $this->serviceproduct->getAllProductCondominia($request->user()->account->condominia_id)
         ]);
     }
-    public function getOne( Product $product)
+    public function getOne( Product $product, Request $request)
     {
         // dd($this->serviceproduct->getOne($id));
         // TEM QUE FAZER TRATATIVA SE CASO NÂO TENHA $id
 
         return Inertia::render('Products/UpdatedProducts', [
             'product' => $product,
-            'product_one' => $this->serviceproduct->getOne($product)
+            'product_one' => $this->serviceproduct->getOne($product, $request->user()->isMaster())
             // 'roles' => [...$this->role->getRoles()],
             // 'users' => [...$this->userservice->getAllUsers()]
             // 'users' => $user

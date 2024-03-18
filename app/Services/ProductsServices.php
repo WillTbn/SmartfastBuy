@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DataTransferObject\Product\ProductDTO;
 use App\Models\Product;
+use App\Models\ProductBarcodes;
 use Illuminate\Support\Facades\DB;
 
 class ProductsServices
@@ -50,7 +51,8 @@ class ProductsServices
     {
         $result = [
             'name'=> 'produtos',
-            'products_conts' => DB::table('produt_barcodes')->with('product')->count(),
+            // 'products_conts' => DB::table('produt_barcodes')->with('product')->count(),
+            'products_conts' => ProductBarcodes::with('product')->count(),
             'count' => DB::table('products')->count(),
             'icons' => 'fa-solid fa-shop'
         ];
@@ -64,7 +66,7 @@ class ProductsServices
         DB::table('products')
         ->join('product_barcodes', 'products.id', '=', 'product_barcodes.product_id')
         ->join('categories', 'products.category_id', '=', 'categories.id')
-        ->join('condominias', 'products.condominia_id', '=', 'condominias.id')
+        // ->join('condominias', 'products.condominia_id', '=', 'condominias.id')
         ->select(
             'products.id',
             'products.name',
@@ -72,21 +74,63 @@ class ProductsServices
             'products.sku',
             'products.image_one as preview',
             'products.description',
-            'condominias.name as condominia_name',
+            // 'condominias.name as condominia_name',
             'categories.name as category_name',
             DB::raw('COUNT(product_barcodes.product_id) as total_barcodes'),
             DB::raw('SUM(product_barcodes.quantity) as total_quantity')
         )
-        ->groupBy('products.id', 'products.name', 'products.value', 'products.sku', 'condominias.name', 'categories.name')
+        ->groupBy('products.id', 'products.name', 'products.value', 'products.sku', 'categories.name')
         ->get();
-        // $products = Product::with(['condominia', 'productBarcodes'])->get();
-
         return $response;
+        // $products = Product::with(['condominia', 'productBarcodes'])->get();
     }
-    public function getOne(Product $product)
+    public function getAllProductCondominia(int $condominia_id)
     {
-        // DB::table('products')->where('id','=', $product->id)->get();
-        $response = $product->where('id', $product->id)->with(['condominia', 'category', 'productBarcodes','user'])->first();
+        return
+        DB::table('products')
+            ->join('product_barcodes', 'products.id', '=', 'product_barcodes.product_id')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->join('condominias', 'product_barcodes.condominia_id', '=', 'condominias.id')
+            ->select('products.id',
+                'products.name',
+                'products.value',
+                'products.sku',
+                'products.image_one as preview',
+                'products.description', 'product_barcodes.id as barcode_id',
+                'condominias.name as condominia_name',
+                'categories.name as category_name',
+                DB::raw('COUNT(product_barcodes.product_id) as total_barcodes'),
+                DB::raw('SUM(product_barcodes.quantity) as total_quantity'))
+            ->where('product_barcodes.condominia_id', '=', $condominia_id)
+            ->groupBy(
+                'products.id',
+                'products.name',
+                'products.value',
+                'products.sku',
+                'product_barcodes.id',
+                'condominias.name',
+                'categories.name'
+            )
+        ->get();
+
+
+    }
+    public function getOne(Product $product, $permission = false)
+    {
+        if(!$permission){
+            $response = ProductBarcodes::
+                where('condominia_id', auth()->user()->account->condominia_id)
+                ->where('product_id', $product->id)
+                ->with(['condominia', 'product', 'product.category', 'product.user'])
+            ->get();
+
+            return $response;
+        }
+        $response = ProductBarcodes::
+            where('product_id', $product->id)
+            ->with(['condominia', 'product', 'product.category', 'product.user'])
+        ->get();
+        // dd($response);
 
         return $response;
     }

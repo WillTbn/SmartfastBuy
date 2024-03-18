@@ -61,6 +61,27 @@ class InvitationServices
         ->get();
         return $response;
     }
+
+    public function getDataAllCondominia(int $condominia_id)
+    {
+        return
+        DB::table('users')
+            ->join('invitations', 'users.id', '=', 'invitations.user_id')
+            ->join('accounts', 'users.id', '=','accounts.user_id')
+            ->whereNull('invitations.deleted_at')
+            ->where('invitations.condominia_id', '=', $condominia_id)
+            ->select(
+                'invitations.id',
+                'invitations.email',
+                'invitations.name',
+                'invitations.created_at',
+                'users.email as create_email',
+                DB::raw("CONCAT('".env('APP_URL_C')."/', accounts.avatar) as create_avatar"),
+            )
+        ->get();
+
+    }
+
     public function delete(int $id)
     {
         Invitation::destroy($id);

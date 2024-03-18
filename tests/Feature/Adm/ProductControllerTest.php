@@ -13,7 +13,7 @@ use Tests\TestCase;
 
 class ProductControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
     /**
      * A basic feature test example.
      */
@@ -26,8 +26,19 @@ class ProductControllerTest extends TestCase
     public function test_index_page_shows_products_with_total_quantity()
     {
         $user = User::factory()->create();
-
         $cond = Condominia::factory()->create();
+        $resp = User::factory()->create();
+        $resp->account()->create([
+            'person' => fake('pt_BR')->cpf(),
+            'telephone' => fake('pt_BR')->phoneNumber(),
+            'phone' => fake('pt_BR')->cellphone(),
+            'birthday' => fake()->date('Y-m-d'),
+            'notifications' => 'accepted',
+            'condominia_id' => $cond->id
+        ]);
+
+
+        $cond2 = Condominia::factory()->create();
         $cate = Category::factory()->create();
         // crie
         $product1 = Product::factory()->create([
@@ -49,26 +60,38 @@ class ProductControllerTest extends TestCase
             'type'=> 'Pilsen',
             'user_id' =>$user->id
         ]);
-        $barcode1 = ProductBarcodes::factory()->create([
+        ProductBarcodes::factory()->create([
             'product_id' => $product1->id,
             'barcode' =>   random_int(100000000000, 1999999999999),
             'condominia_id'=> $cond->id,
             'quantity' =>  10,
         ]);
-        $barcode2 = ProductBarcodes::factory()->create([
+        ProductBarcodes::factory()->create([
             'product_id' => $product2->id,
             'barcode' =>   random_int(100000000000, 1999999999999),
             'condominia_id'=> $cond->id,
             'quantity' =>   random_int(0, 50),
         ]);
-        $barcode3 = ProductBarcodes::factory()->create([
+        ProductBarcodes::factory()->create([
             'product_id' => $product1->id,
             'barcode' =>   random_int(100000000000, 1999999999999),
             'condominia_id'=> $cond->id,
             'quantity' =>   30,
         ]);
+        ProductBarcodes::factory()->create([
+            'product_id' => $product2->id,
+            'barcode' =>   random_int(100000000000, 1999999999999),
+            'condominia_id'=> $cond2->id,
+            'quantity' =>   random_int(0, 50),
+        ]);
+        ProductBarcodes::factory()->create([
+            'product_id' => $product1->id,
+            'barcode' =>   random_int(100000000000, 1999999999999),
+            'condominia_id'=> $cond2->id,
+            'quantity' =>   30,
+        ]);
 
-        $response = $this->actingAs($user)->get(route('products.index'));
+        $response = $this->actingAs($resp)->get(route('products.index'));
 
         // $response->assertRedirect('products');
 

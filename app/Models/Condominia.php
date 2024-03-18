@@ -25,4 +25,8 @@ class Condominia extends Model
     {
         return $this->hasMany(Product::class);
     }
+    public function productBarcode(): HasMany
+    {
+        return $this->hasMany(ProductBarcodes::class);
+    }
 }

@@ -44,7 +44,7 @@
                     </PrimaryButton>
                 </div>
             </form>
-            <barcodes-product :barcodeProduct="product_one.product_barcodes"/>
+            <barcodes-product :barcodeProduct="product_one"/>
         </div>
     </AuthenticatedLayout>
 </template>

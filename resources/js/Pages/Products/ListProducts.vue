@@ -11,7 +11,6 @@
                     <table-head type="normal" label="Preço"/>
                     <table-head type="normal" label="Quantidade"/>
                     <table-head type="first" label="sku"/>
-                    <table-head type="normal" label="Condominio"/>
                     <table-head type="normal" label="actions"/>
                 </template>
                 <template #tableRows>
@@ -36,9 +35,7 @@
                             {{ product.sku }}
                         </table-data>
 
-                        <table-data type="first">
-                            {{ product.condominia_name }}
-                        </table-data>
+
                         <table-data type="first">
                             <Link
                             method="get"

@@ -37,7 +37,7 @@ class UserTableSeeder extends Seeder
             'name'=>'Responsible User',
             'email'=> env('RESP_EMAIL', 'responsible@live.com'),
             'password' => bcrypt(env('RESP_PASSWORD', 'resp123')),
-            'role_id' => Role::where('name', 'Seller')->first()->id
+            'role_id' => Role::where('name', 'Responsible')->first()->id
         ]);
 
         Account::create([
@@ -52,7 +52,7 @@ class UserTableSeeder extends Seeder
             'name'=>'Seller User',
             'email'=> env('SELLER_EMAIL', 'seller@live.com'),
             'password' => bcrypt(env('SELLER_PASSWORD', 'seller123')),
-            'role_id' => Role::where('name', 'Responsible')->first()->id
+            'role_id' => Role::where('name', 'Seller')->first()->id
         ]);
 
         Account::create([
