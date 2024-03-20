@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
+use App\Events\Responsible\SetResponsibleCondominia;
+use App\Listeners\SendEmailResponsable;
 use App\Models\Apartment;
+use App\Models\Condominia;
 use App\Models\Product;
 use App\Observers\ApartmentObserver;
+use App\Observers\CondominiaObserver;
 use App\Observers\ProductObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +26,11 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        SetResponsibleCondominia::class =>[
+            SendEmailResponsable::class
+        ]
+
     ];
 
     /**
@@ -32,6 +41,7 @@ class EventServiceProvider extends ServiceProvider
 
         Apartment::observe(ApartmentObserver::class);
         Product::observe(ProductObserver::class);
+        Condominia::observe(CondominiaObserver::class);
     }
 
     /**

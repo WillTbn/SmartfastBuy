@@ -10,10 +10,10 @@ class RoleServices
     public function getRoles(){
         return Role::all();
     }
-    public function getRoleResponsableId()
+    public function getRoleResponsibleId()
     {
         // $responseId = Role::where('name', 'Responsavel')->first();
-        $responseId = DB::table('roles')->where('name', 'Responsavel')->value('id');
+        $responseId = DB::table('roles')->where('name', 'Responsible')->value('id');
         return $responseId;
     }
 }

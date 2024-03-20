@@ -5,6 +5,7 @@ namespace App\Jobs\AdmSystem\Responsable;
 use App\DataTransferObject\Responsable\ResponsableDTO;
 use App\Services\Adm\AccountServices;
 use App\Services\Adm\UserServices;
+use App\Services\CondominiaServices;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -20,14 +21,15 @@ class UserAndAccountCreateJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
+    private CondominiaServices $condominiaService;
     public function __construct(
         protected ResponsableDTO $dto,
         protected UserServices $userServices,
         protected AccountServices $accountServices,
+        private CondominiaServices $condominiaServices,
     )
     {
-
-
+        $this->condominiaService = $condominiaServices;
     }
 
     /**
@@ -36,6 +38,8 @@ class UserAndAccountCreateJob implements ShouldQueue
     public function handle(): void
     {
         $user = $this->userServices->createResponsable($this->dto);
-        $this->accountServices->createAccountResponsable($this->dto, $user->id);
+        $responsable = $this->accountServices->createAccountResponsable($this->dto, $user->id);
+        //  dd($responsable->condominia_id);
+        $this->condominiaService->updateResponsable($responsable->condominia_id, $responsable->user_id);
     }
 }

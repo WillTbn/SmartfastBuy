@@ -48,4 +48,10 @@ class CondominiaServices
         $cond->saveOrFail();
         return $cond;
     }
+    public function updateResponsable(int $condominia,int $responsable_id)
+    {
+        $cond = Condominia::find($condominia);
+        $cond->update(['responsable_id'=> $responsable_id]);
+        // dd($cond);
+    }
 }

@@ -19,7 +19,7 @@ class ResponsableDTO extends AbstractDTO implements InterfaceDTO
         public readonly string $password_confirmation,
         public readonly int $role_id,
         public readonly int $condominia_id,
-        public readonly int $person,
+        public readonly string $person,
         public readonly string $genre,
         public readonly string $birthday,
         public readonly string $notifications,

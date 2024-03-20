@@ -42,7 +42,7 @@ class ProductObserver
      */
     public function restored(Product $product): void
     {
-        dd('From restored Oberser', $product);
+        // dd('From restored Oberser', $product);
     }
 
     /**

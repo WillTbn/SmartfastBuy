@@ -12,7 +12,7 @@ class Condominia extends Model
 {
     use HasFactory;
     // public $table = 'condominias';
-    protected $fillable =  [ 'name', 'address_condominias_id', 'contract_condominias_id'];
+    protected $fillable =  [ 'name', 'address_condominias_id', 'contract_condominias_id', 'responsable_id'];
     protected $appends = [
         'contract_status'
     ];

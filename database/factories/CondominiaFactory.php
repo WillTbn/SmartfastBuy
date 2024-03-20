@@ -19,6 +19,8 @@ class CondominiaFactory extends Factory
         $names = ['Vivendas Curicica', 'Vivendas Teste', 'Rio 2', 'Barra Squad'];
         return [
             'name' => fake()->randomElement($names),
+            'responsable_id' =>"",
+            'contract_condominias_id' => "",
         ];
     }
 }

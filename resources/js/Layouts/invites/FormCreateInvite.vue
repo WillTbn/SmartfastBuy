@@ -131,7 +131,7 @@ const getGenre = [
 ]
 const notYes = [
     {id:1, value:"accepted", name:"sim"},
-    {id:2, value:"recused", name:"não"}
+    {id:2, value:"refused", name:"não"}
 ]
 const dataEx = ref({
     person:"teste",
