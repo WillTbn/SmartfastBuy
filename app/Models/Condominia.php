@@ -49,21 +49,30 @@ class Condominia extends Model
     public function getContractStatusAttribute(): ContractStates
     {
 
-        if(!$this->contract_condominias_id){
+        $this->load(['responsable', 'contract', 'contract.responsible', 'contract.ceo']);
+        if(!$this->contract){
             return ContractStates::Draft;
         }
-        $this->load(['contract', 'contract.responsible', 'contract.ceo']);
-        if(!$this->contract->responsible && !$this->contract->ceo)
-        {
-            return ContractStates::Initial;
+        if(!$this->contract->responsible){
+            return ContractStates::Negotiate;
+            /// AQUI TEM QUE NOTIFICAR SOMENTE O USUÀRIO RESPONSABLE
+            // SOBRE A NECESSIDADE DE DAR ACEITAR NO CONTRATO
+        }
+        if($this->responsable){
+            return ContractStates::Draft;
         }
 
-        if($this->contract->responsible && !$this->contract->ceo
-            || !$this->contract->responsible && $this->contract->ceo
-        )
-        {
-            return ContractStates::Pending;
-        }
+        // if(!$this->contract->responsible && !$this->contract->ceo)
+        // {
+        //     return ContractStates::Initial;
+        // }
+
+        // if($this->contract->responsible && !$this->contract->ceo
+        //     || !$this->contract->responsible && $this->contract->ceo
+        // )
+        // {
+        //     return ContractStates::Pending;
+        // }
 
         return ContractStates::Start;
     }

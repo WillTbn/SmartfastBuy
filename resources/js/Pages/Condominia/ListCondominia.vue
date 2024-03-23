@@ -1,5 +1,6 @@
 <template>
     <Head title="Condominios"/>
+    <Dialog :open="flash.success" title="Sucesso!" :description="flash.message" button="Ok!" />
     <AuthenticatedLayout>
         <template #header>
             Condominios
@@ -9,25 +10,50 @@
             <table-body>
                 <template #headColumns>
                     <table-head type="first" label="Name"/>
+                    <table-head type="action" label="Ações"/>
                 </template>
                 <template #tableRows>
                     <tr v-for="cond in condominias" :key="cond.id">
                         <table-data type="first">
                             {{ cond.name }}
                         </table-data>
-                        <table-data type="normal">
-                            <!-- verificando se tem responsavel -->
-                            <Link method="get" :href="route('condominia.getOne', cond.id)" v-if="cond.contract_status == 'start'">
-                                <font-awesome-icon color="green"  :icon="['fass', 'fa-building-circle-arrow-right']"/>
-                            </Link>
-                            <PrimaryButton class="p-2" v-if="userMaster && cond.contract_status == 'draft'" @click.prevent="startModal(cond)">
-                                <font-awesome-icon color="white" class="mr-1"  :icon="['fass', 'fa-building-user']"/>
-                                Cadastra responsável
+                        <table-data type="action">
+                            <PrimaryButton
+                                class="p-2"
+                                @click.prevent="startModal(cond)"
+                                v-if="cond.contract_status == 'draft'"
+                            >
+                                <font-awesome-icon color="white" class="mr-1"  :icon="['fass', 'fa-file-contract']"/>
+                               criar contrato
                             </PrimaryButton>
-                            <!-- verificando se tem responsavel -->
+                            <Link
+                                method="get"
+                                class="p-2 mx-2"
+                                v-if="!cond.address"
+                                :href="route('condominia.storeOne', cond.id)"
+                            >
+                                <font-awesome-icon color="green" :icon="['fass', 'fa-edit']"/>
+                                Editar Condominio
+                            </Link>
 
-
-
+                            <Link
+                                method="get"
+                                class="p-2"
+                                :href="route('condominia.getOne', cond.id)"
+                                v-if="userMaster && cond.contract_status == 'negotiate'"
+                            >
+                                <font-awesome-icon color="white" class="mr-1"  :icon="['fass', 'fa-building-user']"/>
+                                editar contrato
+                            </Link>
+                            <Link
+                                method="get"
+                                class="rounded-lg bg-lime-900 p-2"
+                                :href="route('condominia.getOne', cond.id)"
+                                v-if="cond.contract_status == 'start'"
+                            >
+                                <font-awesome-icon color="green"  :icon="['fass', 'fa-building-circle-arrow-right']"/>
+                                <span class="text-white ml-2">GERENCIAR</span>
+                            </Link>
                             <!-- faBuildingCircleArrowRight -->
                             <!-- <font-awesome-icon :icon="['fas', 'building-circle-arrow-right']" /> -->
                         </table-data>
@@ -55,6 +81,7 @@ import TableBody from '../../Components/Table/TableBody.vue';
 import Modal from '../../Components/Modal.vue';
 import PrimaryButton from '../../Components/Buttons/PrimaryButton.vue';
 import DangerButton from '../../Components/DangerButton.vue';
+import InfoButton from '@/Components/Buttons/InfoButton.vue';
 import { useStore } from 'vuex';
 import {defineComponent, ref} from 'vue'
 import FormCreated from '../../Layouts/Condominia/FormCreated.vue';
@@ -74,9 +101,13 @@ export default defineComponent({
         PrimaryButton,
         DangerButton,
         Modal,
-        CreateResponsable
+        CreateResponsable,
+        InfoButton
     },
-    props:['condominias'],
+    props:{
+        condominias:{type:Array},
+        flash:{type:Object},
+    },
     setup(){
         const storeUser= useUserStore()
         const { userMaster } = storeToRefs(storeUser)

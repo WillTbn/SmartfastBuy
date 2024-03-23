@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Adm;
 
 use App\DataTransferObject\Responsable\ResponsableDTO;
+use App\Enums\RoleEnum;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Jobs\AdmSystem\Account\AccountCreateJob;
@@ -37,7 +38,8 @@ class ResponsableController extends Controller
     }
     public function create(Request $request)
     {
-        $request['role_id'] = $this->roleService->getRoleResponsibleId();
+        // $request['role_id'] = $this->roleService->getRoleResponsibleId();
+        $request['role_id'] = RoleEnum::RESPONSIBLE;
         // dd('aqui  ->'.$request['role_id']);
         $dto = new ResponsableDTO(...$request->only([
             'name',

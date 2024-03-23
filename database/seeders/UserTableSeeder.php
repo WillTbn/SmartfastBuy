@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RoleEnum;
 use App\Models\Ability;
 use App\Models\Account;
 use App\Models\Role;
@@ -22,7 +23,7 @@ class UserTableSeeder extends Seeder
             'name'=>'Administrador User',
             'email'=> env('ADMIN_EMAIL'),
             'password' => bcrypt(env('ADMIN_PASSWORD')),
-            'role_id' => Role::where('name', 'Master')->first()->id
+            'role_id' => RoleEnum::MASTER
         ]);
 
         Account::create([
@@ -37,7 +38,7 @@ class UserTableSeeder extends Seeder
             'name'=>'Responsible User',
             'email'=> env('RESP_EMAIL', 'responsible@live.com'),
             'password' => bcrypt(env('RESP_PASSWORD', 'resp123')),
-            'role_id' => Role::where('name', 'Responsible')->first()->id
+            'role_id' => RoleEnum::RESPONSIBLE
         ]);
 
         Account::create([
@@ -52,7 +53,7 @@ class UserTableSeeder extends Seeder
             'name'=>'Seller User',
             'email'=> env('SELLER_EMAIL', 'seller@live.com'),
             'password' => bcrypt(env('SELLER_PASSWORD', 'seller123')),
-            'role_id' => Role::where('name', 'Seller')->first()->id
+            'role_id' => RoleEnum::SELLER
         ]);
 
         Account::create([

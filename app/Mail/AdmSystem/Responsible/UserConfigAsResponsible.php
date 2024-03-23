@@ -42,7 +42,7 @@ class UserConfigAsResponsible extends Mailable
      */
     public function content(): Content
     {
-        // logger('Mail envelope '.$this->condominia.'  -> '.__CLASS__);
+        // logger('Mail envelope '.$this->condominia->condominia->name.'  -> '.__CLASS__);
         return new Content(
             view: 'emails.system.responsible.configResponsible',
             with:[

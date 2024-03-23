@@ -65,6 +65,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/', 'index')->name('index');
         Route::post('/', 'create')->name('create');
         Route::get('/{condominia}','getOne')->name('getOne')->middleware('can:view,condominia');
+        Route::get('/view/{condominia}','storeOne')->name('storeOne')->middleware('can:view,condominia');
     });
     Route::controller(InvitationController::class)->prefix('/invites')->as('invites.')->group(function(){
         Route::get('/', 'index')->name('index');

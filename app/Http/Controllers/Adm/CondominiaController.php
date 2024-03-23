@@ -43,6 +43,14 @@ class CondominiaController extends Controller
 
         ]);
     }
+    public function storeOne(Condominia $condominia)
+    {
+        // $getOne = $this->condServices->getOne($condominia);
+        // dd($getOne->contract);
+        return Inertia::render('Condominia/EditCondominia', [
+            'condominia' => $condominia,
+        ]);
+    }
     public function create(CondominiaPostRequest $request)
     {
         // $register = $this->blockServices->createdBlock($request->name, $request->condominia_id);

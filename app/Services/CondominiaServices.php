@@ -54,4 +54,8 @@ class CondominiaServices
         $cond->update(['responsable_id'=> $responsable_id]);
         // dd($cond);
     }
+    public function getOne(Condominia $condominia)
+    {
+        return $condominia->where('id', $condominia->id)->with(['contract', 'address'])->first();
+    }
 }
