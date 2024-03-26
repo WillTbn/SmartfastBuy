@@ -57,7 +57,8 @@ class User extends Authenticatable
     }
     public function isMaster()
     {
-        return $this->role_id === 1;
+        // dd(RoleEnum::MASTER);
+        return RoleEnum::MASTER == $this->role_id;
     }
     public function isSeller()
     {

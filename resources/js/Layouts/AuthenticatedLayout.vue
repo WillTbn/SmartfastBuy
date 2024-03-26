@@ -1,21 +1,21 @@
 <script setup>
 import { computed, ref, onMounted } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link, usePage } from '@inertiajs/vue3';
-import PrimaryButton from '../Components/Buttons/PrimaryButton.vue';
+import { usePage } from '@inertiajs/vue3';
 import SelectTheme from '../Components/Forms/SelectTheme.vue';
 import {useUserStore} from '../storePinia/user'
 import { storeToRefs } from 'pinia';
+import NavbarLayout from './NavbarLayout.vue';
+import {useDark} from '@vueuse/core'
+
 const showingNavigationDropdown = ref(false);
 const page = usePage()
 const can_user = computed(() => page.props.permissions)
 const storeUser = useUserStore()
 const {condomiaView, userMaster} = storeToRefs(storeUser)
-
+const isDark = useDark()
 onMounted(() =>{
     storeUser.setCan(can_user.value.can_access)
     storeUser.setRole(can_user.value.role)
@@ -24,43 +24,12 @@ onMounted(() =>{
 
 <template>
     <div>
+        <NavbarLayout :key="isDark" :dark="isDark"/>
         <div class="min-h-screen light:bg-gray-100">
-            <nav class="light:bg-white border-b light:border-gray-100">
+            <nav class="light:bg-white">
                 <!-- Primary Navigation Menu -->
                 <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
-
-                        <div class="flex">+
-                            <!-- Logo -->
-                            <div class="flex items-center shrink-0">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block w-auto light:text-gray-800 fill-current h-9"
-                                    />
-                                </Link>
-                            </div>
-
-                            <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
-                                </NavLink>
-                                <NavLink :href="route('condominia.index')" v-if="condomiaView('condominia-access') || userMaster" :active="route().current('condominia.index')">
-                                    Condominios
-                                </NavLink>
-                                <NavLink :href="route('invites.index')" v-if="condomiaView('invites-access') || userMaster" :active="route().current('invites.index')">
-                                    Convites
-                                </NavLink>
-                                <NavLink :href="route('products.index')" v-if="condomiaView('products-access') || userMaster" :active="route().current('products.index')">
-                                    Produtos
-                                </NavLink>
-                                <NavLink :href="route('users.index')" v-if="condomiaView('users-access') || userMaster" :active="route().current('users.index')">
-                                    usuários
-                                </NavLink>
-
-                            </div>
-                        </div>
-
+                    <div class="flex justify-end h-16">
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
                             <div class="relative ml-3">
@@ -69,9 +38,19 @@ onMounted(() =>{
                                         <span class="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none"
+                                                class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 light:text-gray-500 transition duration-150 ease-in-out bg-transparent rounded-md hover:text-gray-700 focus:outline-none"
                                             >
-                                                {{ $page.props.auth.user.name }}
+                                                <!-- <span rounded-full>
+                                                    <img class="inline" src="..." alt="...">
+                                                </span> -->
+                                                <img
+                                                    :src="$page.props.auth.account.avatar"
+                                                    style="margin:0 0.6rem;height: 2rem; width: 2rem; border-radius: 50%; background-color: #999399a6; display: inline;"
+                                                    :srcset="$page.props.auth.account.avatar"
+                                                />
+                                                <span>
+                                                    {{ $page.props.auth.user.name }}
+                                                </span>
 
                                                 <svg
                                                     class="ml-2 -mr-0.5 h-4 w-4"
@@ -89,7 +68,7 @@ onMounted(() =>{
                                         </span>
                                     </template>
 
-                                    <template #content>
+                                    <template #content class="bg-gray-800">
                                         <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
@@ -165,9 +144,9 @@ onMounted(() =>{
                     </div>
                 </div>
             </nav>
-
             <!-- Page Heading -->
-            <header class="light:bg-white shadow" v-if="$slots.header">
+            <header class="light:bg-white" v-if="$slots.header">
+
                 <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>

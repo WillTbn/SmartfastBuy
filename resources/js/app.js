@@ -1,6 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
 import 'vue3-toastify/dist/index.css'
+/* import the fontawesome core */
+import './Config/fontAwesome'
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -8,25 +10,10 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import store from './Store'
 import {createPinia} from 'pinia'
-/* import the fontawesome core */
-import { library } from '@fortawesome/fontawesome-svg-core'
 
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-/* import specific icons */
-import {
-    faUserSecret, faCity, faShop, faEdit,
-    faTrash, faPlus, faWindowClose, faClose,
-    faArrowLeft, faPaperPlane, faBuildingCircleArrowRight,
-    faBuildingUser, faFileContract
-} from '@fortawesome/free-solid-svg-icons'
-library.add(
-    faUserSecret, faCity, faShop, faEdit,
-    faTrash,faPlus, faWindowClose, faClose,
-    faArrowLeft, faPaperPlane,faBuildingCircleArrowRight,
-    faBuildingUser, faFileContract
-)
 const appName = import.meta.env.VITE_APP_NAME || 'Smart Fast Buy';
 const pinia = createPinia()
 createInertiaApp({

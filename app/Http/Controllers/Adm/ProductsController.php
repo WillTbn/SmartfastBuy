@@ -22,7 +22,7 @@ class ProductsController extends Controller
     }
     public function index(Request $request)
     {
-
+        // dd($request->user()->isMaster());
         return Inertia::render('Products/ListProducts', [
             'products' => $request->user()->isMaster()
             ? $this->serviceproduct->getAllProduct()
