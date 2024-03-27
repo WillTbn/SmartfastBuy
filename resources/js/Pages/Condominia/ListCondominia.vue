@@ -30,10 +30,10 @@
                                 method="get"
                                 class="p-2 mx-2"
                                 v-if="!cond.address"
-                                :href="route('condominia.storeOne', cond.id)"
+                                :href="route('condominia.storeAddress', cond.id)"
                             >
                                 <font-awesome-icon color="green" :icon="['fass', 'fa-edit']"/>
-                                Editar Condominio
+                                Add endereço
                             </Link>
 
                             <Link
