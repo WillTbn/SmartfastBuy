@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ability extends Model
@@ -17,5 +18,9 @@ class Ability extends Model
     public function RoleAbility():BelongsTo
     {
         return $this->belongsTo(RoleAbility::class);
+    }
+    public function role():HasOne
+    {
+        return $this->hasOne(Role::class);
     }
 }

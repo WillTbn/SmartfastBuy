@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class CondominiaControllerTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
     /**
      * A basic feature test example.
      */
@@ -22,12 +22,22 @@ class CondominiaControllerTest extends TestCase
     }
     public function test_condominia_created()
     {
+        // $faker = Fake\Factory::create('pt_BR');
         $user = User::factory()->create();
 
         Condominia::factory()->create();
 
         $this->actingAs($user)->post(route('condominia.create', [
             'name' => 'Teste Vivendas Teste',
+            'road' => fake()->streetName(),
+            'state' => fake()->state(),
+            'district' => fake()->citySuffix(),
+            'zip_code' => fake()->postcode(),
+            'city' => fake()->city(),
+            'number' => fake()->buildingNumber(),
+            'document_name' => 'documento.pdf',
+            'initial_date' => '',
+            'final_date' => '',
         ]));
 
         $this->assertDatabaseHas('condominias', [

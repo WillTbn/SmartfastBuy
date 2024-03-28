@@ -2,11 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RoleEnum;
 use App\Models\Ability;
 use App\Models\Role;
 use App\Models\RoleAbility;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RoleTableSeeder extends Seeder
 {
@@ -15,48 +17,60 @@ class RoleTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $ab = Ability::create([
+
+        Ability::create([
             'name'=> 'all-access'
         ]);
 
-        $abv1 = Ability::create([
+        Ability::create([
             'name'=> 'users-access'
         ]);
-        $abv2 = Ability::create([
+        Ability::create([
             'name'=> 'products-access'
         ]);
-        $abv3 = Ability::create([
+        Ability::create([
             'name'=> 'condominia-access'
         ]);
+        Ability::create([
+            'name'=> 'invite-access'
+        ]);
 
-
-        $role = Role::create([
+        Role::create([
             'name'=>'Master'
         ]);
 
-        $vend = Role::create([
+        Role::create([
             'name'=>'Seller'
         ]);
-        $resp = Role::create([
+        Role::create([
             'name'=>'Responsible'
         ]);
 
-        RoleAbility::create([
-            'role_id' =>  $role->id,
-            'ability_id'=> $ab->id
+        // $seller = Role::where('name', 'Seller')->first()->id;
+        // $responsible = Role::where('name', 'Responsible')->first()->id;
+        $abilitySeller = Ability::whereNot('name','all-access')->pluck('id');
+        $abilityResp = Ability::where('name','products-access')->orWhere('name','condominia-access')->pluck('id');
+
+        DB::table('role_abilities')->insert([
+            'role_id' => RoleEnum::MASTER,
+            'ability_id' => Ability::where('name','all-access')->first()->id
         ]);
 
-        RoleAbility::create([
-            'role_id' =>  $vend->id,
-            'ability_id'=> $abv1->id
-        ]);
-        RoleAbility::create([
-            'role_id' =>  $vend->id,
-            'ability_id'=> $abv2->id
-        ]);
-        RoleAbility::create([
-            'role_id' =>  $resp->id,
-            'ability_id'=> $abv3->id
-        ]);
+        foreach($abilitySeller as $ab){
+            DB::table('role_abilities')->insert([
+                'role_id' => RoleEnum::SELLER,
+                'ability_id' => $ab
+            ]);
+        }
+        foreach($abilityResp as $ab){
+            DB::table('role_abilities')->insert([
+                'role_id' => RoleEnum::RESPONSIBLE,
+                'ability_id' => $ab
+            ]);
+        }
+
+
+
+
     }
 }

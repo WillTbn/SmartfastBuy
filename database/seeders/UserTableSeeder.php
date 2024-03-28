@@ -19,50 +19,30 @@ class UserTableSeeder extends Seeder
     public function run(): void
     {
 
-        $user = User::create([
+        User::factory()
+        ->has(Account::factory())
+        ->create([
             'name'=>'Administrador User',
-            'email'=> env('ADMIN_EMAIL'),
-            'password' => bcrypt(env('ADMIN_PASSWORD')),
+            'email'=> env('ADMIN_EMAIL', fake()->email()),
+            'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
             'role_id' => RoleEnum::MASTER
         ]);
-
-        Account::create([
-            'person' => fake('pt_BR')->cpf(),
-            'telephone' => fake('pt_BR')->phoneNumber(),
-            'phone' => fake('pt_BR')->cellphone(),
-            'birthday' => fake()->date('Y-m-d'),
-            'notifications' => 'accepted',
-            'user_id' => $user->id
-        ]);
-        $responsable = User::create([
+        User::factory()
+        ->has(Account::factory())
+        ->create([
             'name'=>'Responsible User',
             'email'=> env('RESP_EMAIL', 'responsible@live.com'),
             'password' => bcrypt(env('RESP_PASSWORD', 'resp123')),
             'role_id' => RoleEnum::RESPONSIBLE
         ]);
 
-        Account::create([
-            'person' => fake('pt_BR')->cpf(),
-            'telephone' => fake('pt_BR')->phoneNumber(),
-            'phone' => fake('pt_BR')->cellphone(),
-            'birthday' => fake()->date('Y-m-d'),
-            'notifications' => 'accepted',
-            'user_id' => $responsable->id
-        ]);
-        $seller = User::create([
+        User::factory()
+        ->has(Account::factory())
+        ->create([
             'name'=>'Seller User',
             'email'=> env('SELLER_EMAIL', 'seller@live.com'),
             'password' => bcrypt(env('SELLER_PASSWORD', 'seller123')),
             'role_id' => RoleEnum::SELLER
-        ]);
-
-        Account::create([
-            'person' => fake('pt_BR')->cpf(),
-            'telephone' => fake('pt_BR')->phoneNumber(),
-            'phone' => fake('pt_BR')->cellphone(),
-            'birthday' => fake()->date('Y-m-d'),
-            'notifications' => 'accepted',
-            'user_id' => $seller->id
         ]);
 
     }

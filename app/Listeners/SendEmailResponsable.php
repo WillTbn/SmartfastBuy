@@ -25,8 +25,8 @@ class SendEmailResponsable
     public function handle(SetResponsibleCondominia $event): void
     {
         logger('Listeener '.__CLASS__);
-        $userSend = DB::table('users')->find($event->condominia->responsable_id);
+        $userSend = DB::table('users')->find($event->condominia->responsible_id);
         // dd($event->condominia->name);
-        Mail::to('contato@smartfastbuy.com.br')->send( new UserConfigAsResponsible($event->condominia->name, $userSend));
+        Mail::to('contato@smartfastbuy.com.br')->send( new UserConfigAsResponsible($event->condominia, $userSend));
     }
 }

@@ -2,8 +2,14 @@
 
 namespace App\Services;
 
+use App\DataTransferObject\Condominia\CondominiaDTO;
+use App\DataTransferObject\Responsible\ResponsibleDTO;
+use App\Models\Account;
+use App\Models\AddressCondominia;
 use App\Models\Condominia;
+use App\Models\ContractCondominias;
 use App\Models\Role;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -31,7 +37,7 @@ class CondominiaServices
         //         'condominias.address_condominias_id',
         //         'users.email')
         // ->get();
-        return Condominia::with(['address', 'contract', 'responsable'])->get();
+        return Condominia::with(['addressCondominia', 'contractCondominia', 'responsable'])->get();
     }
 
     public function getlinkToUser()
@@ -41,21 +47,45 @@ class CondominiaServices
         return DB::table('condominias')->where('id', $auth->account->condominia->id)->get();
     }
 
-    public function createCondominia(String $name) :Condominia
+    public function createCondominia(CondominiaDTO $dtoCondominia)
     {
-        $cond = new Condominia();
-        $cond->name = $name;
-        $cond->saveOrFail();
-        return $cond;
+
+        try{
+            DB::beginTransaction();
+            $cond = Condominia::create([
+                'name' => $dtoCondominia->name
+            ]);
+
+            AddressCondominia::create([
+                'condominia_id' => $cond->id,
+                'road' => $dtoCondominia->road,
+                'state' => $dtoCondominia->state,
+                'district' => $dtoCondominia->district,
+                'zip_code' => $dtoCondominia->zip_code,
+                'city' => $dtoCondominia->city,
+                'number' => $dtoCondominia->number
+
+            ]);
+
+            DB::commit();
+
+        }catch(Exception $e){
+            // dd($e);
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Problema na criação do condominio!');
+        }
+
     }
-    public function updateResponsable(int $condominia,int $responsable_id)
+    public function updateResponsable(ResponsibleDTO $responsible)
     {
-        $cond = Condominia::find($condominia);
-        $cond->update(['responsable_id'=> $responsable_id]);
+        $cond = Condominia::find($responsible->condominia_id);
+        // dd($responsible); first
+        $respon = Account::where('person', $responsible->person)->first();
+        $cond->update(['responsible_id'=> $respon->user_id]);
         // dd($cond);
     }
     public function getOne(Condominia $condominia)
     {
-        return $condominia->where('id', $condominia->id)->with(['contract', 'address'])->first();
+        return $condominia->where('id', $condominia->id)->with(['contractCondominia', 'addressCondominia'])->first();
     }
 }

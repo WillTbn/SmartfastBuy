@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Jobs\AdmSystem\Responsable;
+namespace App\Jobs\AdmSystem\Responsible;
 
-use App\DataTransferObject\Responsable\ResponsableDTO;
+use App\DataTransferObject\Responsible\ResponsibleDTO;
 use App\Services\Adm\AccountServices;
 use App\Services\Adm\UserServices;
 use App\Services\CondominiaServices;
@@ -23,7 +23,7 @@ class UserAndAccountCreateJob implements ShouldQueue
      */
     private CondominiaServices $condominiaService;
     public function __construct(
-        protected ResponsableDTO $dto,
+        protected ResponsibleDTO $dto,
         protected UserServices $userServices,
         protected AccountServices $accountServices,
         private CondominiaServices $condominiaServices,
@@ -37,9 +37,11 @@ class UserAndAccountCreateJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $user = $this->userServices->createResponsable($this->dto);
-        $responsable = $this->accountServices->createAccountResponsable($this->dto, $user->id);
+
+        $this->userServices->createResponsable($this->dto);
+        // $responsable = $this->accountServices->createAccountResponsable($this->dto, $user->id);
         //  dd($responsable->condominia_id);
-        $this->condominiaService->updateResponsable($responsable->condominia_id, $responsable->user_id);
+        $this->condominiaService->updateResponsable($this->dto);
+
     }
 }

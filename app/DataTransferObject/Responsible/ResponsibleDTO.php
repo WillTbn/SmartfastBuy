@@ -1,33 +1,34 @@
 <?php
-namespace App\DataTransferObject\Responsable;
+namespace App\DataTransferObject\Responsible;
 
 use App\DataTransferObject\AbstractDTO;
 use App\DataTransferObject\InterfaceDTO;
+use App\Enums\RoleEnum;
 use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\Rule;
 
-class ResponsableDTO extends AbstractDTO implements InterfaceDTO
+class ResponsibleDTO extends AbstractDTO implements InterfaceDTO
 {
-
+    public $role_id;
     public function __construct(
         public readonly string $name,
         public readonly string $email,
         public readonly string $password,
         public readonly string $password_confirmation,
-        public readonly int $role_id,
         public readonly int $condominia_id,
         public readonly string $person,
         public readonly string $genre,
         public readonly string $birthday,
         public readonly string $notifications,
+        // ?int $role_id =  RoleEnum::RESPONSIBLE,
         public readonly ?string $phone,
         public readonly ?string $telephone,
     )
     {
-
+        $this->role_id = RoleEnum::RESPONSIBLE;
         $this->validate();
     }
 

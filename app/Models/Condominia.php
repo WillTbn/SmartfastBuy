@@ -12,19 +12,19 @@ class Condominia extends Model
 {
     use HasFactory;
     // public $table = 'condominias';
-    protected $fillable =  [ 'name', 'address_condominias_id', 'contract_condominias_id', 'responsable_id'];
+    protected $fillable =  [ 'name', 'address_condominias_id', 'contract_condominias_id', 'responsible_id'];
     protected $appends = [
         'contract_status'
     ];
     public function responsable():HasOne
     {
-        return $this->hasOne(Account::class, 'id', 'responsable_id');
+        return $this->hasOne(Account::class, 'id', 'responsible_id');
     }
-    public function contract():HasOne
+    public function contractCondominia():HasOne
     {
-        return $this->hasOne(ContractCondominias::class, 'id', 'contract_condominias_id');
+        return $this->hasOne(ContractCondominias::class);
     }
-    public function address():HasOne
+    public function addressCondominia():HasOne
     {
         return $this->hasOne(AddressCondominia::class);
     }
@@ -49,11 +49,11 @@ class Condominia extends Model
     public function getContractStatusAttribute(): ContractStates
     {
 
-        $this->load(['responsable', 'contract', 'contract.responsible', 'contract.ceo']);
-        if(!$this->contract){
+        $this->load(['responsable', 'contractCondominia', 'contractCondominia.responsible', 'contractCondominia.ceo']);
+        if(!$this->contractCondominia){
             return ContractStates::Draft;
         }
-        if(!$this->contract->responsible){
+        if(!$this->contractCondominia->responsible){
             return ContractStates::Negotiate;
             /// AQUI TEM QUE NOTIFICAR SOMENTE O USUÀRIO RESPONSABLE
             // SOBRE A NECESSIDADE DE DAR ACEITAR NO CONTRATO

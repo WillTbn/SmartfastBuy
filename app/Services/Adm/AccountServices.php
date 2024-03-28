@@ -2,7 +2,7 @@
 
 namespace App\Services\Adm;
 
-use App\DataTransferObject\Responsable\ResponsableDTO;
+use App\DataTransferObject\Responsible\ResponsibleDTO;
 use App\DataTransferObject\User\UserAdmDTO;
 use App\Models\Account;
 
@@ -23,7 +23,7 @@ class AccountServices
         $ac->saveOrFail();
         return $ac;
     }
-    public function createAccountResponsable(ResponsableDTO $responsable, int $user_id)
+    public function createAccountResponsable(ResponsibleDTO $responsable, int $user_id)
     {
         $ac = new Account();
         $ac->user_id = $user_id;

@@ -5,7 +5,7 @@ use App\Http\Controllers\Adm\BlockController;
 use App\Http\Controllers\Adm\CondominiaController;
 use App\Http\Controllers\Adm\InvitationController;
 use App\Http\Controllers\Adm\ProductsController;
-use App\Http\Controllers\Adm\ResponsableController;
+use App\Http\Controllers\Adm\ResponsibleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -82,7 +82,7 @@ Route::middleware(['auth'])->group(function(){
         Route::delete('/{product}', 'deleted')->name('delete');
     });
 
-    Route::controller(ResponsableController::class)->prefix('/responsable')->as('responsable.')->group(function () {
+    Route::controller(ResponsibleController::class)->prefix('/responsable')->as('responsable.')->group(function () {
         Route::post('/', 'create')->name('create');
     });
 });

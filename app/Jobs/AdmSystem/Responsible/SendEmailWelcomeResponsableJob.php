@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Jobs\AdmSystem\Responsable;
+namespace App\Jobs\AdmSystem\Responsible;
 
-use App\DataTransferObject\Responsable\ResponsableDTO;
+use App\DataTransferObject\Responsible\ResponsibleDTO;
 use App\DataTransferObject\User\UserAdmDTO;
 use App\Mail\AdmSystem\InvitationEmail;
 use App\Mail\AdmSystem\Responsable\WelcomeResponsableEmail;
@@ -21,7 +21,7 @@ class SendEmailWelcomeResponsableJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(protected ResponsableDTO $dto)
+    public function __construct(protected ResponsibleDTO $dto)
     {
         //
     }

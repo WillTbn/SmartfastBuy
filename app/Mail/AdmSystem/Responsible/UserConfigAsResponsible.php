@@ -46,7 +46,7 @@ class UserConfigAsResponsible extends Mailable
         return new Content(
             view: 'emails.system.responsible.configResponsible',
             with:[
-                'cond_name'=>$this->condominia,
+                'cond_name'=>$this->condominia->condominia->name,
                 'resp_name'=>$this->user->name
             ]
         );

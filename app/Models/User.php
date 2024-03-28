@@ -25,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id'
     ];
 
     /**
@@ -36,17 +37,14 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    public function casts():array {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+            'role_id' => RoleEnum::class
+        ];
+    }
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-        'role_id' => RoleEnum::class
-    ];
     public function account(): HasOne
     {
         return $this->hasOne(Account::class, 'user_id', 'id');

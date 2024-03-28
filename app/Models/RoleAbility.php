@@ -13,4 +13,8 @@ class RoleAbility extends Model
     {
         return $this->belongsTo(Ability::class, 'id', 'ability_id');
     }
+    public function roles(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
 }

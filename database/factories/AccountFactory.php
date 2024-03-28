@@ -17,7 +17,12 @@ class AccountFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'person' => fake()->cpf(),
+            'telephone' => fake()->phoneNumber(),
+            'phone' => fake()->cellphone(),
+            'birthday' => fake()->date('Y-m-d'),
+            'notifications' => 'accepted',
+            // 'user_id' => $user->id
         ];
     }
 }

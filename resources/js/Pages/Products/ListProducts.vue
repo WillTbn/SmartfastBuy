@@ -60,6 +60,7 @@ import TableHead from '../../Components/Table/TableHead.vue';
 import TableData from '../../Components/Table/TableData.vue';
 import TableBody from '../../Components/Table/TableBody.vue';
 
+
 export default defineComponent({
     components:{
         TableBody,

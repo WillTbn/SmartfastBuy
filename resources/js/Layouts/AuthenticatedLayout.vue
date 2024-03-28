@@ -1,25 +1,18 @@
 <script setup>
-import { computed, ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { usePage } from '@inertiajs/vue3';
 import SelectTheme from '../Components/Forms/SelectTheme.vue';
-import {useUserStore} from '../storePinia/user'
-import { storeToRefs } from 'pinia';
 import NavbarLayout from './NavbarLayout.vue';
 import {useDark} from '@vueuse/core'
 
 const showingNavigationDropdown = ref(false);
 const page = usePage()
-const can_user = computed(() => page.props.permissions)
-const storeUser = useUserStore()
-const {condomiaView, userMaster} = storeToRefs(storeUser)
+
 const isDark = useDark()
-onMounted(() =>{
-    storeUser.setCan(can_user.value.can_access)
-    storeUser.setRole(can_user.value.role)
-})
+
 </script>
 
 <template>

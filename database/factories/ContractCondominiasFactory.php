@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Condominia>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ContractCondominias>
  */
-class CondominiaFactory extends Factory
+class ContractCondominiasFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,9 +16,9 @@ class CondominiaFactory extends Factory
      */
     public function definition(): array
     {
-        // $names = ['Vivendas Curicica', 'Vivendas Teste', 'Rio 2', 'Barra Squad'];
         return [
-            'name' => fake()->company(),
+           'document_name' => 'default-initial.pdf',
+           'initial_date' => fake()->date()
         ];
     }
 }

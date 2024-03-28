@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Adm;
 
+use App\DataTransferObject\Condominia\CondominiaDTO;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Condominia\CondominiaPostRequest;
 use App\Models\Condominia;
 use App\Services\ApartmentServices;
 use App\Services\BlockServices;
@@ -59,16 +59,26 @@ class CondominiaController extends Controller
             'condominia' => $condominia,
         ]);
     }
-    public function create(CondominiaPostRequest $request)
+    public function create(Request $request)
     {
+
+        $dtoCondominia = new CondominiaDTO(...$request->only([
+            'name',
+            'road',
+            'state',
+            'district',
+            'zip_code',
+            'city',
+            'number',
+            'document_name',
+            'initial_date',
+            'final_date',
+        ]));
         // $register = $this->blockServices->createdBlock($request->name, $request->condominia_id);
-        $register = $this->condServices->createCondominia($request->name);
-        if($register){
-            return redirect()->back()
-            ->with('success', 'Condominio criado!');
-        }
-        return redirect()->back('500')
-        ->with('error', 'Problema ao salva no banco contate o suporte!');
+        $this->condServices->createCondominia($dtoCondominia);
+
+        return redirect()->back()
+        ->with('success', 'Condominio criado!');
     }
     public function delete(Condominia $condominia)
     {

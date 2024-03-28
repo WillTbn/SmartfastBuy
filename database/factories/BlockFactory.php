@@ -16,7 +16,7 @@ class BlockFactory extends Factory
      */
     public function definition(): array
     {
-        $names = ['a1', 'a2', 'b1', 'b2'];
+        $names = ['a1', 'a2','a3', 'a4', 'a5', 'b1', 'b2', 'b3', 'b4', 'b5'];
         return [
             'name' => fake()->randomElement($names),
         ];

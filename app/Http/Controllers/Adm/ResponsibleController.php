@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Adm;
 
-use App\DataTransferObject\Responsable\ResponsableDTO;
+use App\DataTransferObject\Responsible\ResponsibleDTO;
 use App\Enums\RoleEnum;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Jobs\AdmSystem\Account\AccountCreateJob;
-use App\Jobs\AdmSystem\Responsable\SendEmailWelcomeResponsableJob;
-use App\Jobs\AdmSystem\Responsable\UserAndAccountCreateJob;
+use App\Jobs\AdmSystem\Responsible\SendEmailWelcomeResponsableJob;
+use App\Jobs\AdmSystem\Responsible\UserAndAccountCreateJob;
 use App\Models\Role;
 use App\Services\Adm\AccountServices;
 use App\Services\RoleServices;
@@ -16,7 +16,7 @@ use App\Services\Adm\UserServices;
 use App\Services\CondominiaServices;
 use Exception;
 
-class ResponsableController extends Controller
+class ResponsibleController extends Controller
 {
 
     private UserServices $userservice;
@@ -39,9 +39,11 @@ class ResponsableController extends Controller
     public function create(Request $request)
     {
         // $request['role_id'] = $this->roleService->getRoleResponsibleId();
-        $request['role_id'] = RoleEnum::RESPONSIBLE;
-        // dd('aqui  ->'.$request['role_id']);
-        $dto = new ResponsableDTO(...$request->only([
+        // dd('aqui  ->'.RoleEnum::RESPONSIBLE);
+        // $request['role_id'] = RoleEnum::RESPONSIBLE;
+        // dd($request['role_id']);
+
+        $dto = new ResponsibleDTO(...$request->only([
             'name',
             'password',
             'password_confirmation',
@@ -52,8 +54,7 @@ class ResponsableController extends Controller
             'notifications',
             'phone',
             'telephone',
-            'condominia_id',
-            'role_id'
+            'condominia_id'
         ]));
 
         UserAndAccountCreateJob::withChain([
