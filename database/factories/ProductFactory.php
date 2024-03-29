@@ -28,7 +28,9 @@ class ProductFactory extends Factory
             'category_id'=> Category::first()->id,
             'type'=> 'PuroMalte',
             'user_id' =>User::first()->id,
-            'type' => fake()->randomElement($namesType)
+            'type' => fake()->randomElement($namesType),
+            'created_at' => now(),
+            'updated_at' => now()
         ];
     }
 }

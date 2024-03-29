@@ -23,7 +23,9 @@ class ProductsTableSeeder extends Seeder
             'category_id'=>1,
             'type'=> 'PuroMalte',
             // 'condominia_id'=> 1,
-            'user_id' =>$user->id
+            'user_id' =>$user->id,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         DB::table('products')->insert([
@@ -35,7 +37,9 @@ class ProductsTableSeeder extends Seeder
             'category_id'=>1,
             'type'=> 'Pilsen',
             // 'condominia_id'=> 1,
-            'user_id' =>$user->id
+            'user_id' =>$user->id,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
         DB::table('products')->insert([
             'name' => 'Antartica 473ml',
@@ -45,7 +49,9 @@ class ProductsTableSeeder extends Seeder
             'category_id'=>1,
             'type'=> 'Pilsen',
             // 'condominia_id'=> 1,
-            'user_id' =>$user->id
+            'user_id' =>$user->id,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         DB::table('products')->insert([
@@ -57,7 +63,9 @@ class ProductsTableSeeder extends Seeder
             'category_id'=>3,
             'type'=> 'Tinto',
             // 'condominia_id'=> 1,
-            'user_id' =>$user->id
+            'user_id' =>$user->id,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
         DB::table('products')->insert([
             'name' => 'Vodka Absolut Original 1L',
@@ -68,7 +76,9 @@ class ProductsTableSeeder extends Seeder
             'category_id'=>2,
             'type'=> 'Vodka',
             // 'condominia_id'=> 1,
-            'user_id' =>$user->id
+            'user_id' =>$user->id,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
     }
 }

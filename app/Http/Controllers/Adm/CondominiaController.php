@@ -51,13 +51,11 @@ class CondominiaController extends Controller
             'condominia' => $condominia,
         ]);
     }
-    public function storeAddress(Condominia $condominia)
+    public function storeCondominia()
     {
         // $getOne = $this->condServices->getOne($condominia);
         // dd($getOne->contract);
-        return Inertia::render('Condominia/AddAddress', [
-            'condominia' => $condominia,
-        ]);
+        return Inertia::render('Condominia/CondominiaCreated');
     }
     public function create(Request $request)
     {

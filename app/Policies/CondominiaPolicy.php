@@ -35,7 +35,7 @@ class CondominiaPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role_id === 1;
+        return $user->isMaster();
     }
 
     /**

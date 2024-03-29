@@ -5,7 +5,17 @@
         <template #header>
             Condominios
         </template>
-        <form-created/>
+        <!-- <form-created/> -->
+        <div class="container flex justify-end">
+            <Link
+                method="get"
+                class="p-2 mx-2  outline outline-offset-1 outline-green-500 rounded-lg hover:bg-green-900"
+                :href="route('condominia.storeCondominia')"
+            >
+                <font-awesome-icon color="green" :icon="['fass', 'fa-plus']"/>
+               Novo Condominio
+            </Link>
+        </div>
         <div v-if="condominias.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <table-body>
                 <template #headColumns>
@@ -23,27 +33,19 @@
                                 @click.prevent="startModal(cond)"
                                 v-if="cond.contract_status == 'draft'"
                             >
-                                <font-awesome-icon color="white" class="mr-1"  :icon="['fass', 'fa-file-contract']"/>
-                               criar contrato
+                                <font-awesome-icon color="white" class="mr-1"  :icon="['fass', 'fa-building-user']"/>
+                               Adicionar responsavel
                             </PrimaryButton>
                             <Link
                                 method="get"
-                                class="p-2 mx-2"
-                                v-if="!cond.address"
-                                :href="route('condominia.storeAddress', cond.id)"
-                            >
-                                <font-awesome-icon color="green" :icon="['fass', 'fa-edit']"/>
-                                Add endereço
-                            </Link>
-
-                            <Link
-                                method="get"
-                                class="p-2"
+                                class="p-2 rounded-lg outline outline-offset-1 outline-cyan-500 hover:bg-gray-300 "
                                 :href="route('condominia.getOne', cond.id)"
                                 v-if="userMaster && cond.contract_status == 'negotiate'"
                             >
-                                <font-awesome-icon color="white" class="mr-1"  :icon="['fass', 'fa-building-user']"/>
-                                editar contrato
+                                <font-awesome-icon color="gray" class="mr-1"  :icon="['fass', 'fa-file-contract']"/>
+
+                                <span class="text-gray-900 ml-2">editar contrato</span>
+
                             </Link>
                             <Link
                                 method="get"
@@ -74,6 +76,10 @@
 </template>
 <script>
 import { Head,Link} from '@inertiajs/vue3';
+import { useStore } from 'vuex';
+import {defineComponent, ref, onMounted} from 'vue'
+import {useUserStore} from '../../storePinia/user'
+import { storeToRefs } from 'pinia';
 import AuthenticatedLayout from '../../Layouts/AuthenticatedLayout.vue';
 import TableHead from '../../Components/Table/TableHead.vue';
 import TableData from '../../Components/Table/TableData.vue';
@@ -82,19 +88,17 @@ import Modal from '../../Components/Modal.vue';
 import PrimaryButton from '../../Components/Buttons/PrimaryButton.vue';
 import DangerButton from '../../Components/DangerButton.vue';
 import InfoButton from '@/Components/Buttons/InfoButton.vue';
-import { useStore } from 'vuex';
-import {defineComponent, ref} from 'vue'
-import FormCreated from '../../Layouts/Condominia/FormCreated.vue';
 import CreateResponsable from '@/Layouts/users/responsable/CreateResponsable.vue';
-import {useUserStore} from '../../storePinia/user'
-import { storeToRefs } from 'pinia';
+// import FormCreated from '../../Layouts/Condominia/FormCreated.vue';
+import Dialog from '@/Components/Dialog.vue';
+import {useCondominiaStore} from '../../storePinia/condominia'
 
 export default defineComponent({
     components:{
         TableBody,
         TableHead,
         TableData,
-        FormCreated,
+        // FormCreated,
         AuthenticatedLayout,
         Head,
         Link,
@@ -102,15 +106,18 @@ export default defineComponent({
         DangerButton,
         Modal,
         CreateResponsable,
-        InfoButton
+        InfoButton,
+        Dialog
     },
     props:{
         condominias:{type:Array},
         flash:{type:Object},
     },
-    setup(){
+    setup(props){
         const storeUser= useUserStore()
         const { userMaster } = storeToRefs(storeUser)
+        const storeCond = useCondominiaStore()
+
         const resp = ref(false)
         const store = useStore()
 
@@ -124,6 +131,10 @@ export default defineComponent({
             setCond(condominia)
             resp.value = true
         }
+        onMounted(()=>{
+            storeCond.setCondomina(props.condominias)
+        })
+
         return{
             userMaster,
             setCond,

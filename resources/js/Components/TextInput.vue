@@ -6,6 +6,10 @@ defineProps({
         type: String,
         required: true,
     },
+    error:{
+        type:Boolean,
+        default: false
+    }
 });
 
 defineEmits(['update:modelValue']);
@@ -23,7 +27,8 @@ defineExpose({ focus: () => input.value.focus() });
 
 <template>
     <input
-        class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm p-2 text-lg font-medium"
+        class="text-black border-2 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm p-2 text-lg font-medium"
+        :class="{'border-rose-500' :  error}"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
         ref="input"

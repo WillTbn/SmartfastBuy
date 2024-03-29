@@ -17,7 +17,7 @@ class ContractCondominiasFactory extends Factory
     public function definition(): array
     {
         return [
-           'document_name' => 'default-initial.pdf',
+           'document_name' => 'default-contract.pdf',
            'initial_date' => fake()->date()
         ];
     }

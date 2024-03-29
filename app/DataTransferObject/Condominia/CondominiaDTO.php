@@ -3,12 +3,7 @@ namespace App\DataTransferObject\Condominia;
 
 use App\DataTransferObject\AbstractDTO;
 use App\DataTransferObject\InterfaceDTO;
-use App\Models\AddressCondominia;
-use App\Models\Condominia;
-use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Validation\Rules;
-use Illuminate\Validation\Rule;
 
 class CondominiaDTO extends AbstractDTO implements InterfaceDTO
 {
@@ -17,17 +12,17 @@ class CondominiaDTO extends AbstractDTO implements InterfaceDTO
         public readonly string $name,
 
         // date address condominia
-        public readonly string $road,
-        public readonly string $state,
-        public readonly string $district,
-        public readonly string $zip_code,
-        public readonly string $city,
-        public readonly ?int $number,
+        public readonly ?string $road= null,
+        public readonly ?string $state= null,
+        public readonly ?string $district= null,
+        public readonly ?string $zip_code= null,
+        public readonly ?string $city= null,
+        public  ?int $number = null,
 
         // date contract condominia
-        public readonly ?string $document_name,
-        public readonly ?string $initial_date,
-        public readonly ?string $final_date,
+        public ?string $document_name= null,
+        public ?string $initial_date= null,
+        public ?string $final_date= null,
 
     )
     {
@@ -48,8 +43,7 @@ class CondominiaDTO extends AbstractDTO implements InterfaceDTO
     public function messages():array
     {
         return [
-            'required.name' => "Obrigatório campo name",
-            'required.email' => "Obrigatório campo e-mail",
+            'required' => "Obrigatório campo :attribute ",
             'unique' => ':attribute ja registrado em no nosso sistema.',
             'min' => ':attribute tem que ter no minimo :min.',
             'date' => "o :attribute tem que ser uma data válida.",

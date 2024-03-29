@@ -63,10 +63,11 @@ Route::middleware(['auth'])->group(function(){
     // ->middleware('can:viewAny,App\Models\Condominia')
     Route::controller(CondominiaController::class)->prefix('/condominia')->as('condominia.')->group(function (){
         Route::get('/', 'index')->name('index');
+        Route::get('/created','storeCondominia')->name('storeCondominia')->can('create', 'Condominia');
+        // ->middleware('can:create,App\Models\Condominia');
         Route::post('/', 'create')->name('create');
         Route::get('/{condominia}','getOne')->name('getOne')->middleware('can:view,condominia');
         Route::get('/view/{condominia}','storeOne')->name('storeOne')->middleware('can:view,condominia');
-        Route::get('/address/{condominia}','storeAddress')->name('storeAddress')->middleware('can:view,condominia');
     });
     Route::controller(InvitationController::class)->prefix('/invites')->as('invites.')->group(function(){
         Route::get('/', 'index')->name('index');

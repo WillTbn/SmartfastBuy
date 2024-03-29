@@ -53,19 +53,25 @@ class RoleTableSeeder extends Seeder
 
         DB::table('role_abilities')->insert([
             'role_id' => RoleEnum::MASTER,
-            'ability_id' => Ability::where('name','all-access')->first()->id
+            'ability_id' => Ability::where('name','all-access')->first()->id,
+            'created_at' => now(),
+            'updated_at' => now()
         ]);
 
         foreach($abilitySeller as $ab){
             DB::table('role_abilities')->insert([
                 'role_id' => RoleEnum::SELLER,
-                'ability_id' => $ab
+                'ability_id' => $ab,
+                'created_at' => now(),
+                'updated_at' => now()
             ]);
         }
         foreach($abilityResp as $ab){
             DB::table('role_abilities')->insert([
                 'role_id' => RoleEnum::RESPONSIBLE,
-                'ability_id' => $ab
+                'ability_id' => $ab,
+                'created_at' => now(),
+                'updated_at' => now()
             ]);
         }
 
