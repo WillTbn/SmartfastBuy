@@ -2,10 +2,16 @@
 
 namespace Tests\Feature\Adm;
 
+use App\Enums\RoleEnum;
+use App\Models\Ability;
+use App\Models\Account;
+use App\Models\AddressCondominia;
 use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Condominia;
-
+use App\Models\Role;
+use App\Models\RoleAbility;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use Tests\TestCase;
@@ -25,30 +31,56 @@ class ApartmentControllerTest extends TestCase
 
     public function test_apartment_created()
     {
-
-
-        $user = \App\Models\User::factory()->create();
-        $condominia = Condominia::factory()->create();
-
-        $block = Block::factory()->create(
-            ['name' => 'Vivendas teste', 'condominia_id' =>$condominia->id]
-        );
+        $user = User::factory()
+            ->has(Account::factory())
+            ->has(
+                Role::factory(1, ['name' =>  RoleEnum::RESPONSIBLE])
+                    ->has(Ability::factory()
+                        ->has(RoleAbility::factory()
+                    )
+                )
+            )
+        ->create([
+            'name'=>'Administrador User',
+            'email'=> env('ADMIN_EMAIL', fake()->email()),
+            'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
+            'role_id' => RoleEnum::MASTER
+        ]);
+        $condominia = Condominia::factory()
+            ->has(AddressCondominia::factory())
+            ->has(Block::factory())
+        ->create();
         $this->actingAs($user)->post(route('apartment.create', [
             'number' => 105,
             'condominia_id' => $condominia->id,
-            'block_id' => $block->id,
+            'block_id' => $condominia->blocks[0]->id,
         ]));
+
 
         $this->assertDatabaseHas('apartments', [
             'number' => 105,
             'condominia_id' => $condominia->id,
-            'block_id' => $block->id,
+            'block_id' => $condominia->blocks[0]->id,
         ]);
 
     }
     public function test_apartment_deleted()
     {
-        $user = \App\Models\User::factory()->create();
+        $user = User::factory()
+            ->has(Account::factory())
+            ->has(
+                Role::factory(1, ['name' =>  RoleEnum::RESPONSIBLE])
+                    ->has(Ability::factory()
+                        ->has(RoleAbility::factory()
+                    )
+                )
+            )
+        ->create([
+            'name'=>'Administrador User',
+            'email'=> env('ADMIN_EMAIL', fake()->email()),
+            'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
+            'role_id' => RoleEnum::MASTER
+        ]);
         $condominia = Condominia::factory()->create();
 
         $block = Block::factory()->create(

@@ -136,14 +136,10 @@ import InputLabel from '../../Components/InputLabel.vue'
 import InputError from '../../Components/InputError.vue'
 import {useCondominiaStore} from '../../storePinia/condominia'
 import { storeToRefs } from 'pinia'
-import AddAddress from './AddAddress.vue'
-import InitialCreated from './InitialCreated.vue'
 
 export default defineComponent({
     name:"FormCreatedCondominia",
     components:{
-        AddAddress,
-        InitialCreated,
         PrimaryButton,
         InfoButton,
         GreenButton,
