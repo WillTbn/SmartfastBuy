@@ -26,6 +26,6 @@ class ContractCondominias extends Model
     }
     public function signature():HasOne
     {
-        return $this->hasOne(Signature::class);
+        return $this->hasOne(Signature::class, 'contract_condominias_id', 'id');
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\Adm\ResponsibleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Models\ContractCondominias;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -63,11 +64,12 @@ Route::middleware(['auth'])->group(function(){
     // ->middleware('can:viewAny,App\Models\Condominia')
     Route::controller(CondominiaController::class)->prefix('/condominia')->as('condominia.')->group(function (){
         Route::get('/', 'index')->name('index');
-        Route::get('/created','storeCondominia')->name('storeCondominia')->can('create', 'Condominia');
+        Route::get('/created','storeCondominia')->name('storeCondominia')->middleware('can:create,condominia');
         // ->middleware('can:create,App\Models\Condominia');
         Route::post('/', 'create')->name('create');
         Route::get('/{condominia}','getOne')->name('getOne')->middleware('can:view,condominia');
         Route::get('/view/{condominia}','storeOne')->name('storeOne')->middleware('can:view,condominia');
+        Route::get('/contract/{condominia}', 'viewCreateContract')->name('ViewCreateContract');
     });
     Route::controller(InvitationController::class)->prefix('/invites')->as('invites.')->group(function(){
         Route::get('/', 'index')->name('index');
@@ -86,6 +88,9 @@ Route::middleware(['auth'])->group(function(){
     Route::controller(ResponsibleController::class)->prefix('/responsable')->as('responsable.')->group(function () {
         Route::post('/', 'create')->name('create');
     });
+    // Route::controller(ContractCondominias::class)->prefix('/contract')->as('contract.')->group(function() {
+
+    // });
 });
 
 

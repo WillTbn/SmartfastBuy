@@ -39,8 +39,8 @@ class ResponsibleController extends Controller
     public function create(Request $request)
     {
         // $request['role_id'] = $this->roleService->getRoleResponsibleId();
-        // dd('aqui  ->'.RoleEnum::RESPONSIBLE);
-        // $request['role_id'] = RoleEnum::RESPONSIBLE;
+        // dd('aqui  ->'.RoleEnum::Responsible);
+        // $request['role_id'] = RoleEnum::Responsible;
         // dd($request['role_id']);
 
         $dto = new ResponsibleDTO(...$request->only([

@@ -33,19 +33,7 @@ class ApartmentControllerTest extends TestCase
     {
         $user = User::factory()
             ->has(Account::factory())
-            ->has(
-                Role::factory(1, ['name' =>  RoleEnum::RESPONSIBLE])
-                    ->has(Ability::factory()
-                        ->has(RoleAbility::factory()
-                    )
-                )
-            )
-        ->create([
-            'name'=>'Administrador User',
-            'email'=> env('ADMIN_EMAIL', fake()->email()),
-            'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
-            'role_id' => RoleEnum::MASTER
-        ]);
+        ->create();
         $condominia = Condominia::factory()
             ->has(AddressCondominia::factory())
             ->has(Block::factory())
@@ -55,7 +43,6 @@ class ApartmentControllerTest extends TestCase
             'condominia_id' => $condominia->id,
             'block_id' => $condominia->blocks[0]->id,
         ]));
-
 
         $this->assertDatabaseHas('apartments', [
             'number' => 105,
@@ -69,17 +56,17 @@ class ApartmentControllerTest extends TestCase
         $user = User::factory()
             ->has(Account::factory())
             ->has(
-                Role::factory(1, ['name' =>  RoleEnum::RESPONSIBLE])
+                Role::factory(1, ['name' =>  RoleEnum::Responsible->name])
                     ->has(Ability::factory()
                         ->has(RoleAbility::factory()
                     )
                 )
             )
         ->create([
-            'name'=>'Administrador User',
+            'name'=>'Responsible User',
             'email'=> env('ADMIN_EMAIL', fake()->email()),
             'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
-            'role_id' => RoleEnum::MASTER
+            'role_id' => RoleEnum::Responsible
         ]);
         $condominia = Condominia::factory()->create();
 

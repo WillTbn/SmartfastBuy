@@ -20,6 +20,7 @@
             <table-body>
                 <template #headColumns>
                     <table-head type="first" label="Name"/>
+                    <table-head type="first" label="Status"/>
                     <table-head type="action" label="Ações"/>
                 </template>
                 <template #tableRows>
@@ -27,16 +28,28 @@
                         <table-data type="first">
                             {{ cond.name }}
                         </table-data>
+                        <table-data type="first">
+                            {{ cond.contract_status }}
+                        </table-data>
                         <table-data type="action">
-                            <PrimaryButton
+                            <!-- <PrimaryButton
                                 class="p-2"
                                 @click.prevent="startModal(cond)"
                                 v-if="cond.contract_status == 'draft'"
                             >
                                 <font-awesome-icon color="white" class="mr-1"  :icon="['fass', 'fa-building-user']"/>
-                               Adicionar responsavel
-                            </PrimaryButton>
+                               Adicionar Contrato
+                            </PrimaryButton> -->
                             <Link
+                                method="get"
+                                class="rounded-lg bg-gray-900 p-2"
+                                :href="route('condominia.ViewCreateContract', cond.id)"
+                                v-if="cond.contract_status == 'draft'"
+                            >
+                            <font-awesome-icon color="white" class="mr-1"  :icon="['fass', 'fa-building-user']"/>
+                                <span class="text-white ml-2"> Adicionar Contrato</span>
+                            </Link>
+                            <!-- <Link
                                 method="get"
                                 class="p-2 rounded-lg outline outline-offset-1 outline-cyan-500 hover:bg-gray-300 "
                                 :href="route('condominia.getOne', cond.id)"
@@ -46,7 +59,7 @@
 
                                 <span class="text-gray-900 ml-2">editar contrato</span>
 
-                            </Link>
+                            </Link> -->
                             <Link
                                 method="get"
                                 class="rounded-lg bg-lime-900 p-2"

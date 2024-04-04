@@ -70,7 +70,7 @@ class CondominiaControllerTest extends TestCase
         'name'=>'Administrador User',
         'email'=> env('ADMIN_EMAIL', fake()->email()),
         'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
-        'role_id' => RoleEnum::MASTER
+        'role_id' => RoleEnum::Master
         ]);
 
         $cond = Condominia::factory()
@@ -98,7 +98,7 @@ class CondominiaControllerTest extends TestCase
             'name'=>'Administrador User',
             'email'=> env('ADMIN_EMAIL', fake()->email()),
             'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
-            'role_id' => RoleEnum::MASTER
+            'role_id' => RoleEnum::Master
         ]);
         // dd($user);
         $cond = Condominia::factory()
@@ -128,7 +128,7 @@ class CondominiaControllerTest extends TestCase
             'name'=>'Administrador User',
             'email'=> env('ADMIN_EMAIL', fake()->email()),
             'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
-            'role_id' => RoleEnum::MASTER
+            'role_id' => RoleEnum::Master
         ]);
 
         $cond = Condominia::factory()
@@ -159,7 +159,7 @@ class CondominiaControllerTest extends TestCase
         $user = User::factory()
             ->has(Account::factory())
             ->has(
-                Role::factory(1, ['name' =>  RoleEnum::RESPONSIBLE])
+                Role::factory(1, ['name' =>  RoleEnum::Responsible])
                     ->has(Ability::factory()
                         ->has(RoleAbility::factory()
                     )
@@ -169,7 +169,7 @@ class CondominiaControllerTest extends TestCase
             'name'=>'Administrador User',
             'email'=> env('ADMIN_EMAIL', fake()->email()),
             'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
-            'role_id' => RoleEnum::MASTER
+            'role_id' => RoleEnum::Master
         ]);
         $respo = User::factory()
             ->has(Account::factory())
@@ -184,7 +184,7 @@ class CondominiaControllerTest extends TestCase
             'name'=>'Responsible User',
             'email'=> fake()->email(),
             'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
-            'role_id' => RoleEnum::RESPONSIBLE
+            'role_id' => RoleEnum::Responsible
         ]);
 
         $cond = Condominia::factory()

@@ -3,6 +3,7 @@ import '../css/app.css';
 import 'vue3-toastify/dist/index.css'
 /* import the fontawesome core */
 import './Config/fontAwesome'
+import 'flowbite';
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';

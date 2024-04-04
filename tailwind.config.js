@@ -8,6 +8,7 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
+        './node_modules/flowbite/**/*.js'
     ],
 
     theme: {
@@ -32,6 +33,7 @@ export default {
         require("@tailwindcss/forms")({
             strategy: 'base', // only generate global styles
             strategy: 'class', // only generate classes
-          })
+        }),
+        require('flowbite/plugin')
     ],
 };

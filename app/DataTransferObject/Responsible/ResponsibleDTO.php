@@ -23,12 +23,12 @@ class ResponsibleDTO extends AbstractDTO implements InterfaceDTO
         public readonly string $genre,
         public readonly string $birthday,
         public readonly string $notifications,
-        // ?int $role_id =  RoleEnum::RESPONSIBLE,
+        // ?int $role_id =  RoleEnum::Responsible,
         public readonly ?string $phone,
         public readonly ?string $telephone,
     )
     {
-        $this->role_id = RoleEnum::RESPONSIBLE;
+        $this->role_id = RoleEnum::Responsible;
         $this->validate();
     }
 

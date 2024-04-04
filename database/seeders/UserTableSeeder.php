@@ -25,24 +25,24 @@ class UserTableSeeder extends Seeder
             'name'=>'Administrador User',
             'email'=> env('ADMIN_EMAIL', fake()->email()),
             'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
-            'role_id' => RoleEnum::MASTER
+            'role_id' => RoleEnum::Master
         ]);
         User::factory()
         ->has(Account::factory())
         ->create([
             'name'=>'Responsible User',
-            'email'=> env('RESP_EMAIL', 'responsible@live.com'),
+            'email'=> env('RESPO_EMAIL', fake()->email()),
             'password' => bcrypt(env('RESP_PASSWORD', 'resp123')),
-            'role_id' => RoleEnum::RESPONSIBLE
+            'role_id' => RoleEnum::Responsible
         ]);
 
         User::factory()
         ->has(Account::factory())
         ->create([
             'name'=>'Seller User',
-            'email'=> env('SELLER_EMAIL', 'seller@live.com'),
+            'email'=> env('SELLE_EMAIL', fake()->email()),
             'password' => bcrypt(env('SELLER_PASSWORD', 'seller123')),
-            'role_id' => RoleEnum::SELLER
+            'role_id' => RoleEnum::Seller
         ]);
 
     }

@@ -33,7 +33,12 @@ class CondominiaController extends Controller
             'condominias' => $request->user()->isMaster() ? $this->condServices->getAllCond() : $this->condServices->getlinkToUser(),
         ]);
     }
-
+    public function viewCreateContract(Condominia $condominia, Request $request)
+    {
+         return Inertia::render('Contract/CreatedContract', [
+             'condominia' => $condominia
+         ]);
+    }
     public function getOne(Condominia $condominia)
     {
 

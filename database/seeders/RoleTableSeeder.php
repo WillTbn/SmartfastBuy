@@ -36,14 +36,14 @@ class RoleTableSeeder extends Seeder
         ]);
 
         Role::create([
-            'name'=>'Master'
+            'name'=>RoleEnum::Master->name
         ]);
 
         Role::create([
-            'name'=>'Seller'
+            'name'=>RoleEnum::Seller->name
         ]);
         Role::create([
-            'name'=>'Responsible'
+            'name'=>RoleEnum::Responsible->name
         ]);
 
         // $seller = Role::where('name', 'Seller')->first()->id;
@@ -52,7 +52,7 @@ class RoleTableSeeder extends Seeder
         $abilityResp = Ability::where('name','products-access')->orWhere('name','condominia-access')->pluck('id');
 
         DB::table('role_abilities')->insert([
-            'role_id' => RoleEnum::MASTER,
+            'role_id' => RoleEnum::Master,
             'ability_id' => Ability::where('name','all-access')->first()->id,
             'created_at' => now(),
             'updated_at' => now()
@@ -60,7 +60,7 @@ class RoleTableSeeder extends Seeder
 
         foreach($abilitySeller as $ab){
             DB::table('role_abilities')->insert([
-                'role_id' => RoleEnum::SELLER,
+                'role_id' => RoleEnum::Seller,
                 'ability_id' => $ab,
                 'created_at' => now(),
                 'updated_at' => now()
@@ -68,7 +68,7 @@ class RoleTableSeeder extends Seeder
         }
         foreach($abilityResp as $ab){
             DB::table('role_abilities')->insert([
-                'role_id' => RoleEnum::RESPONSIBLE,
+                'role_id' => RoleEnum::Responsible,
                 'ability_id' => $ab,
                 'created_at' => now(),
                 'updated_at' => now()

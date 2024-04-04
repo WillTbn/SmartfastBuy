@@ -51,17 +51,17 @@ class Condominia extends Model
 
         $this->load([
             'responsable', 'contractCondominia', 'contractCondominia.responsible',
-            'contractCondominia.ceo', 'contractCondominia.signature'
+            'contractCondominia.ceo', 'contractCondominia.signature',
         ]);
         if(!$this->contractCondominia){
             return ContractStates::Draft;
         }
         if(!$this->contractCondominia->ceo){
             return ContractStates::Initial;
+        }
+        if($this->contractCondominia->signature && !$this->contractCondominia->signature->signature_responsible){
             /// AQUI TEM QUE NOTIFICAR SOMENTE O USUÀRIO responsible
             // SOBRE A NECESSIDADE DE DAR ACEITAR NO CONTRATO
-        }
-        if($this->contractCondominia->signature && !$this->contractCondominia->responsible){
             return ContractStates::Pending;
         }
         return ContractStates::Start;

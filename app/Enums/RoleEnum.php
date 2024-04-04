@@ -4,7 +4,7 @@ namespace App\Enums;
 
 Enum RoleEnum :int
 {
-    case MASTER = 1;
-    case SELLER = 2;
-    case RESPONSIBLE = 3;
+    case Master = 1;
+    case Seller = 2;
+    case Responsible = 3;
 }

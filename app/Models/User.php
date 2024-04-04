@@ -37,7 +37,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-    public function casts():array {
+    protected function casts():array {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
@@ -55,8 +55,8 @@ class User extends Authenticatable
     }
     public function isMaster()
     {
-        // dd(RoleEnum::MASTER);
-        return RoleEnum::MASTER == $this->role_id;
+        // dd(RoleEnum::Master);
+        return RoleEnum::Master == $this->role_id;
     }
     public function isSeller()
     {

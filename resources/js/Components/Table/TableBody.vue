@@ -1,16 +1,16 @@
 
 <template>
-    <div class="mt-8 -mx-4 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg"
-    style="    max-height: 25rem;
+    <div class="mt-8 -mx-4 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg "
+    style="max-height: 25rem;
     overflow: auto;"
     >
         <table class="min-w-full divide-y divide-gray-300">
-            <thead class="bg-gray-50">
+            <thead class="dark:bg-slate-900 light:bg-gray-50">
                 <tr>
                     <slot name="headColumns" />
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody class="dark:bg-slate-900 light:bg-white divide-y divide-gray-200">
                 <slot name="tableRows" />
             </tbody>
         </table>

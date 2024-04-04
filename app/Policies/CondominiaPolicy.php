@@ -33,7 +33,7 @@ class CondominiaPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user):bool
     {
         return $user->isMaster();
     }
@@ -43,7 +43,7 @@ class CondominiaPolicy
      */
     public function update(User $user, Condominia $condominia): bool
     {
-        return $user->role_id === 1;
+        return $user->isMaster();
     }
 
     /**
@@ -51,7 +51,7 @@ class CondominiaPolicy
      */
     public function delete(User $user, Condominia $condominia): bool
     {
-        return $user->role_id === 1;
+        return $user->isMaster();
     }
 
     /**
@@ -59,7 +59,7 @@ class CondominiaPolicy
      */
     public function restore(User $user, Condominia $condominia): bool
     {
-        return $user->role_id === 1;
+        return $user->isMaster();
     }
 
     /**
@@ -67,6 +67,6 @@ class CondominiaPolicy
      */
     public function forceDelete(User $user, Condominia $condominia): bool
     {
-        return $user->role_id === 1;
+        return $user->isMaster();
     }
 }
