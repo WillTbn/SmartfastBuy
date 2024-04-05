@@ -14,18 +14,18 @@ class ResponsibleDTO extends AbstractDTO implements InterfaceDTO
 {
     public $role_id;
     public function __construct(
-        public readonly string $name,
-        public readonly string $email,
-        public readonly string $password,
-        public readonly string $password_confirmation,
-        public readonly int $condominia_id,
-        public readonly string $person,
-        public readonly string $genre,
-        public readonly string $birthday,
-        public readonly string $notifications,
-        // ?int $role_id =  RoleEnum::Responsible,
-        public readonly ?string $phone,
-        public readonly ?string $telephone,
+        public readonly ?string $name=null,
+        public readonly ?string $email=null,
+        public readonly ?string $password=null,
+        public readonly ?string $password_confirmation=null,
+        public readonly ?int $condominia_id=null,
+        public readonly ?string $person=null,
+        public readonly ?string $genre=null,
+        public readonly ?string $birthday=null,
+        public readonly ?string $notifications=null,
+        // ?int $role_id =  RoleEnum::Responsible=null,
+        public readonly ?string $phone=null,
+        public readonly ?string $telephone=null,
     )
     {
         $this->role_id = RoleEnum::Responsible;

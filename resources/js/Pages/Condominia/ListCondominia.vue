@@ -29,7 +29,7 @@
                             {{ cond.name }}
                         </table-data>
                         <table-data type="first">
-                            {{ cond.contract_status }}
+                            <contract-status :nameStatus="cond.contract_status"/>
                         </table-data>
                         <table-data type="action">
                             <!-- <PrimaryButton
@@ -43,7 +43,7 @@
                             <Link
                                 method="get"
                                 class="rounded-lg bg-gray-900 p-2"
-                                :href="route('condominia.ViewCreateContract', cond.id)"
+                                :href="route('contract.ViewCreateContract', cond.id)"
                                 v-if="cond.contract_status == 'draft'"
                             >
                             <font-awesome-icon color="white" class="mr-1"  :icon="['fass', 'fa-building-user']"/>
@@ -75,6 +75,9 @@
                     </tr>
                 </template>
             </table-body>
+            <div class="flex justify-end">
+                <contract-status v-for="item in itemStatus" :key="item.id" :nameStatus="item.name" :descriptionName="true"/>
+            </div>
         </div>
         <div class="text-center max-auto max-w-7x1 sm:px-6 lg:px-8" v-else>
             <p> Não há condominios cadastrados</p>
@@ -105,6 +108,7 @@ import CreateResponsable from '@/Layouts/users/responsable/CreateResponsable.vue
 // import FormCreated from '../../Layouts/Condominia/FormCreated.vue';
 import Dialog from '@/Components/Dialog.vue';
 import {useCondominiaStore} from '../../storePinia/condominia'
+import ContractStatus from '../../Components/Status/ContractStatus.vue';
 
 export default defineComponent({
     components:{
@@ -120,7 +124,8 @@ export default defineComponent({
         Modal,
         CreateResponsable,
         InfoButton,
-        Dialog
+        Dialog,
+        ContractStatus
     },
     props:{
         condominias:{type:Array},
@@ -147,13 +152,19 @@ export default defineComponent({
         onMounted(()=>{
             storeCond.setCondomina(props.condominias)
         })
-
+        const itemStatus = [
+            {name:"draft"},
+            {name:"initial"},
+            {name:"Pending"},
+            {name:"start"}
+        ]
         return{
             userMaster,
             setCond,
             resp,
             startModal,
-            closeModal
+            closeModal,
+            itemStatus
         }
     }
     // setup(){

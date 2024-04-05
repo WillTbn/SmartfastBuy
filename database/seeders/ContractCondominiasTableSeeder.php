@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Condominia;
-use App\Models\ContractCondominias;
+use App\Models\ContractCondominia;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,7 +19,7 @@ class ContractCondominiasTableSeeder extends Seeder
         $resp = User::where('role_id', 3)->first();
         $master = User::where('role_id', 1)->first();
         // $cond = Condominia::where('name', 'Vivendas Teste')->first();
-        $get = ContractCondominias::create([
+        $get = ContractCondominia::create([
             'initial_date' => fake()->date(),
             'ceo_id' => $master->id,
             'responsible_id' => $resp->id

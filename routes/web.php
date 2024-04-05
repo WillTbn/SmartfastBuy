@@ -3,13 +3,14 @@
 use App\Http\Controllers\Adm\ApartmentController;
 use App\Http\Controllers\Adm\BlockController;
 use App\Http\Controllers\Adm\CondominiaController;
+use App\Http\Controllers\Adm\ContractCondominiaController;
 use App\Http\Controllers\Adm\InvitationController;
 use App\Http\Controllers\Adm\ProductsController;
 use App\Http\Controllers\Adm\ResponsibleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use App\Models\ContractCondominias;
+use App\Models\ContractCondominia;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -69,7 +70,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/', 'create')->name('create');
         Route::get('/{condominia}','getOne')->name('getOne')->middleware('can:view,condominia');
         Route::get('/view/{condominia}','storeOne')->name('storeOne')->middleware('can:view,condominia');
-        Route::get('/contract/{condominia}', 'viewCreateContract')->name('ViewCreateContract');
+
     });
     Route::controller(InvitationController::class)->prefix('/invites')->as('invites.')->group(function(){
         Route::get('/', 'index')->name('index');
@@ -88,9 +89,10 @@ Route::middleware(['auth'])->group(function(){
     Route::controller(ResponsibleController::class)->prefix('/responsable')->as('responsable.')->group(function () {
         Route::post('/', 'create')->name('create');
     });
-    // Route::controller(ContractCondominias::class)->prefix('/contract')->as('contract.')->group(function() {
-
-    // });
+    Route::controller(ContractCondominiaController::class)->prefix('/contract')->as('contract.')->group(function() {
+        Route::post('/', 'create')->name('create');
+        Route::get('/{condominia}', 'viewCreateContract')->name('ViewCreateContract');
+    });
 });
 
 

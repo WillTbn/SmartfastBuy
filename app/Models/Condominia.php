@@ -22,7 +22,7 @@ class Condominia extends Model
     }
     public function contractCondominia():HasOne
     {
-        return $this->hasOne(ContractCondominias::class);
+        return $this->hasOne(ContractCondominia::class);
     }
     public function addressCondominia():HasOne
     {

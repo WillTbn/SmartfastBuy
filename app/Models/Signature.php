@@ -18,6 +18,6 @@ class Signature extends Model
 
     public function contractCondominias():HasOne
     {
-        return $this->hasOne(ContractCondominias::class);
+        return $this->hasOne(ContractCondominia::class);
     }
 }

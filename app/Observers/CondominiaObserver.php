@@ -20,14 +20,6 @@ class CondominiaObserver
      */
     public function updated(Condominia $condominia): void
     {
-        // if($condominia->isDirty('responsible_id')){
-        //     // TIRA ISSO PARA OUTRA Fazer uma abstração CLASS or HELPER
-        //     $str = explode('products', $product->getOriginal('image_one'));
-        //     $nameFile = end($str);
-        //     // TIRA ISSO PARA OUTRA CLASS or HELPER
-        //     Storage::disk('public')->delete('/products'.$nameFile);
-        // }
-
         if($condominia->isDirty('responsible_id')){
             event(new SetResponsibleCondominia($condominia));
         }

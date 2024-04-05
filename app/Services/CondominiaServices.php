@@ -7,7 +7,7 @@ use App\DataTransferObject\Responsible\ResponsibleDTO;
 use App\Models\Account;
 use App\Models\AddressCondominia;
 use App\Models\Condominia;
-use App\Models\ContractCondominias;
+use App\Models\ContractCondominia;
 use App\Models\Role;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;

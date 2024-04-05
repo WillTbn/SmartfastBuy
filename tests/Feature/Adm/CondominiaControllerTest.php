@@ -8,7 +8,7 @@ use App\Models\Ability;
 use App\Models\Account;
 use App\Models\AddressCondominia;
 use App\Models\Condominia;
-use App\Models\ContractCondominias;
+use App\Models\ContractCondominia;
 use App\Models\Role;
 use App\Models\RoleAbility;
 use App\Models\Signature;
@@ -103,7 +103,7 @@ class CondominiaControllerTest extends TestCase
         // dd($user);
         $cond = Condominia::factory()
             ->has(AddressCondominia::factory())
-            ->has(ContractCondominias::factory())
+            ->has(ContractCondominia::factory())
         ->create(['name' => 'Teste']);
 
         $response = $this->actingAs($user)->get(route('condominia.getOne',[1]));
@@ -134,7 +134,7 @@ class CondominiaControllerTest extends TestCase
         $cond = Condominia::factory()
             ->has(AddressCondominia::factory())
         ->create(['name' => 'Teste']);
-        $contract = ContractCondominias::factory()->create([
+        $contract = ContractCondominia::factory()->create([
             'document_name' => 'default-contract.pdf',
             'initial_date' => now(),
             'ceo_id' => $user->account->id,
@@ -190,7 +190,7 @@ class CondominiaControllerTest extends TestCase
         $cond = Condominia::factory()
             ->has(AddressCondominia::factory())
         ->create(['name' => 'Teste']);
-        $contract = ContractCondominias::factory()->create([
+        $contract = ContractCondominia::factory()->create([
             'document_name' => 'default-contract.pdf',
             'initial_date' => now(),
             'ceo_id' => $user->account->id,
@@ -204,7 +204,7 @@ class CondominiaControllerTest extends TestCase
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        // dd(ContractCondominias::with(['responsible'])->first());
+        // dd(ContractCondominia::with(['responsible'])->first());
 
         $response = $this->actingAs($user)->get(route('condominia.getOne',[1]));
         // dd($response);

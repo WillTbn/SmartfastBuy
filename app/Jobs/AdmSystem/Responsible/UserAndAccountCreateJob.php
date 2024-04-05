@@ -21,15 +21,15 @@ class UserAndAccountCreateJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    private CondominiaServices $condominiaService;
+    // private CondominiaServices $condominiaService;
     public function __construct(
         protected ResponsibleDTO $dto,
         protected UserServices $userServices,
         protected AccountServices $accountServices,
-        private CondominiaServices $condominiaServices,
+        protected CondominiaServices $condominiaServices,
     )
     {
-        $this->condominiaService = $condominiaServices;
+        // $this->condominiaService = $condominiaServices;
     }
 
     /**
@@ -39,9 +39,7 @@ class UserAndAccountCreateJob implements ShouldQueue
     {
 
         $this->userServices->createResponsable($this->dto);
-        // $responsable = $this->accountServices->createAccountResponsable($this->dto, $user->id);
-        //  dd($responsable->condominia_id);
-        $this->condominiaService->updateResponsable($this->dto);
+        $this->condominiaServices->updateResponsable($this->dto);
 
     }
 }

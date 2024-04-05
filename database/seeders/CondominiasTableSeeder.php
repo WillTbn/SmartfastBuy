@@ -8,7 +8,7 @@ use App\Models\AddressCondominia;
 use App\Models\Apartment;
 use App\Models\Block;
 use App\Models\Condominia;
-use App\Models\ContractCondominias;
+use App\Models\ContractCondominia;
 use App\Models\Signature;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -31,7 +31,7 @@ class CondominiasTableSeeder extends Seeder
         $cond = Condominia::factory()
             ->has(AddressCondominia::factory())
             ->has(
-                ContractCondominias::factory(1, ['ceo_id' => $userMaster->account->id, 'responsible_id' => $userResponsible->account->id])
+                ContractCondominia::factory(1, ['ceo_id' => $userMaster->account->id, 'responsible_id' => $userResponsible->account->id])
                 ->has(Signature::factory(1, ['signature_ceo' => $signatureMaster, 'signature_responsible' => $signatureResponsible]))
             )
             ->has(Block::factory(5))
@@ -44,7 +44,7 @@ class CondominiasTableSeeder extends Seeder
         // STATUS PENDING
         Condominia::factory()
             ->has(AddressCondominia::factory())
-            ->has(ContractCondominias::factory(
+            ->has(ContractCondominia::factory(
                 1,
                 ['ceo_id' => $ceo->account->id]
                 )->has(Signature::factory(1, ['signature_ceo' => $signature]))
@@ -58,7 +58,7 @@ class CondominiasTableSeeder extends Seeder
 
 
 
-        // Condominia::factory()->has(AddressCondominia::factory())->has(ContractCondominias::factory(1, ['ceo_id' => $ceo->account->id]))->has(Block::factory(2))->create(['name' => 'Alfa Teste']);
+        // Condominia::factory()->has(AddressCondominia::factory())->has(ContractCondominia::factory(1, ['ceo_id' => $ceo->account->id]))->has(Block::factory(2))->create(['name' => 'Alfa Teste']);
 
     }
 }

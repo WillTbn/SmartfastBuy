@@ -3,12 +3,17 @@
 namespace App\Providers;
 
 use App\Events\Responsible\SetResponsibleCondominia;
+use App\Events\Signature\SetSignatureContract;
+use App\Listeners\Contract\SendEmailContractToCeo;
+use App\Listeners\Contract\SetSignatureCeoTable;
 use App\Listeners\SendEmailResponsable;
 use App\Models\Apartment;
 use App\Models\Condominia;
+use App\Models\ContractCondominia;
 use App\Models\Product;
 use App\Observers\ApartmentObserver;
 use App\Observers\CondominiaObserver;
+use App\Observers\ContractCondominiaObserver;
 use App\Observers\ProductObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -29,8 +34,12 @@ class EventServiceProvider extends ServiceProvider
 
         SetResponsibleCondominia::class =>[
             SendEmailResponsable::class
-        ]
+        ],
 
+        SetSignatureContract::class => [
+            SetSignatureCeoTable::class,
+            SendEmailContractToCeo::class
+        ],
     ];
 
     /**
@@ -42,6 +51,7 @@ class EventServiceProvider extends ServiceProvider
         Apartment::observe(ApartmentObserver::class);
         Product::observe(ProductObserver::class);
         Condominia::observe(CondominiaObserver::class);
+        ContractCondominia::observe(ContractCondominiaObserver::class);
     }
 
     /**
