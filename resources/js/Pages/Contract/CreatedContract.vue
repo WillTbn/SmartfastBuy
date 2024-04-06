@@ -6,7 +6,6 @@
             <h2 class="text-4xl font-extrabold leading-tight  light:text-gray-800"> Contrato </h2>
         </template>
         <stepper-layout/>
-
     </AuthenticatedLayout>
 </template>
 <script>
