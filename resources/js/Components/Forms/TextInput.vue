@@ -9,6 +9,10 @@ defineProps({
     error:{
         type:Boolean,
         default: false
+    },
+    typeInput:{
+        type:String,
+        default:"text"
     }
 });
 
@@ -31,6 +35,7 @@ defineExpose({ focus: () => input.value.focus() });
         :class="{'border-rose-500' :  error}"
         :value="modelValue"
         @input="$emit('update:modelValue', $event.target.value)"
+        :type="typeInput"
         ref="input"
     />
 </template>

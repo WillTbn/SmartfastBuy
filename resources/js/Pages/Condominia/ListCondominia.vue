@@ -16,7 +16,7 @@
                Novo Condominio
             </Link>
         </div>
-        <div v-if="condominias.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div v-if="condominias.length > 0" class="mx-auto max-w-7xl sm:px-2 lg:px-8">
             <table-body>
                 <template #headColumns>
                     <table-head type="first" label="Name"/>
@@ -43,7 +43,7 @@
                             <Link
                                 method="get"
                                 class="rounded-lg bg-gray-900 p-2"
-                                :href="route('contract.ViewCreateContract', cond.id)"
+                                :href="route('contract.viewCreateContract', cond.id)"
                                 v-if="cond.contract_status == 'draft'"
                             >
                             <font-awesome-icon color="white" class="mr-1"  :icon="['fass', 'fa-building-user']"/>

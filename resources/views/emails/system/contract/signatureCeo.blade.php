@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 </head>
 <body>
-    <h1> Aqui a confirmação da sua assinatura de contrato, com o condominio {{$codominio_name}}</h1>
+    <h1> Aqui a confirmação da sua assinatura de contrato, com o condominio {{$condominia_name}}</h1>
 
     <p>Segue em anexo o contrato para verificação!</p>
 

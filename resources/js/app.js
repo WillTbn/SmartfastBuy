@@ -4,6 +4,7 @@ import 'vue3-toastify/dist/index.css'
 /* import the fontawesome core */
 import './Config/fontAwesome'
 import 'flowbite';
+import './Config/VeeValidate'
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -14,7 +15,9 @@ import {createPinia} from 'pinia'
 
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
+// datapicker
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 const appName = import.meta.env.VITE_APP_NAME || 'Smart Fast Buy';
 const pinia = createPinia()
 createInertiaApp({
@@ -27,6 +30,7 @@ createInertiaApp({
             .use(store)
             .use(pinia)
             .component('font-awesome-icon', FontAwesomeIcon)
+            .component('VueDatePicker', VueDatePicker)
             .mount(el);
     },
     progress: {

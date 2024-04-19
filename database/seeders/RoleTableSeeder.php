@@ -35,7 +35,7 @@ class RoleTableSeeder extends Seeder
             'name'=> 'invite-access'
         ]);
 
-        Role::create([
+        $roleMaster = Role::create([
             'name'=>RoleEnum::Master->name
         ]);
 
@@ -52,7 +52,7 @@ class RoleTableSeeder extends Seeder
         $abilityResp = Ability::where('name','products-access')->orWhere('name','condominia-access')->pluck('id');
 
         DB::table('role_abilities')->insert([
-            'role_id' => RoleEnum::Master,
+            'role_id' => $roleMaster->id,
             'ability_id' => Ability::where('name','all-access')->first()->id,
             'created_at' => now(),
             'updated_at' => now()

@@ -14,7 +14,7 @@ use Illuminate\Queue\SerializesModels;
 class SetSignatureContract
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    private ContractCondominia $contract;
+    public ContractCondominia $contract;
     /**
      * Create a new event instance.
      */

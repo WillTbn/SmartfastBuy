@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('signatures', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('contract_condominias_id')->constrained('contract_condominias', 'id')->onDelete('cascade');
+            $table->foreignId('contract_condominia_id')->constrained('contract_condominias', 'id')->onDelete('cascade');
             $table->string('signature_ceo')->nullable();
             $table->string('signature_responsible')->nullable();
             $table->timestamps();

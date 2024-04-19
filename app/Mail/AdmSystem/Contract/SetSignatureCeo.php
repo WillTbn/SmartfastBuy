@@ -10,12 +10,13 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Symfony\Component\HttpKernel\Log\Logger;
 
 class SetSignatureCeo extends Mailable
 {
     use Queueable, SerializesModels;
-    private Account $account;
-    private Condominia $condominia;
+    public Account $account;
+    public Condominia $condominia;
     /**
      * Create a new message instance.
      */
@@ -26,6 +27,8 @@ class SetSignatureCeo extends Mailable
     {
         $this->account = $account;
         $this->condominia = $condominia;
+        Logger('Estou no construct do '.__CLASS__);
+        Logger($this->condominia);
     }
 
     /**

@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 
 class SetSignatureCeoTable
 {
-    private SignatureServices $signatureServices;
+    public SignatureServices $signatureServices;
     /**
      * Create the event listener.
      */
@@ -18,7 +18,7 @@ class SetSignatureCeoTable
     {
         logger('Estou no construct de '.__CLASS__);
         $this->signatureServices = $signatureServices;
-        logger($this->signatureServices);
+        // logger($this->signatureServices);
     }
 
     /**
@@ -27,7 +27,7 @@ class SetSignatureCeoTable
     public function handle(object $event): void
     {
         logger('Listener Initial '.__CLASS__);
-        $this->signatureServices->setCreate($event);
+        $this->signatureServices->setCreate($event->contract);
         logger('Listener finally '.__CLASS__);
     }
 }

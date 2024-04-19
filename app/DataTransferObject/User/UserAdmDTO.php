@@ -11,18 +11,18 @@ use Illuminate\Validation\Rule;
 class UserAdmDTO extends AbstractDTO implements InterfaceDTO
 {
     public function __construct(
-        public readonly string $name,
-        public readonly string $email,
-        public readonly string $password,
-        public readonly string $password_confirmation,
-        public readonly int $role_id,
+        public readonly ?string $name=null,
+        public readonly ?string $email=null,
+        public readonly ?string $password=null,
+        public readonly ?string $password_confirmation=null,
+        public readonly ?int $role_id=null,
 
-        public readonly int $person,
-        public readonly string $genre,
-        public readonly string $birthday,
-        public readonly string $notifications,
-        public readonly ?string $phone,
-        public readonly ?string $telephone
+        public readonly ?int $person=null,
+        public readonly ?string $genre=null,
+        public readonly ?string $birthday=null,
+        public readonly ?string $notifications=null,
+        public readonly ?string $phone=null,
+        public readonly ?string $telephone=null
 
     )
     {

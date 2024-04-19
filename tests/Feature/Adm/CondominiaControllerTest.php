@@ -58,20 +58,21 @@ class CondominiaControllerTest extends TestCase
     }
     public function test_condominia_status_draft()
     {
-        $user = User::factory()
-                ->has(
-                    Role::factory()
-                        ->has(Ability::factory()
-                            ->has(RoleAbility::factory()
-                        )
-                    )
-                )
-            ->create([
-        'name'=>'Administrador User',
-        'email'=> env('ADMIN_EMAIL', fake()->email()),
-        'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
-        'role_id' => RoleEnum::Master
-        ]);
+        // $user = User::factory()
+        //         ->has(
+        //             Role::factory()
+        //                 ->has(Ability::factory()
+        //                     ->has(RoleAbility::factory()
+        //                 )
+        //             )
+        //         )
+        //     ->create([
+        // 'name'=>'Administrador User',
+        // 'email'=> env('ADMIN_EMAIL', fake()->email()),
+        // 'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
+        // 'role_id' => RoleEnum::Master
+        // ]);
+        $user = User::factory()->create();
 
         $cond = Condominia::factory()
             ->has(AddressCondominia::factory())
@@ -86,20 +87,7 @@ class CondominiaControllerTest extends TestCase
     }
     public function test_condominia_status_initial()
     {
-        $user = User::factory()
-            ->has(
-                Role::factory()
-                    ->has(Ability::factory()
-                        ->has(RoleAbility::factory()
-                    )
-                )
-            )
-        ->create([
-            'name'=>'Administrador User',
-            'email'=> env('ADMIN_EMAIL', fake()->email()),
-            'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
-            'role_id' => RoleEnum::Master
-        ]);
+        $user = User::factory()->create();
         // dd($user);
         $cond = Condominia::factory()
             ->has(AddressCondominia::factory())
@@ -115,21 +103,7 @@ class CondominiaControllerTest extends TestCase
     }
     public function test_condominia_status_pending()
     {
-        $user = User::factory()
-            ->has(Account::factory())
-            ->has(
-                Role::factory()
-                    ->has(Ability::factory()
-                        ->has(RoleAbility::factory()
-                    )
-                )
-            )
-        ->create([
-            'name'=>'Administrador User',
-            'email'=> env('ADMIN_EMAIL', fake()->email()),
-            'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
-            'role_id' => RoleEnum::Master
-        ]);
+        $user = User::factory()->create();
 
         $cond = Condominia::factory()
             ->has(AddressCondominia::factory())
@@ -141,7 +115,7 @@ class CondominiaControllerTest extends TestCase
             'condominia_id' => $cond->id
         ]);
         $sign = Signature::factory()->create([
-            'contract_condominias_id' => $contract->id,
+            'contract_condominia_id' => $contract->id,
             'signature_ceo' => Hash::make($user->account->person),
             // 'signature_ceo' => Hash::make($user->account->person),
             'created_at' => now(),
@@ -156,21 +130,7 @@ class CondominiaControllerTest extends TestCase
     }
     public function test_condominia_status_start()
     {
-        $user = User::factory()
-            ->has(Account::factory())
-            ->has(
-                Role::factory(1, ['name' =>  RoleEnum::Responsible])
-                    ->has(Ability::factory()
-                        ->has(RoleAbility::factory()
-                    )
-                )
-            )
-        ->create([
-            'name'=>'Administrador User',
-            'email'=> env('ADMIN_EMAIL', fake()->email()),
-            'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
-            'role_id' => RoleEnum::Master
-        ]);
+        $user = User::factory()->create();
         $respo = User::factory()
             ->has(Account::factory())
             ->has(
@@ -198,7 +158,7 @@ class CondominiaControllerTest extends TestCase
             'condominia_id' => $cond->id,
         ]);
         Signature::factory()->create([
-            'contract_condominias_id' => $contract->id,
+            'contract_condominia_id' => $contract->id,
             'signature_ceo' => Hash::make($user->account->person),
             'signature_responsible' => Hash::make($respo->account->person),
             'created_at' => now(),

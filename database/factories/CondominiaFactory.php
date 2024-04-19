@@ -19,6 +19,8 @@ class CondominiaFactory extends Factory
         // $names = ['Vivendas Curicica', 'Vivendas Teste', 'Rio 2', 'Barra Squad'];
         return [
             'name' => fake()->company(),
+            'address_condominias_id' => null,
+            'contract_condominia_id' => null,
         ];
     }
 }

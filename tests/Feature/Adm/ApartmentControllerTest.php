@@ -13,8 +13,9 @@ use App\Models\Role;
 use App\Models\RoleAbility;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ApartmentControllerTest extends TestCase
 {
@@ -28,9 +29,15 @@ class ApartmentControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
+    public function test_apartment_index()
+    {
+        $reto = $this->get(route('apartment.index'));
+        $reto->assertStatus(200);
 
+    }
     public function test_apartment_created()
     {
+
         $user = User::factory()
             ->has(Account::factory())
         ->create();
@@ -38,11 +45,14 @@ class ApartmentControllerTest extends TestCase
             ->has(AddressCondominia::factory())
             ->has(Block::factory())
         ->create();
-        $this->actingAs($user)->post(route('apartment.create', [
+
+        $reto = $this->actingAs($user, 'web')->post(route('apartment.create', [
             'number' => 105,
             'condominia_id' => $condominia->id,
             'block_id' => $condominia->blocks[0]->id,
         ]));
+
+        $reto->assertStatus(200);
 
         $this->assertDatabaseHas('apartments', [
             'number' => 105,

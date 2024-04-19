@@ -96,8 +96,8 @@ Route::middleware(['auth'])->group(function(){
         Route::post('/', 'create')->name('create');
     });
     Route::controller(ContractCondominiaController::class)->prefix('/contract')->as('contract.')->group(function() {
+        Route::get('/{condominia}', 'viewCreateContract')->name('viewCreateContract');
         Route::post('/', 'create')->name('create');
-        Route::get('/{condominia}', 'viewCreateContract')->name('ViewCreateContract');
     });
 });
 

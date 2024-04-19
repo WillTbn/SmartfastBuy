@@ -25,7 +25,7 @@ class CondominiaServices
         //     ->select(
         //         'condominias.id',
         //         'condominias.name',
-        //         'condominias.contract_condominias_id as cond_id',
+        //         'condominias.contract_condominia_id as cond_id',
         //         'condominias.address_condominias_id as addr_id',
         //         'users.email as responsable_email'
         //     )
@@ -33,7 +33,7 @@ class CondominiaServices
         //         'condominias.id',
         //         'condominias.name',
         //         'users.email',
-        //         'condominias.contract_condominias_id',
+        //         'condominias.contract_condominia_id',
         //         'condominias.address_condominias_id',
         //         'users.email')
         // ->get();

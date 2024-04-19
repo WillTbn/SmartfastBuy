@@ -16,12 +16,12 @@ export default function useNotify() {
         })
     };
 
-    const errorNotify = (message) => {
-        toast(message || "Oops.. erro!", {
+    const errorNotify = (message = "Oops.. Erro!", tempClose =3000) => {
+        toast(message, {
             type:'error',
             theme: "colored",
             transition:'slide',
-            autoClose:3000
+            autoClose:tempClose
         })
         // $q.notify({
         //     type: "negative",
@@ -37,8 +37,11 @@ export default function useNotify() {
         })
     };
     const multError = (obj) => {
+        let qua = 1
         for(const key in obj){
-            errorNotify(obj[key])
+            qua++
+            let formatInt = parseInt(`${qua}000`)
+            errorNotify(obj[key], formatInt)
         }
     }
 

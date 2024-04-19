@@ -25,6 +25,8 @@ class CondominiasTableSeeder extends Seeder
     {
         $userMaster = User::where('role_id', RoleEnum::Master)->first();
         $userResponsible =  User::where('role_id', RoleEnum::Responsible)->first();
+        // $all = User::all();
+        // dd($all);
         $signatureMaster = Hash::make($userMaster->account->person.$userMaster->account->birthday);
         $signatureResponsible = Hash::make($userResponsible->account->person.$userResponsible->account->birthday);
         // STATUS START

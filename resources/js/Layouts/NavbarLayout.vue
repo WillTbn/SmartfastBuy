@@ -77,28 +77,28 @@ export default defineComponent({
             },
             {
                 linkHref:'condominia.index',
-                linkActive:'condominia.index',
+                linkActive:'condominia.*',
                 icon:'fa-solid fa-city',
                 text:'Condominio',
                 can:'condominia-access'
             },
             {
                 linkHref:'invites.index',
-                linkActive:'invites.index',
+                linkActive:'invites.*',
                 icon:'fa-solid fa-envelope',
                 text:'Convites',
                 can:'invites-access'
             },
             {
                 linkHref:'products.index',
-                linkActive:'products.index',
+                linkActive:'products.*',
                 icon:'fa-solid fa-shop',
                 text:'Produtos',
                 can:'products-access'
             },
             {
                 linkHref:'users.index',
-                linkActive:'users.index',
+                linkActive:'users.*',
                 icon:'fa-solid fa-address-card',
                 text:'Usuários',
                 can:'users-access'

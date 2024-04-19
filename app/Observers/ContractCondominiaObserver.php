@@ -14,7 +14,8 @@ class ContractCondominiaObserver
     {
         logger('Entrei no '.__CLASS__);
         if($contractCondominia->isDirty('ceo_id')){
-            logger('Estou no isDirty '.__CLASS__);
+            logger('Estou no isDirty aquiiiii '.__CLASS__);
+            logger($contractCondominia);
             event(new SetSignatureContract($contractCondominia));
         }
     }

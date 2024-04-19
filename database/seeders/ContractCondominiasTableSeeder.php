@@ -26,7 +26,7 @@ class ContractCondominiasTableSeeder extends Seeder
         ]);
         // $getCon = DB::table('contract_condominias')->first();
         Condominia::where('name', 'Vivendas Teste')->update([
-            'contract_condominias_id' => $get->id
+            'contract_condominia_id' => $get->id
         ]);
     }
 }

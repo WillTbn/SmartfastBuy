@@ -3,10 +3,10 @@
 namespace Database\Factories;
 
 use App\Enums\RoleEnum;
-use App\Models\Ability;
+
 use App\Models\Role;
-use App\Models\RoleAbility;
 use App\Models\User;
+use Closure;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -29,7 +29,21 @@ class UserFactory extends Factory
             // 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'password' => bcrypt('password'), // password
             'remember_token' => Str::random(10),
-            'role_id' => RoleEnum::Master
+            // 'role_id' => RoleEnum::Master
+        ];
+    }
+    /**
+     * Define the model's relationships.
+     *
+     * @return array
+     */
+    public function relationships()
+    {
+        return [
+            'role_id' => function () {
+                $role = Role::factory(['name'=> RoleEnum::Master->name])->create();
+                return $role;
+            },
         ];
     }
     /**
@@ -40,5 +54,16 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+    public function configure(): static
+    {
+        return $this->afterMaking(function (User $user) {
+            // ...
+            // dd($user);
+        })->afterCreating(function (User $user) {
+
+            // $role = fake(Role::class)->create(['name'=> RoleEnum::Master->name]);
+
+        });
     }
 }

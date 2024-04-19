@@ -18,9 +18,16 @@
 </template>
 <script>
 import { defineComponent } from 'vue';
+import InputLabel from '../../Components/Forms/InputLabel.vue'
+import TextInput from '../../Components/Forms/TextInput.vue'
+
 
 export default defineComponent({
     name:"ContractFormLayout",
+    components:{
+        InputLabel,
+        TextInput
+    },
     setup(){
 
     }

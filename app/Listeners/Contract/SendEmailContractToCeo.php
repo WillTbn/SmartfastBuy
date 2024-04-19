@@ -22,8 +22,9 @@ class SendEmailContractToCeo
      */
     public function handle(object $event): void
     {
-        logger('Listeener Initial '.__CLASS__);
-        Mail::to(env('CONTACT_EMAIL', 'no_env_contact@smartfastbuy.com.br'))->send(new SetSignatureCeo($event->ceo, $event->condominia));
+        logger('Listeener Initial aaasad '.__CLASS__);
+        logger(json_encode($event));
+        Mail::to(env('CONTACT_EMAIL', 'no_env_contact@smartfastbuy.com.br'))->send(new SetSignatureCeo($event->contract->ceo, $event->contract->condominia));
         logger('Listeener finish '.__CLASS__);
     }
 }

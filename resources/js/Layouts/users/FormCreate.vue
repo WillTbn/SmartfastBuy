@@ -1,13 +1,16 @@
 <template>
     <!-- <Dialog :open="flash.success" title="Sucesso!" :description="flash.message" button="Ok!" /> -->
-    <form @submit.prevent="submitRegister" class="p-4 mx-auto mt-6 space-y-6 md:container" >
+    <form @submit.prevent="submitRegister" class="mx-auto max-w-7xl sm:px-6 lg:px-8" >
       <!-- email class="grid grid-cols-3 grid-rows-3 gap-4"-->
         <div class="grid grid-cols-3 gap-4">
             <label class="block">
-                <span for="name" class="light:text-gray-700">Nome*</span>
-                <input id="name" type="text" v-model="form.name"
+                <input-label value="Nome"/>
+                <!-- <span for="name" class="light:text-gray-700">Nome*</span> -->
+                <!-- <input id="name" type="text" v-model="form.name"
                 :class="styleForm"
-                >
+                > -->
+                <text-input id="name" v-model="form.name"
+                    :class="styleForm"/>
                 <div v-if="form.errors.name">{{ form.errors.name }}</div>
             </label>
             <label class="block">
@@ -114,6 +117,8 @@
 const styleForm = "block w-full px-4 border-transparent rounded form-input text-black"
 import {useForm} from '@inertiajs/vue3'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
+import InputLabel from '@/Components/Forms/InputLabel.vue'
+import TextInput from '@/Components/Forms/TextInput.vue'
 // import Dialog from '@/Components/Dialog.vue';
 
 
