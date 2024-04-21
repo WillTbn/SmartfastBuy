@@ -10,8 +10,6 @@ use App\Http\Controllers\Adm\ResponsibleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
-use App\Models\ContractCondominia;
-use App\Models\TelescopeEntrie;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,12 +33,6 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-Route::get('/telescope', function () {
-    return Inertia::render('Telescope', [
-        'telescope' => TelescopeEntrie::all(),
-    ]);
-});
-
 Route::get('/dashboard', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 // Route::get('/users', [UserController::class, 'index'])->middleware(['auth', 'verified'])->name('users');
 Route::middleware('auth')->group(function () {
