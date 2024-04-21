@@ -36,7 +36,6 @@ class CondominiaController extends Controller
 
     public function getOne(Condominia $condominia)
     {
-
         return Inertia::render('Condominia/UpdateCondominia', [
             'condominia' => $condominia,
             'apartments' => $this->aptServices->getAptCond($condominia->id),

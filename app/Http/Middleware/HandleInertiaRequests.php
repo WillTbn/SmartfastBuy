@@ -44,25 +44,17 @@ class HandleInertiaRequests extends Middleware
                 'success' => session()->has('success'),
                 'message' => session('success')
             ],
-            'permissions' =>function(){
-                $user = auth()->user();
-                return $user ? [
-                    'can_access' =>  $user->role->abilities->pluck('name'),
-                    'role'=> $user->role->name,
-                    'account' => $user->account,
-                ]:null;
-            }
-            // 'permissions' => [
-            //     'can_access' =>  $request->user() ? $request->user()->role->abilities->pluck('name'):"",
-            //     'role' =>  $request->user() ? $request->user()->role->name:"",
-            //     'account' =>$request->user() ? $request->user()->account:""
-            //     // $user = $request->user(),
-            //     // return $user ? [
-            //     //     'can_access' =>  $user->role->abilities->pluck('name'),
-            //     //     'role'=> $user->role->name,
-            //     //     'account' => $user->account,
-            //     // ]:null;
-            // ],
+            'permissions' =>[
+                'can_access' =>  $request->user()->role->abilities->pluck('name'),
+                'role' =>  $request->user()->role->name,
+                'account' =>$request->user()->account
+                // $user = $request->user(),
+                // return $user ? [
+                //     'can_access' =>  $user->role->abilities->pluck('name'),
+                //     'role'=> $user->role->name,
+                //     'account' => $user->account,
+                // ]:null;
+            ],
         ]);
     }
 }
