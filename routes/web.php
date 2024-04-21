@@ -11,7 +11,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\ContractCondominia;
-use App\Models\TelescopeEntrie;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,11 +32,6 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
-    ]);
-});
-Route::get('/telescope', function () {
-    return Inertia::render('Telescope', [
-        'telescope' => TelescopeEntrie::all(),
     ]);
 });
 

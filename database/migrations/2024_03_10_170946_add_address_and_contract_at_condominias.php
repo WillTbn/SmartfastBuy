@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('condominias', function (Blueprint $table) {
             $table->foreignId('address_condominias_id')->nullable()->constrained()->onDelete('set null');
-            $table->foreignId('contract_condominia_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignId('contract_condominias_id')->nullable()->constrained()->onDelete('set null');
         });
     }
 
@@ -24,7 +24,7 @@ return new class extends Migration
     {
         Schema::table('condominias', function (Blueprint $table) {
             $table->dropColumn('address_condominias_id');
-            $table->dropColumn('contract_condominia_id');
+            $table->dropColumn('contract_condominias_id');
         });
     }
 };

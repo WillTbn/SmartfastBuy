@@ -278,12 +278,7 @@ defineProps({
                                     href="https://laravel.com/docs/sanctum"
                                     class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                     >Sanctum</a
-                                >,
-                                <a
-                                    href="https://laravel.com/docs/telescope"
-                                    class="underline hover:text-gray-700 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >Telescope</a
-                                >, and more.
+                                >
                             </p>
                         </div>
                     </div>

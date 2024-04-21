@@ -20,7 +20,7 @@ class CondominiaFactory extends Factory
         return [
             'name' => fake()->company(),
             'address_condominias_id' => null,
-            'contract_condominia_id' => null,
+            'contract_condominias_id' => null,
         ];
     }
 }
