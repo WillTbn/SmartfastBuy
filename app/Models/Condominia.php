@@ -12,10 +12,10 @@ class Condominia extends Model
 {
     use HasFactory;
     // public $table = 'condominias';
-    protected $fillable =  [ 'name', 'address_condominias_id', 'contract_condominia_id', 'responsible_id'];
-    protected $appends = [
-        'contract_status'
-    ];
+    protected $fillable =  [ 'name', 'address_condominias_id', 'contract_condominia_id', 'responsible_id','contract_status'];
+    // protected $appends = [
+    //     'contract_status'
+    // ];
     public function responsable():HasOne
     {
         return $this->hasOne(Account::class, 'id', 'responsible_id');
@@ -46,24 +46,24 @@ class Condominia extends Model
     {
         return $this->hasMany(ProductBarcodes::class);
     }
-    public function getContractStatusAttribute(): ContractStates
-    {
+    // public function getContractStatusAttribute(): ContractStates
+    // {
 
-        $this->load([
-            'responsable', 'contractCondominia', 'contractCondominia.responsible',
-            'contractCondominia.ceo', 'contractCondominia.signature',
-        ]);
-        if(!$this->contractCondominia){
-            return ContractStates::Draft;
-        }
-        if(!$this->contractCondominia->ceo){
-            return ContractStates::Initial;
-        }
-        if($this->contractCondominia->signature && !$this->contractCondominia->signature->signature_responsible){
-            /// AQUI TEM QUE NOTIFICAR SOMENTE O USUÀRIO responsible
-            // SOBRE A NECESSIDADE DE DAR ACEITAR NO CONTRATO
-            return ContractStates::Pending;
-        }
-        return ContractStates::Start;
-    }
+    //     $this->load([
+    //         'responsable', 'contractCondominia', 'contractCondominia.responsible',
+    //         'contractCondominia.ceo', 'contractCondominia.signature',
+    //     ]);
+    //     if(!$this->contractCondominia){
+    //         return ContractStates::Draft;
+    //     }
+    //     if(!$this->contractCondominia->ceo){
+    //         return ContractStates::Initial;
+    //     }
+    //     if($this->contractCondominia->signature && !$this->contractCondominia->signature->signature_responsible){
+    //         /// AQUI TEM QUE NOTIFICAR SOMENTE O USUÀRIO responsible
+    //         // SOBRE A NECESSIDADE DE DAR ACEITAR NO CONTRATO
+    //         return ContractStates::Pending;
+    //     }
+    //     return ContractStates::Start;
+    // }
 }

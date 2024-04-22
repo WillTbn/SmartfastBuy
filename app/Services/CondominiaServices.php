@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DataTransferObject\Condominia\CondominiaDTO;
 use App\DataTransferObject\Responsible\ResponsibleDTO;
+use App\Enums\ContractStates;
 use App\Models\Account;
 use App\Models\AddressCondominia;
 use App\Models\Condominia;
@@ -12,9 +13,16 @@ use App\Models\Role;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CondominiaServices
 {
+    private Condominia $condominiaModel;
+    public function __construct(
+        Condominia $condominiaModel
+    ) {
+        $this->condominiaModel = $condominiaModel;
+    }
     public function getAllCond()
     {
         // $respon = Role::where('name', 'Responsavel')->value('id');
@@ -87,5 +95,22 @@ class CondominiaServices
     public function getOne(Condominia $condominia)
     {
         return $condominia->where('id', $condominia->id)->with(['contractCondominia', 'addressCondominia'])->first();
+    }
+    public function updatedStatus(Condominia $cond, ContractStates $status)
+    {
+        try{
+            DB::beginTransaction();
+            Log::info('Status é '.json_encode($status));
+            $cond->update([
+                'contract_status' => $status
+            ]);
+            Log::info('Status atualizado '.json_encode($status));
+            DB::commit();
+        }catch(Exception $e)
+        {
+            DB::rollBack();
+            Log::error('No update de '.__CLASS__);
+            // return redirect()->back()->with('error', 'Problema na criação do condominio!');
+        }
     }
 }

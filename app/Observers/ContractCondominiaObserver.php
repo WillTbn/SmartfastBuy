@@ -12,9 +12,8 @@ class ContractCondominiaObserver
      */
     public function created(ContractCondominia $contractCondominia): void
     {
-        logger('Entrei no '.__CLASS__);
+        logger('Entrei no observer '.__CLASS__);
         if($contractCondominia->isDirty('ceo_id')){
-            logger('Estou no isDirty aquiiiii '.__CLASS__);
             logger($contractCondominia);
             event(new SetSignatureContract($contractCondominia));
         }
