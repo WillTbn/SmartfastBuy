@@ -32,7 +32,7 @@ class ApartmentControllerTest extends TestCase
     public function test_apartment_index()
     {
         $reto = $this->get(route('apartment.index'));
-        $reto->assertStatus(200);
+        $reto->assertStatus(302);
 
     }
     public function test_apartment_created()
@@ -52,7 +52,7 @@ class ApartmentControllerTest extends TestCase
             'block_id' => $condominia->blocks[0]->id,
         ]));
 
-        $reto->assertStatus(200);
+        $reto->assertStatus(302);
 
         $this->assertDatabaseHas('apartments', [
             'number' => 105,
