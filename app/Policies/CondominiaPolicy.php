@@ -27,7 +27,10 @@ class CondominiaPolicy
      */
     public function view(User $user, Condominia $condominia): bool
     {
-        return $user->isMaster() || $user->account->condominia_id  == $condominia->id;
+        if($user->isMaster()){
+            return true;
+        }
+        return $user->account->condominia_id  == $condominia->id;
     }
 
     /**

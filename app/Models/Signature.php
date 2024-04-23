@@ -12,7 +12,7 @@ class Signature extends Model
     protected $table = 'signatures';
     protected $fillable =[
         'signature_ceo',
-        'signature_responsable',
+        'signature_responsible',
         'contract_id',
     ];
 

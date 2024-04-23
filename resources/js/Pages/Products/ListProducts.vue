@@ -4,7 +4,7 @@
         <template #header>
             Produtos
         </template>
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8" v-if="products.length > 0">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 md:max-w-4xl" v-if="products.length > 0">
             <table-body class="text-white">
                 <template #headColumns>
                     <table-head type="first" label="Name"/>

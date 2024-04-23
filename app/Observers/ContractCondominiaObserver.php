@@ -2,11 +2,21 @@
 
 namespace App\Observers;
 
+use App\Enums\ContractStates;
 use App\Events\Signature\SetSignatureContract;
 use App\Models\ContractCondominia;
+use App\Services\CondominiaServices;
+use Illuminate\Support\Facades\Log;
 
 class ContractCondominiaObserver
 {
+    private CondominiaServices $condominiaServices;
+    public function __construct(
+        CondominiaServices $condominiaServices
+    )
+    {
+        $this->condominiaServices = $condominiaServices;
+    }
     /**
      * Handle the ContractCondominia "created" event.
      */
@@ -16,6 +26,10 @@ class ContractCondominiaObserver
         if($contractCondominia->isDirty('ceo_id')){
             logger($contractCondominia);
             event(new SetSignatureContract($contractCondominia));
+        }else{
+            $cond = $this->condominiaServices->getFirst($contractCondominia->condominia_id);
+            Log::debug('Esse contrato não foi assinado pelo ceo_id'.json_encode( $cond));
+            $this->condominiaServices->updatedStatus( $cond, ContractStates::Initial);
         }
     }
 

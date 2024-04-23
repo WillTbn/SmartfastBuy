@@ -96,6 +96,10 @@ class CondominiaServices
     {
         return $condominia->where('id', $condominia->id)->with(['contractCondominia', 'addressCondominia'])->first();
     }
+    public function getFirst($condominia_id)
+    {
+        return $this->condominiaModel->find($condominia_id);
+    }
     public function updatedStatus(Condominia $cond, ContractStates $status)
     {
         try{

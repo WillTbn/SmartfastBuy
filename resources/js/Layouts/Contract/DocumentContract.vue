@@ -5,7 +5,7 @@
                 Dados do contrato
             </h2>
         </div>
-        <Form @submit="submitFinally" class="mx-auto max-w-7xl sm:px-2 lg:px-8" v-slot="{errors}">
+        <Form @submit="submitFinally" class="mx-auto max-w-7xl sm:px-2 lg:px-8  md:max-w-4xl" v-slot="{errors}">
             <div class="grid grid-cols-3 gap-4">
                 <div class="">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Documento do contrato</label>

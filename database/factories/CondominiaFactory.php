@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\ContractStates;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,6 +22,7 @@ class CondominiaFactory extends Factory
             'name' => fake()->company(),
             'address_condominias_id' => null,
             'contract_condominia_id' => null,
+            'contract_status' => ContractStates::Draft
         ];
     }
 }

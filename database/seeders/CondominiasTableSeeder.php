@@ -33,7 +33,7 @@ class CondominiasTableSeeder extends Seeder
         $cond = Condominia::factory()
             ->has(AddressCondominia::factory())
             ->has(
-                ContractCondominia::factory(1, ['ceo_id' => $userMaster->account->id, 'responsible_id' => $userResponsible->account->id])
+                ContractCondominia::factory()
                 ->has(Signature::factory(1, ['signature_ceo' => $signatureMaster, 'signature_responsible' => $signatureResponsible]))
             )
             ->has(Block::factory(5))
@@ -41,15 +41,12 @@ class CondominiasTableSeeder extends Seeder
         Account::where('user_id', 2)->update(['condominia_id'=> $cond->id]);
         Account::where('user_id', 3)->update(['condominia_id'=> $cond->id]);
 
-        $ceo = User::factory()->has(Account::factory())->create();
+        $ceo = User::factory()->has(Account::factory())->create(['role_id' => RoleEnum::Master]);
         $signature = Hash::make($ceo->account->person.$ceo->account->birthday);
         // STATUS PENDING
         Condominia::factory()
             ->has(AddressCondominia::factory())
-            ->has(ContractCondominia::factory(
-                1,
-                ['ceo_id' => $ceo->account->id]
-                )->has(Signature::factory(1, ['signature_ceo' => $signature]))
+            ->has(ContractCondominia::factory()->has(Signature::factory(1, ['signature_ceo' => $signature]))
             )
             ->has(Block::factory(2))
         ->create(['name' => 'Alfa Teste P']);

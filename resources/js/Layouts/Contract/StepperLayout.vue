@@ -1,5 +1,5 @@
 <template >
-    <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl sm:px-6 lg:px-8  md:max-w-4xl">
         <ol class="flex items-center w-full mb-4 sm:mb-5">
             <li class="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-['Adicionar_responsável'] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-800">
                 <div class="flex items-center justify-center w-10 h-10 rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0">

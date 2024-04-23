@@ -20,7 +20,7 @@ class UserTableSeeder extends Seeder
     {
 
         User::factory()
-        ->has(Account::factory())
+            ->has(Account::factory())
         ->create([
             'name'=>'Administrador User',
             'email'=> env('ADMIN_EMAIL', fake()->email()),
@@ -28,7 +28,7 @@ class UserTableSeeder extends Seeder
             'role_id' => RoleEnum::Master
         ]);
         User::factory()
-        ->has(Account::factory())
+            ->has(Account::factory())
         ->create([
             'name'=>'Responsible User',
             'email'=> env('RESPO_EMAIL', fake()->email()),
@@ -37,7 +37,7 @@ class UserTableSeeder extends Seeder
         ]);
 
         User::factory()
-        ->has(Account::factory())
+            ->has(Account::factory())
         ->create([
             'name'=>'Seller User',
             'email'=> env('SELLE_EMAIL', fake()->email()),

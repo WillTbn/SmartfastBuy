@@ -16,6 +16,12 @@ class Condominia extends Model
     // protected $appends = [
     //     'contract_status'
     // ];
+    protected function casts():array
+    {
+        return[
+            'contract_status' => ContractStates::class
+        ];
+    }
     public function responsable():HasOne
     {
         return $this->hasOne(Account::class, 'id', 'responsible_id');

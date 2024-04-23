@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tightenco\Ziggy\Ziggy;
@@ -44,12 +45,11 @@ class HandleInertiaRequests extends Middleware
                 'success' => session()->has('success'),
                 'message' => session('success')
             ],
-            'permissions' =>function(){
-                $user = auth()->user();
-                return $user ? [
-                    'can_access' =>  $user->role->abilities->pluck('name'),
-                    'role'=> $user->role->name,
-                    'account' => $user->account,
+            'permissions' =>function () use ($request){
+                return $request->user() ? [
+                    'can_access' =>  $request->user()->role->abilities->pluck('name'),
+                    'role'=> $request->user()->role->name,
+                    'account' => $request->user()->account,
                 ]:null;
             }
             // 'permissions' => [

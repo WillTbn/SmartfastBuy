@@ -6,7 +6,7 @@
             Condominios
         </template>
         <!-- <form-created/> -->
-        <div class="container flex justify-end">
+        <div class="container flex justify-end md:max-w-4xl">
             <Link
                 method="get"
                 class="p-2 mx-2  outline outline-offset-1 outline-green-500 rounded-lg hover:bg-green-900"
@@ -16,7 +16,7 @@
                Novo Condominio
             </Link>
         </div>
-        <div v-if="condominias.length > 0" class="mx-auto max-w-7xl sm:px-2 lg:px-8">
+        <div v-if="condominias.length > 0" class="mx-auto max-w-7xl sm:px-2 lg:px-8 md:max-w-5xl">
             <table-body>
                 <template #headColumns>
                     <table-head type="first" label="Name"/>

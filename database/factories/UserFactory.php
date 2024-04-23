@@ -42,10 +42,9 @@ class UserFactory extends Factory
     {
         return [
             'role_id' => function () {
-                $role = Role::factory()
+                Role::factory()
                     ->has(RoleAbility::factory())
                 ->create(['name'=> RoleEnum::Master->name]);
-                return $role;
             },
         ];
     }
@@ -63,7 +62,13 @@ class UserFactory extends Factory
         return $this->afterMaking(function (User $user) {
             // ...
             if(!$user->role_id){
-                $user->role_id = RoleEnum::Master;
+                Ability::create([
+                    'name'=> 'all-access'
+                ]);
+                $roleMaster = Role::create([
+                    'name'=>RoleEnum::Master->name
+                ]);
+                $user->role_id = $roleMaster->id;
             }
             // dd($user->role_id);
             // AbilityFactory::factory()->create();
