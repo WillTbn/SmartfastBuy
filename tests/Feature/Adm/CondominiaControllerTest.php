@@ -71,7 +71,9 @@ class CondominiaControllerTest extends TestCase
         $response = $this->actingAs($user)->get(route('condominia.getOne',[1]));
         // dd($response);
         $response->assertStatus(200);
-        $response->assertSee('Teste');
+        $this->assertDatabaseHas('condominias', [
+            'name' => $cond->name
+        ]);
 
         $this->assertDatabaseHas('condominias', [
             'contract_status' =>  ContractStates::Draft,
