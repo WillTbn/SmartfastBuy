@@ -88,7 +88,7 @@
 <script setup>
 const styleForm = ref("block w-full px-4 bg-zinc-400 rounded form-input")
 import {useForm} from '@inertiajs/vue3'
-import {ref, computed, defineComponent, defineEmits} from 'vue'
+import {ref, computed, defineComponent} from 'vue'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 import DangerButton from '@/Components/DangerButton.vue';
 import condominia from '../../Store/condominia';

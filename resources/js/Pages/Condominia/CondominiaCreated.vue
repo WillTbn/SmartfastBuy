@@ -12,8 +12,8 @@ import { computed, defineComponent, onMounted, ref } from 'vue';
 import PrimaryButton from '../../Components/Buttons/PrimaryButton.vue';
 import DangerButton from '../../Components/DangerButton.vue';
 import Dialog from '../../Components/Dialog.vue';
-import InputLabel from '../../Components/InputLabel.vue'
-import TextInput from '../../Components/TextInput.vue'
+import InputLabel from '../../Components/Forms/InputLabel.vue'
+import TextInput from '../../Components/Forms/TextInput.vue'
 import FormCreatedCondominia from '../../Layouts/Condominia/FormCreatedCondominia.vue';
 
 

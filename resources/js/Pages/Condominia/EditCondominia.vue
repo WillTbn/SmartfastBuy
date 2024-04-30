@@ -86,8 +86,8 @@ import DangerButton from '../../Components/DangerButton.vue';
 import { useStore } from 'vuex';
 import Dialog from '../../Components/Dialog.vue';
 import { Inertia} from '@inertiajs/inertia'
-import InputLabel from '../../Components/InputLabel.vue'
-import TextInput from '../../Components/TextInput.vue'
+import InputLabel from '../../Components/Forms/InputLabel.vue'
+import TextInput from '../../Components/Forms/TextInput.vue'
 
 export default{
     components:{
