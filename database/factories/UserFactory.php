@@ -38,16 +38,16 @@ class UserFactory extends Factory
      *
      * @return array
      */
-    public function relationships()
-    {
-        return [
-            'role_id' => function () {
-                Role::factory()
-                    ->has(RoleAbility::factory())
-                ->create(['name'=> RoleEnum::Master->name]);
-            },
-        ];
-    }
+    // public function relationships()
+    // {
+    //     return [
+    //         'role_id' => function () {
+    //             Role::factory()
+    //                 ->has(RoleAbility::factory())
+    //             ->create(['name'=> RoleEnum::Master->name]);
+    //         },
+    //     ];
+    // }
     /**
      * Indicate that the model's email address should be unverified.
      */
@@ -57,21 +57,28 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+    public function withRoleResponsible():Factory
+    {
+        return $this->state(function (array $attributes) {
+
+            $roleResposible = Role::factory()
+                ->has(Ability::factory(1, ['name' => 'condominia-all']))
+            ->create(['name'=> RoleEnum::Responsible->name]);
+            return [
+                'role_id'=> $roleResposible->id
+            ];
+        });
+    }
     public function configure(): static
     {
         return $this->afterMaking(function (User $user) {
-            // ...
             if(!$user->role_id){
-                Ability::create([
-                    'name'=> 'all-access'
-                ]);
-                $roleMaster = Role::create([
-                    'name'=>RoleEnum::Master->name
-                ]);
+                $roleMaster = Role::factory()
+                    ->has(Ability::factory())
+                ->create(['name'=> RoleEnum::Master->name]);
                 $user->role_id = $roleMaster->id;
             }
-            // dd($user->role_id);
-            // AbilityFactory::factory()->create();
+
         })->afterCreating(function (User $user) {
 
             // $role = fake(Role::class)->create(['name'=> RoleEnum::Master->name]);

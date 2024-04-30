@@ -55,6 +55,7 @@ class SignatureServices
     }
     public function updateStart(ContractCondominia $contract)
     {
+        Log::debug('Criando reponsible vai assina o contrato -> '.$contract);
         Log::debug('Criando reponsible vai assina o contrato do condominioID -> '.$contract->condominia_id);
         try{
             DB::beginTransaction();

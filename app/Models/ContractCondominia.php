@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class ContractCondominia extends Model
 {
     use HasFactory;
-    protected $fillable =  [ 'document_name', 'final_date', 'initial_date', 'ceo_id', 'responsible_id'];
+    protected $fillable =  [ 'document_name', 'final_date', 'initial_date', 'ceo_id', 'responsible_id', 'condominia_id'];
 
     public function responsible():HasOne
     {

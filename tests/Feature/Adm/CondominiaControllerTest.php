@@ -69,7 +69,7 @@ class CondominiaControllerTest extends TestCase
         ->create(['name' => 'Teste']);
 
         $response = $this->actingAs($user)->get(route('condominia.getOne',[1]));
-
+        // dd($response);
         $response->assertStatus(200);
         $response->assertSee('Teste');
 
@@ -114,22 +114,8 @@ class CondominiaControllerTest extends TestCase
     }
     public function test_condominia_status_start()
     {
-        $user = User::factory() ->has(Account::factory())->create();
-        $respo = User::factory()
-            ->has(Account::factory())
-            ->has(
-                Role::factory()
-                    ->has(Ability::factory()
-                        ->has(RoleAbility::factory()
-                    )
-                )
-            )
-        ->create([
-            'name'=>'Responsible User',
-            'email'=> fake()->email(),
-            'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
-            'role_id' => RoleEnum::Responsible
-        ]);
+        $user = User::factory()->has(Account::factory())->create();
+        $respo = User::factory()->withRoleResponsible()->has(Account::factory())->create();
 
         $cond = Condominia::factory()
             ->has(AddressCondominia::factory())

@@ -36,7 +36,7 @@ class ContractCondominiaControllerTest extends TestCase
         $file = UploadedFile::fake()->create('testeDocument.pdf', 100, 'application/pdf');
         // dd($file);
         $user = User::factory()->create();
-        $responsible = User::factory()->has(Account::factory())->create();
+        $responsible = User::factory()->has(Account::factory())->withRoleResponsible()->create();
         $cond = Condominia::factory()
             ->has(AddressCondominia::factory())
         ->create(['name' => 'Teste Condominia']);
@@ -71,7 +71,7 @@ class ContractCondominiaControllerTest extends TestCase
         // $response->assertSee('Teste');
 
     }
-    public function test_create_contract_and_event()
+    public function test_event_create_contract()
     {
         Event::fake([SetSignatureContract::class]);
         $user = User::factory()->has(Account::factory())->create();
@@ -81,7 +81,7 @@ class ContractCondominiaControllerTest extends TestCase
             ->has(ContractCondominia::factory(
                 1,
                 ['ceo_id' => $user->account->id]
-                )->has(Signature::factory(1, ['signature_ceo' => $signature]))
+                )
             )
         ->create(['name' => 'Alfa Teste P']);
         // dd($cond->contractCondominia->signature);

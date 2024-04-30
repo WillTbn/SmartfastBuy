@@ -22,7 +22,7 @@ return new class extends Migration
             // cria softdelete na tabela account
             $table->unsignedBigInteger('ceo_id')->nullable();
             $table->unsignedBigInteger('responsible_id')->nullable();
-            $table->foreignId('condominia_id')->nullable()->constrained();
+            $table->foreignId('condominia_id')->constrained();
 
             $table->foreign('ceo_id')->references('id')->on('accounts')->onDelete('set null');
             $table->foreign('responsible_id')->references('id')->on('accounts')->onDelete('set null');

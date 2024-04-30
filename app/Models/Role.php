@@ -18,10 +18,10 @@ class Role extends Model
         'name',
     ];
 
-    // public function RoleAbility():HasMany
-    // {
-    //     return $this->hasMany(RoleAbility::class);
-    // }
+    public function RoleAbilities():HasMany
+    {
+        return $this->hasMany(RoleAbility::class);
+    }
     // public function roleAbilities():BelongsToMany
     // {
 

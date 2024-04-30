@@ -11,6 +11,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\FileHelper;
+use Illuminate\Support\Facades\Log;
 
 class ContractCondominiaServices {
     use FileHelper;
@@ -34,7 +35,7 @@ class ContractCondominiaServices {
 
     public function createdContract(ResponsibleDTO $resp,ContractCondominiaDTO $contract )
     {
-        logger('entrei no '.__CLASS__);
+        Log::info('entrei no '.__CLASS__);
         try{
             DB::beginTransaction();
             $user = $this->userModel->create([
@@ -65,8 +66,8 @@ class ContractCondominiaServices {
             logger('Deu tudo certo no '.__CLASS__);
             DB::commit();
         }catch (Exception $e){
-            logger('Deu erro no '.__CLASS__);
-            logger('exception '.$e);
+            Log::error('Deu erro no '.__CLASS__);
+            Log::error('exception '.$e);
             DB::rollBack();
             return redirect()->back()->with('error', 'Problema na inserção no banco de dados!');
         }
