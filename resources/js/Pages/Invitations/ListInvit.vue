@@ -4,7 +4,7 @@
         <template #header>
             Convites
         </template>
-        <div v-if="invites.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div v-if="invites.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8 md:max-w-5xl" >
             <table-body>
                 <template #headColumns>
                     <table-head type="first" label="E-mail"/>

@@ -7,7 +7,7 @@
         <form-create
             :roles="roles"
         ></form-create>
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 md:max-w-5xl">
             <table-body>
                 <template #headColumns>
                     <table-head type="first" label="Name"/>

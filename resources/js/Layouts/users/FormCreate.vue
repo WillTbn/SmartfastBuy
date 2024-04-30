@@ -1,6 +1,6 @@
 <template>
     <!-- <Dialog :open="flash.success" title="Sucesso!" :description="flash.message" button="Ok!" /> -->
-    <form @submit.prevent="submitRegister" class="mx-auto max-w-7xl sm:px-6 lg:px-8" >
+    <form @submit.prevent="submitRegister" class="mx-auto max-w-7xl sm:px-6 lg:px-8 md:max-w-5xl" >
       <!-- email class="grid grid-cols-3 grid-rows-3 gap-4"-->
         <div class="grid grid-cols-3 gap-4">
             <label class="block">
