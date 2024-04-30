@@ -108,7 +108,7 @@ class CondominiaServices
             $cond->update([
                 'contract_status' => $status
             ]);
-            Log::info('Status atualizado '.json_encode($status));
+            Log::info('Status atualizado para '.json_encode($status));
             DB::commit();
         }catch(Exception $e)
         {

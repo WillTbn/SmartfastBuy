@@ -33,9 +33,7 @@ class CondominiasTableSeeder extends Seeder
         $cond = Condominia::factory()
             ->has(AddressCondominia::factory())
             ->has(
-                ContractCondominia::factory()
-                ->has(Signature::factory(1, ['signature_ceo' => $signatureMaster, 'signature_responsible' => $signatureResponsible]))
-            )
+                ContractCondominia::factory(1, ['ceo_id' =>$userMaster->id, 'responsible_id' => $userResponsible->id]))
             ->has(Block::factory(5))
         ->create(['name' => 'Vivendas Teste']);
         Account::where('user_id', 2)->update(['condominia_id'=> $cond->id]);
@@ -46,8 +44,7 @@ class CondominiasTableSeeder extends Seeder
         // STATUS PENDING
         Condominia::factory()
             ->has(AddressCondominia::factory())
-            ->has(ContractCondominia::factory()->has(Signature::factory(1, ['signature_ceo' => $signature]))
-            )
+            ->has(ContractCondominia::factory(1, ['ceo_id' =>$userMaster->id]))
             ->has(Block::factory(2))
         ->create(['name' => 'Alfa Teste P']);
         // STATUS DRAFT

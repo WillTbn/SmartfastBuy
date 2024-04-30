@@ -53,5 +53,31 @@ class SignatureServices
             return response()->json(['error' => 'Erro ao grava assinatura', 'exception'=> $e], 402);
         }
     }
+    public function updateStart(ContractCondominia $contract)
+    {
+        Log::debug('Criando reponsible vai assina o contrato do condominioID -> '.$contract->condominia_id);
+        try{
+            DB::beginTransaction();
+            $sig = $this->signatureModel->updateOrCreate(
+                ['contract_condominia_id' => $contract->condominia_id],
+                [
+                    'signature_responsible' => Hash::make($contract->responsible->person.$contract->responsible->birthday),
+                    'updated_at' => now(),
+                ]
+            );
+            Log::info('assinatura criada '.$sig);
+
+            /// Atualizar o status do contract
+            $cond = Condominia::find($contract->condominia_id);
+            // Log::info('pegando condominio'.$cond);
+            $this->servicesCondominia->updatedStatus($cond,ContractStates::Start);
+            DB::commit();
+        } catch(Exception $e)
+        {
+            DB::rollBack();
+            Log::error('Erro na criação da assinatura');
+            return response()->json(['error' => 'Erro ao grava assinatura', 'exception'=> $e], 402);
+        }
+    }
 
 }
