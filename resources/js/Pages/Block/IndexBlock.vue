@@ -7,7 +7,7 @@
 
         <steps-control-apartment @action-update="$emit('back-init')"/>
 
-        <div v-if="aps.apartments.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8 table-scrol">
+        <div v-if="aps.apartments.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8 table-scrol md:max-w-5xl">
 
             <table-body>
                 <template #headColumns>

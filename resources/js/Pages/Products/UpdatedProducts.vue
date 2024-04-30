@@ -1,7 +1,7 @@
 <template>
     <Head title="Produtos"/>
     <AuthenticatedLayout>
-        <div class="md:px-16 md:m-auto md:container">
+        <div class="md:px-16 md:m-auto md:container md:max-w-5xl">
             <avatar-upload :imageURL="product.image_one" :product="product.id"/>
             <form @submit.prevent="submitRegister" class="p-4 mt-6 space-y-6" >
                 <div class="grid grid-cols-3 gap-4">

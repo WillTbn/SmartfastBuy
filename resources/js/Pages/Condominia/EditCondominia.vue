@@ -2,7 +2,7 @@
     <Dialog :open="flash.success" title="Sucesso!" :description="flash.message" button="Ok!" />
     <Head :title="condominia.name"/>
     <AuthenticatedLayout>
-        <div class="flex justify-center p-6">
+        <div class="flex justify-center p-6 md:max-w-5xl">
            Condominio - {{ condominia.name }}
 
         </div>

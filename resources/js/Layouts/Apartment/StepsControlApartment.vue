@@ -1,7 +1,7 @@
 <template>
-    <div class="stesp-control-apartment">
+    <div class="stesp-control-apartment flex justify-center md:max-w-5xl">
         <div v-if="controlStepApartment == 'initial'">
-            <div class="flex justify-center">
+            <div class="flex justify-around">
                 <green-button @click.prevent="statusSteps('createOne')">
                     add 1 apartamento
                 </green-button>
@@ -10,7 +10,7 @@
                 </primary-button>
             </div>
         </div>
-        <div  v-if="controlStepApartment == 'createOne'" class="flex justify-around p-4 m-4 rounded-md bg-slate-100">
+        <div  v-if="controlStepApartment == 'createOne'" class="flex justify-center p-4 m-4 rounded-md bg-slate-100 md:max-w-5xl">
             <created-one @created-apto="$emit('action-update')"/>
             <info-button @click.prevent="statusSteps('initial')" class="m-8">
 
@@ -18,7 +18,7 @@
                <span class="ml-5">voltar</span>
             </info-button>
         </div>
-        <div class="flex justify-around p-4 m-4 rounded-md bg-slate-100" v-if="controlStepApartment == 'createMult'">
+        <div class="flex justify-center md:max-w-5xl p-4 m-4 rounded-md bg-slate-100" v-if="controlStepApartment == 'createMult'">
             <created-mult @created-apto="$emit('action-update')"/>
             <info-button @click.prevent="statusSteps('initial')" class="m-8" style="max-height: 2rem;">
 

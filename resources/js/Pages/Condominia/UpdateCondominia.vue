@@ -32,10 +32,10 @@
                 </div>
 
             </div>
-            <div v-if="createdBlock == true" class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div v-if="createdBlock == true" class="mx-auto max-w-7xl sm:px-6 lg:px-8 md:max-w-5xl" >
                 <created-block/>
             </div>
-            <div v-if="blocks.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div v-if="blocks.length > 0" class="mx-auto max-w-7xl sm:px-6 lg:px-8 md:max-w-5xl">
 
                 <table-body>
                     <template #headColumns>
