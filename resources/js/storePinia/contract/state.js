@@ -5,8 +5,8 @@ const state = () => {
         lastName:"SobreNome",
         role_id:2,
         email:"teste@teste.com.br",
-        password:"",
-        password_confirmation:"",
+        password:"test123987",
+        password_confirmation:"test123987",
         remember:false,
         notifications: 1,
         person: "22233311133",
@@ -14,13 +14,13 @@ const state = () => {
         genre: 2,
         birthday:"08/07/1998",
         phone:"",
-        initial_date:"",
-        final_date:"",
-        ceo : 0,
+        initial_contract:"",
+        final_contract:"",
+        ceo : null,
         errors:[]
     },
 
-    step:"stepContract"
+    step:"initial"
 
   };
 };

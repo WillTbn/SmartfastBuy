@@ -8,6 +8,9 @@ const actions = {
     },
     setStep(payload){
         this.step = payload
+    },
+    setErros(payload){
+        this.formData.errors = payload
     }
 };
 

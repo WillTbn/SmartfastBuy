@@ -5,7 +5,7 @@
                 Adicionar responsavel para o condominio e que irá assinar o contrato
             </h2>
         </div>
-        <Form @submit="submitRegister" class="mx-auto max-w-7xl sm:px-2 lg:px-8" v-slot="{errors}">
+        <Form @submit="submitRegister" class="mx-auto max-w-7xl sm:px-2 lg:px-8 md:max-w-5xl" v-slot="{errors}">
 
             <div class="grid grid-cols-3 gap-4">
                 <div>
@@ -180,8 +180,6 @@ import useStrandardFields from '../../composables/useStandardFields'
 import { storeToRefs } from 'pinia';
 import { useContractStore } from '../../storePinia/contract';
 
-
-
 const props = defineProps({
     condominia_id:{
         type:Number
@@ -195,12 +193,15 @@ const {formData} =  storeToRefs(useContract)
 
 const submitRegister = (values) => {
     console.log(JSON.stringify(values, null, 2));
+    formData.value.condominia_id = props.condominia_id
+    console.log(formData.value)
     useContract.setStep('stepContract')
     // form.post(route('contract.create'), {
-    //     onError:(e) => multError(e),
-    //     onSuccess:() => form.reset()
-    // })
-}
+        //     onError:(e) => multError(e),
+        //     onSuccess:() => form.reset()
+        // })
+    }
+
 
 const sendPassword = () => {
     let passwordDefault = passwordGenerator()

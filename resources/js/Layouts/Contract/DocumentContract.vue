@@ -15,42 +15,44 @@
                         ref="document"
                         name="document"
                         accept=".doc,.docx,.pdf"
+
                         @change="getDocument($event)"
                     >
+                    <!-- <input-error class="mt-2" :message="errors.signature" v-if="errors.signature"/> -->
                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">
                         PDF, DOCX (MAX. 1240mb).
                     </p>
+                    <input-error class="mt-2" v-if="formData.errors.document" :message="formData.errors.document"/>
                 </div>
 
                 <div class="">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Data inicio de contrato(pode ser previa)</label>
-                    <VueDatePicker class="dark:dp__theme_dark" v-model="formData.initial_date" month-picker />
+                    <VueDatePicker class="dark:dp__theme_dark" locale="pt-BR" v-model="formData.initial_contract" month-picker />
+                    <input-error class="mt-2" v-if="formData.errors.initial_date" :message="formData.errors.initial_date"/>
                 </div>
                 <div class="">
                     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Data Final do contrato(pode ser previa)</label>
-                    <VueDatePicker class="dark:dp__theme_dark" v-model="formData.final_date" month-picker />
+                    <VueDatePicker class="dark:dp__theme_dark" v-model="formData.final_contract" month-picker/>
+                    <input-error class="mt-2" v-if="formData.errors.final_date" :message="formData.errors.final_date"/>
                 </div>
             </div>
             <div class="">
-
-
-                <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">Identification</h3>
+                <h3 class="my-2 font-semibold text-gray-900 dark:text-white">Você vai assinar agora o contrato?</h3>
                 <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                     <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                         <div class="flex items-center ps-3">
-                            <input id="horizontal-list-radio-license" type="radio" :value="true" name="list-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                            <input id="horizontal-list-radio-license" v-model="formData.ceo" type="radio" :value="true" name="list-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                             <label for="horizontal-list-radio-license" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Assinar o documento </label>
                         </div>
                     </li>
                     <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                         <div class="flex items-center ps-3">
-                            <input id="horizontal-list-radio-id" type="radio" :value="false" name="list-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                            <input id="horizontal-list-radio-id" type="radio" v-model="formData.ceo" :value="false" name="list-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
                             <label for="horizontal-list-radio-id" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Não assinar o documento</label>
                         </div>
                     </li>
                 </ul>
-
-
+                <input-error class="mt-2" v-if="formData.errors.ceo" :message="formData.errors.ceo"/>
             </div>
             <PrimaryButton class="m-6" @click="backToback">
                Voltar
@@ -66,27 +68,58 @@ import {Form} from 'vee-validate'
 import { useContractStore } from '../../storePinia/contract';
 import { storeToRefs } from 'pinia';
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
+import InputError from '@/Components/Forms/InputError.vue'
 import {ref} from 'vue'
+import {useForm} from '@inertiajs/vue3'
+import useNotify from '../../composables/useNotify'
 
 const selectFile = ref()
 const getDocument = (e) =>{
     selectFile.value = e.target.files[0]
 }
-
+function formatToTwoDigits(str) {
+  const num = parseInt(str);
+  return (num < 10) ? `0${num}` : num.toString();
+}
+const format = (date) => {
+    if(date){
+        const formMonth = formatToTwoDigits(date.month+1)
+        const year = date.year;
+        return `${formMonth}-${year}`
+    }
+    return "";
+}
 const document = ref({})
 
 const useContract = useContractStore()
-const {formData, setName} = storeToRefs(useContract)
+const {multError}= useNotify()
+const {formData} = storeToRefs(useContract)
 const backToback = () => {
-    let dataForm = new FormData()
-    dataForm.append('document', selectFile.value, selectFile.value.name)
-    formData.value.document = dataForm
     useContract.setStep('initial')
-    console.log('OLA', formData.value)
+    console.log('backToback -> ', formData.value)
 }
 const submitFinally = () =>{
-    formData.value.name = setName
-    console.log('OLA', formData.value)
+    formData.value.initial_date = format(formData.value.initial_contract)
+    formData.value.final_date = format(formData.value.final_contract)
+    formData.value.name = useContract.setName
+    ///document
+    // let dataForm = new FormData()
+    // dataForm.append('document', selectFile.value, selectFile.value.name)
+    console.info(selectFile.value)
+    formData.value.document = selectFile.value
+
+    const form = useForm({...formData.value})
+    form.post(route('contract.create'), {
+        onSuccess:()=>{
+            form.reset()
+            useContract.setStep('finally')
+        },
+        onError:(e)=>{
+            multError(e)
+            useContract.setErros(e)
+        }
+    })
+    console.log('formart ->', form)
 }
 </script>
 <style>

@@ -38,3 +38,11 @@ defineRule('confirmed', (value, [target]) => {
     }
     return 'As senhas não coincidem';
 });
+defineRule('signature', (value, [target]) => {
+    if (!target) {
+      return true;
+    }
+    if(!value){
+        return 'Anexa um documento é obrigatório.';
+    }
+});

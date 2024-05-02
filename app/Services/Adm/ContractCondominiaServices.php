@@ -44,7 +44,7 @@ class ContractCondominiaServices {
                 'role_id' => $resp->role_id,
                 'password' => $resp->password
             ]);
-            $this->accountModel->create([
+            $responsible = $this->accountModel->create([
                 'person' =>$resp->person,
                 'genre' =>$resp->genre,
                 'birthday' =>$resp->birthday,
@@ -61,7 +61,7 @@ class ContractCondominiaServices {
                 'initial_date' => $contract->initial_date,
                 'final_date' => $contract->final_date,
                 'ceo_id' => $contract->ceo_id,
-                'responsible_id' => $contract->responsible_id,
+                'responsible_id' => $responsible->id,
             ]);
             logger('Deu tudo certo no '.__CLASS__);
             DB::commit();

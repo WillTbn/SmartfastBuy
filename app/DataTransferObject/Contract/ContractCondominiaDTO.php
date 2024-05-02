@@ -15,9 +15,9 @@ class ContractCondominiaDTO extends AbstractDTO implements InterfaceDTO
         public readonly ?UploadedFile $document = null,
         public readonly ?string $initial_date= null,
         public readonly ?string $final_date= null,
-        public readonly ?bool $ceo = false,
+        public readonly ?bool $ceo = null,
         public readonly ?int $condominia_id=null,
-        public readonly ?int $responsible_id,
+        // public readonly ?int $responsible_id,
 
     )
     {
@@ -32,12 +32,14 @@ class ContractCondominiaDTO extends AbstractDTO implements InterfaceDTO
             'initial_date' => 'required|string',
             'final_date' => 'required|string',
             'ceo' => 'required|boolean',
-            'responsible_id' => 'required|exists:accounts,user_id',
+            // 'responsible_id' => 'required|exists:accounts,user_id',
         ];
     }
     public function messages():array
     {
-        return [];
+        return [
+            'ceo.required' => 'Esses campo é obrigatorio, selecionar positivo ou negativo!'
+        ];
     }
     public function validator():Validator
     {

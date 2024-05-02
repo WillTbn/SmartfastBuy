@@ -57,10 +57,10 @@ class ContractCondominiaController extends Controller
             'initial_date',
             'final_date',
             'ceo',
-            'responsible_id',
+            // 'responsible_id',
         ]));
 
-        $this->contractServices->createdContract($respDto, $contractDto);
+        // $this->contractServices->createdContract($respDto, $contractDto);
 
         return redirect()->back()
         ->with('success', 'Responsavel adicionado, e-mail com senha para ele será enviado e status do condominio atualizado!');

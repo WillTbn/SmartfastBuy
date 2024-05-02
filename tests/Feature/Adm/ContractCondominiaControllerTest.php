@@ -36,12 +36,12 @@ class ContractCondominiaControllerTest extends TestCase
         $file = UploadedFile::fake()->create('testeDocument.pdf', 100, 'application/pdf');
         // dd($file);
         $user = User::factory()->create();
-        $responsible = User::factory()->has(Account::factory())->withRoleResponsible()->create();
+        // $responsible = User::factory()->has(Account::factory())->withRoleResponsible()->create();
         $cond = Condominia::factory()
             ->has(AddressCondominia::factory())
         ->create(['name' => 'Teste Condominia']);
 
-        $this->actingAs($user)->post(route('contract.create'), [
+        $response = $this->actingAs($user)->post(route('contract.create'), [
             'name' =>fake()->name(),
             'password' =>"123456789",
             'password_confirmation' =>"123456789",
@@ -55,18 +55,21 @@ class ContractCondominiaControllerTest extends TestCase
             'telephone'=>"21999949999",
             'condominia_id'=>$cond->id,
             'document' => $file,
-            'initial_date' => "2023-03-01",
-            'final_date' => "2023-03-01",
+            'initial_date' => "2023-03",
+            'final_date' => "2024-04",
             'ceo' => true,
-            'responsible_id' => $responsible->account->user_id,
+            // 'responsible_id' => $responsible->account->user_id,
         ]);
-        // $response->assertStatus(200);
+        $response->assertStatus(302);
         $this->assertDatabaseHas('accounts', [
             'person' =>   "22233344455",
         ]);
         $this->assertDatabaseHas('contract_condominias', [
-            'initial_date' =>   "2023-03-01",
+            'initial_date' =>   "2023-03",
+            // 'condominia_id' =>    $cond->id,
         ]);
+
+
         Event::assertDispatched(SetSignatureContract::class);
         // $response->assertSee('Teste');
 

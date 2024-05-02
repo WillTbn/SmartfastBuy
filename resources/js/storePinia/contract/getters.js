@@ -6,7 +6,7 @@ const getters = {
     //     return false
     // }
     setName:(state) => {
-        return state.formData.firstName + state.formData.lastName
+        return state.formData.firstName +" "+ state.formData.lastName
     }
 };
 

@@ -13,12 +13,12 @@ class ContractCondominia extends Model
 
     public function responsible():HasOne
     {
-        return $this->hasOne(Account::class, 'user_id', 'responsible_id');
+        return $this->hasOne(Account::class, 'id', 'responsible_id');
     }
 
     public function ceo():HasOne
     {
-        return $this->hasOne(Account::class, 'user_id', 'ceo_id');
+        return $this->hasOne(Account::class, 'id', 'ceo_id');
     }
     public function condominia():HasOne
     {

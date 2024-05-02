@@ -45,11 +45,11 @@ class ResponsibleDTO extends AbstractDTO implements InterfaceDTO
             // verificar existencia na tabela roles
             'role_id' => 'required',
             'person' => [
-                'required','max:11',
+                'required','min:11','max:14',
                 // Rule::unique('accounts')->ignore($this->user_id, 'user_id')
                 Rule::unique('accounts')
             ],
-            'telephone' => 'min:10|max:11',
+            'telephone' => 'min:10|max:12',
             'phone'=>'',
         ];
     }

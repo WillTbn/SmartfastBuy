@@ -5,12 +5,12 @@ import {
     faTrash, faPlus, faWindowClose, faClose,
     faArrowLeft, faPaperPlane, faBuildingCircleArrowRight,
     faBuildingUser, faFileContract, faEnvelope, faChartLine, faAddressCard,
-    faRightFromBracket, faTriangleExclamation, faSpinner
+    faRightFromBracket, faTriangleExclamation, faSpinner, faCircleCheck
 } from '@fortawesome/free-solid-svg-icons'
 library.add(
     faUserSecret, faCity, faShop, faEdit,
     faTrash,faPlus, faWindowClose, faClose,
     faArrowLeft, faPaperPlane,faBuildingCircleArrowRight,
     faBuildingUser, faFileContract, faEnvelope, faChartLine, faAddressCard,
-    faRightFromBracket, faTriangleExclamation, faSpinner
+    faRightFromBracket, faTriangleExclamation, faSpinner, faCircleCheck
 )
