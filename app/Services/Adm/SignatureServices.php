@@ -14,31 +14,28 @@ use Illuminate\Support\Facades\Log;
 
 class SignatureServices
 {
-    private Signature $signatureModel;
     private CondominiaServices $servicesCondominia;
     public function __construct(
         Signature $signatureModel,
         CondominiaServices $servicesCondominia
     )
     {
+        Log::alert('Estou no alert');
         $this->servicesCondominia = $servicesCondominia;
-        $this->signatureModel = $signatureModel;
     }
 
     public function setCreate(ContractCondominia $contract)
     {
         Log::debug('Criando assinatura para o condominioID -> '.$contract->condominia_id);
+        Log::debug('O ceo vai assianar -> '.$contract->ceo);
         try{
             DB::beginTransaction();
-            $sig = $this->signatureModel->updateOrCreate(
-                ['contract_condominia_id' => $contract->condominia_id],
-                [
+            $sig = Signature::create([
                     'signature_ceo' => Hash::make($contract->ceo->person.$contract->ceo->birthday),
                     'contract_condominia_id' => $contract->condominia_id,
                     'created_at' => now(),
                     'updated_at' => now(),
-                ]
-            );
+                ]);
             Log::info('assinatura criada '.$sig);
 
             /// Atualizar o status do contract
@@ -49,17 +46,19 @@ class SignatureServices
         } catch(Exception $e)
         {
             DB::rollBack();
-            Log::error('Erro na criação da assinatura');
-            return response()->json(['error' => 'Erro ao grava assinatura', 'exception'=> $e], 402);
+            Log::error('Erro na criação da assinatura do ceo');
+            Log::error('exception '.$e);
+            return redirect()->back()->with('error', 'Problema na inserção no banco de dados!');
         }
     }
     public function updateStart(ContractCondominia $contract)
     {
         Log::debug('Criando reponsible vai assina o contrato -> '.$contract);
         Log::debug('Criando reponsible vai assina o contrato do condominioID -> '.$contract->condominia_id);
+
         try{
             DB::beginTransaction();
-            $sig = $this->signatureModel->updateOrCreate(
+            $sig = Signature::updateOrCreate(
                 ['contract_condominia_id' => $contract->condominia_id],
                 [
                     'signature_responsible' => Hash::make($contract->responsible->person.$contract->responsible->birthday),
@@ -77,7 +76,8 @@ class SignatureServices
         {
             DB::rollBack();
             Log::error('Erro na criação da assinatura');
-            return response()->json(['error' => 'Erro ao grava assinatura', 'exception'=> $e], 402);
+            Log::error('exception '.$e);
+            return redirect()->back()->with('error', 'Problema na inserção no banco de dados!');
         }
     }
 

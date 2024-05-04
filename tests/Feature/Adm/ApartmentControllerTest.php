@@ -46,7 +46,7 @@ class ApartmentControllerTest extends TestCase
             ->has(Block::factory())
         ->create();
 
-        $reto = $this->actingAs($user, 'web')->post(route('apartment.create', [
+        $reto = $this->actingAs($user)->post(route('apartment.create', [
             'number' => 105,
             'condominia_id' => $condominia->id,
             'block_id' => $condominia->blocks[0]->id,
@@ -65,19 +65,7 @@ class ApartmentControllerTest extends TestCase
     {
         $user = User::factory()
             ->has(Account::factory())
-            ->has(
-                Role::factory(1, ['name' =>  RoleEnum::Responsible->name])
-                    ->has(Ability::factory()
-                        ->has(RoleAbility::factory()
-                    )
-                )
-            )
-        ->create([
-            'name'=>'Responsible User',
-            'email'=> env('ADMIN_EMAIL', fake()->email()),
-            'password' => bcrypt(env('ADMIN_PASSWORD', 'password')),
-            'role_id' => RoleEnum::Responsible
-        ]);
+            ->withRoleResponsible()->create();
         $condominia = Condominia::factory()->create();
 
         $block = Block::factory()->create(
@@ -91,7 +79,7 @@ class ApartmentControllerTest extends TestCase
         ]);
 
         $this->actingAs($user)->delete(route('apartment.delete', $apto->id));
-        // dd($apto);
+        // dd($r);
 
         $this->assertDatabaseMissing('apartments', [
             'number' => 106,

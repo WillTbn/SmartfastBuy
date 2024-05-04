@@ -2,11 +2,13 @@
 
 namespace App\Listeners\Contract;
 
+use App\Models\ContractCondominia;
 use App\Services\Adm\SignatureServices;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
 
-class SetSignatureCeoTable
+class SetSignatureCeoTable implements ShouldQueue
 {
     public SignatureServices $signatureServices;
     /**
@@ -16,7 +18,7 @@ class SetSignatureCeoTable
         SignatureServices $signatureServices
     )
     {
-        logger('Estou no construct de '.__CLASS__);
+        Log::alert('Estou no construct de '.__CLASS__);
         $this->signatureServices = $signatureServices;
         // logger($this->signatureServices);
     }

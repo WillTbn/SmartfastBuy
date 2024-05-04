@@ -3,6 +3,7 @@ namespace App\DataTransferObject\Responsible;
 
 use App\DataTransferObject\AbstractDTO;
 use App\DataTransferObject\InterfaceDTO;
+use App\Enums\NotificationsEnum;
 use App\Enums\RoleEnum;
 use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
@@ -40,7 +41,7 @@ class ResponsibleDTO extends AbstractDTO implements InterfaceDTO
             'password' => ['required', 'confirmed', Rules\Password::defaults() ],
             'genre' => 'required|max:1',
             'birthday' => 'required|date',
-            'notifications' => 'required',
+            'notifications' => ['required', Rule::in(NotificationsEnum::forSelectName())],
             'condominia_id' => 'exists:condominias,id',
             // verificar existencia na tabela roles
             'role_id' => 'required',

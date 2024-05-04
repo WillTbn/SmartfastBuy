@@ -24,6 +24,8 @@ class SetSignatureResponsible
     )
     {
         $this->contract = $contract;
+        logger('Estou no construct do event '.__CLASS__);
+        logger('Esses são os dados que irei passar para os ouvintes '.$this->contract);
     }
 
     /**

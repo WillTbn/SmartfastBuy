@@ -30,8 +30,8 @@ export default function useStandardFields() {
         {id:4, name:"não informar"}
     ]
     const notYes = [
-        {id:1, value:"accepted", name:"sim"},
-        {id:2, value:"refused", name:"não"}
+        {id:"accepted", value:"accepted", name:"sim"},
+        {id:"refused", value:"refused", name:"não"}
     ]
     return {
         passwordGenerator,

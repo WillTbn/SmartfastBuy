@@ -9,7 +9,7 @@
         <transition name="fade" mode="out-in" :duration="{ enter: 1500, leave: 800 }">
             <create-responsible :condominia_id="condominia.id" v-if="step == 'initial'" />
             <document-contract v-else-if="step === 'stepContract'"/>
-            <success-finally v-else-if="step === 'finally'" message="flash.success" :description="flash.message"/>
+            <success-finally v-else-if="step === 'finally'" :message="flash.success" :description="flash.message"/>
         </transition>
     </AuthenticatedLayout>
 </template>

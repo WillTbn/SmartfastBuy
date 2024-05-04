@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events\Signature;
+namespace App\Events\Ceo\Signature;
 
 use App\Models\ContractCondominia;
 use Illuminate\Broadcasting\Channel;
@@ -10,21 +10,22 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
-class SetSignatureContract
+class SetSignatureCeo
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public ContractCondominia $contract;
+    // public ContractCondominia $contract;
     /**
      * Create a new event instance.
      */
     public function __construct(
-        ContractCondominia $contract
+       public ContractCondominia $contract
     )
     {
-        $this->contract = $contract;
-        logger('Estou no construct do event '.__CLASS__);
-        logger('Esses são os dados que irei passar para os ouvintes '.$this->contract);
+        Log::alert('Entrei no '.__CLASS__);
+        // $this->contract = $contract;
+        Log::warning($this->contract);
     }
 
     /**

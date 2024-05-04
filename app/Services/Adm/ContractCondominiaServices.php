@@ -58,18 +58,18 @@ class ContractCondominiaServices {
             $this->contractModel->create([
                 'document' => $this->setFileStore($contract->document,$contract->condominia_id, 'contract' ),
                 'condominia_id' => $contract->condominia_id,
-                'initial_date' => $contract->initial_date,
-                'final_date' => $contract->final_date,
+                'initial_date' => $contract->getInitialDate()->format('Y-m-d'),
+                'final_date' => $contract->getFinalDate()->format('Y-m-d'),
                 'ceo_id' => $contract->ceo_id,
-                'responsible_id' => $responsible->id,
+                'responsible_id' => $responsible->user_id,
             ]);
             logger('Deu tudo certo no '.__CLASS__);
             DB::commit();
         }catch (Exception $e){
             Log::error('Deu erro no '.__CLASS__);
             Log::error('exception '.$e);
-            DB::rollBack();
             return redirect()->back()->with('error', 'Problema na inserção no banco de dados!');
+            DB::rollBack();
         }
     }
 

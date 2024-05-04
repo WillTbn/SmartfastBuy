@@ -1,3 +1,4 @@
+import {ref} from 'vue'
 export default function useStopWatch() {
     const getDate = (tempLast) =>{
         var dia, hora, minutos, segundos,temp, status = true
@@ -31,47 +32,22 @@ export default function useStopWatch() {
 
         return {dia, hour, minutes, seconds, status, tempLast}
     }
-    const showTime = () => {
-        let now = new Date()
-        console.log('initial -> ', now)
-        var tempLast = new Date(now.setMinutes(now.getMinutes() +1))
-        let { dia, hour, minutes, seconds, status,} = getDate(tempLast)
+    /**
+     *
+     * @param {array} arrayitens
+     */
+    const countArray = (arrayitens) => {
+        const cont = 0
         let timer = setInterval(() => {
-            segundos++;
-            segundos === 60 ? segundos=0 : segundos++
-            minutos === 60 ? minutos=0 : minutos++
-            hora === 60 ? hora=0 : hora++
-
-            console.log('segundos-> ', segundos)
-
-            if(segundos >= 5){
+            cont+1
+            if(arrayitens.length < cont ){
                 clearInterval(timer)
-                console.log('ESTOU AQUI VAI FALSE')
             }
-            console.log('AINDA TU', status)
-
         }, 1000)
-        // let timer = setInterval(getDate(), 1000)
-
-        // if(getDate().status){
-        //     clearInterval(timer)
-        // }
 
     }
-    const incrementSeconds = (value = 5) => {
-        let sec = 0;
-        let timer = setInterval(() => {
-            sec++;
-            console.log('Ola ', sec)
-            if(sec > value){
-                console.log('PAREI')
-                clearInterval(timer)
-            }
-        },1000)
-    }
-
     return{
         getDate,
-        showTime
+        countArray
     }
 }

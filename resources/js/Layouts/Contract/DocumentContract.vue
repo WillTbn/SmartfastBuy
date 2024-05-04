@@ -26,13 +26,13 @@
                 </div>
 
                 <div class="">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Data inicio de contrato(pode ser previa)</label>
-                    <VueDatePicker class="dark:dp__theme_dark" locale="pt-BR" v-model="formData.initial_contract" month-picker />
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="data_initial">Data inicio de contrato(pode ser previa)</label>
+                    <VueDatePicker class="dark:dp__theme_dark" locale="pt-BR" v-model="formData.initial_contract" month-picker id="data_initial"/>
                     <input-error class="mt-2" v-if="formData.errors.initial_date" :message="formData.errors.initial_date"/>
                 </div>
                 <div class="">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Data Final do contrato(pode ser previa)</label>
-                    <VueDatePicker class="dark:dp__theme_dark" v-model="formData.final_contract" month-picker/>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="data_finally">Data Final do contrato(pode ser previa)</label>
+                    <VueDatePicker class="dark:dp__theme_dark" v-model="formData.final_contract" id="data_finally" month-picker/>
                     <input-error class="mt-2" v-if="formData.errors.final_date" :message="formData.errors.final_date"/>
                 </div>
             </div>
@@ -85,7 +85,7 @@ const format = (date) => {
     if(date){
         const formMonth = formatToTwoDigits(date.month+1)
         const year = date.year;
-        return `${formMonth}-${year}`
+        return `01-${formMonth}-${year}`
     }
     return "";
 }

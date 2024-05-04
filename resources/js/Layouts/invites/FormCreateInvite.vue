@@ -6,7 +6,7 @@
         <font-awesome-icon class="w-10 text-red-600 h-7" :icon="['fass', 'fa-window-close']"  @click.prevent="$emit('closed')"/>
     </div>
      <!-- <Dialog :open="flash.success" title="Sucesso!" :description="flash.message" button="Ok!" /> -->
-     <form @submit.prevent="submitRegister" class="p-4 mx-auto mt-6 space-y-6 md:container" >
+    <form @submit.prevent="submitRegister" class="p-4 mx-auto mt-6 space-y-6 md:container darK:bg-ligth-800" >
       <!-- email class="grid grid-cols-3 grid-rows-3 gap-4"-->
         <div class="grid grid-cols-2 gap-2 ">
             <label class="block">

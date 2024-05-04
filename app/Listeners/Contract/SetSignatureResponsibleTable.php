@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 
-class SetSignatureResponsibleTable
+class SetSignatureResponsibleTable implements ShouldQueue
 {
 
     public SignatureServices $signatureServices;
@@ -27,6 +27,7 @@ class SetSignatureResponsibleTable
      */
     public function handle(object $event): void
     {
+        Log::info('Handler de listner ');
         $this->signatureServices->updateStart($event->contract);
     }
 }

@@ -60,8 +60,13 @@ class ContractCondominiaController extends Controller
             // 'responsible_id',
         ]));
 
-        // $this->contractServices->createdContract($respDto, $contractDto);
-
+        $this->contractServices->createdContract($respDto, $contractDto);
+        // $response = $this->contractServices->createdContract($respDto, $contractDto);
+        // if($response)
+        // {
+        //     redirect()->back()
+        //         ->with('error', $response);
+        // }
         return redirect()->back()
         ->with('success', 'Responsavel adicionado, e-mail com senha para ele será enviado e status do condominio atualizado!');
     }

@@ -14,6 +14,7 @@ class Signature extends Model
         'signature_ceo',
         'signature_responsible',
         'contract_id',
+        'contract_condominia_id'
     ];
 
     public function contractCondominia():HasOne

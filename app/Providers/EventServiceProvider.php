@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\Ceo\Signature\SetSignatureCeo;
 use App\Events\Responsible\SetResponsibleCondominia;
 use App\Events\Responsible\SetSignatureResponsible;
-use App\Events\Signature\SetSignatureContract;
 use Illuminate\Auth\Events\Registered;
 use App\Listeners\Contract\SendEmailContractToCeo;
 use App\Listeners\Contract\SendEmailSignatureResponsible;
@@ -31,6 +31,10 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
+        SetSignatureCeo::class =>[
+            SetSignatureCeoTable::class,
+            SendEmailContractToCeo::class
+        ],
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
@@ -39,12 +43,8 @@ class EventServiceProvider extends ServiceProvider
             SendEmailResponsable::class
         ],
         SetSignatureResponsible::class =>[
-            SetSignatureResponsibleTable::class,
-            SendEmailSignatureResponsible::class
-        ],
-        SetSignatureContract::class => [
-            SetSignatureCeoTable::class,
-            SendEmailContractToCeo::class
+            // SetSignatureResponsibleTable::class,
+            // SendEmailSignatureResponsible::class
         ],
     ];
 
